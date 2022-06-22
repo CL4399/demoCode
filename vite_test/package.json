@@ -1,0 +1,35 @@
+{
+  "name": "vite_test",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@antv/x6": "^1.31.3",
+    "@types/three": "^0.140.0",
+    "@viselect/vue": "^3.0.0-beta.13",
+    "axios": "^0.27.2",
+    "echarts": "^5.3.1",
+    "element-plus": "^2.0.5",
+    "element-theme": "^2.0.1",
+    "sass": "^1.49.9",
+    "three": "^0.140.2",
+    "v-contextmenu": "^3.0.0",
+    "vue": "^3.2.25",
+    "vue-right-click-menu-next": "^1.1.1",
+    "vue-router": "^4.0.14",
+    "vue3-menus": "^1.1.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "element-theme-chalk": "^2.15.6",
+    "fast-glob": "^3.2.11",
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vue-tsc": "^0.29.8"
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+<script>
+
+  var data = [
+    { pid: 0, id: 'a', value: '陕西' },
+    { pid: 'a', id: 01, value: '西安' },
+    { pid: 01, id: 301, value: '雁塔区' },
+    { pid: 01, id: 302, value: '高新区' },
+    { pid: 'a', id: 02, value: '渭南' },
+    { pid: 'a', id: 03, value: '咸阳' },
+    { pid: 0, id: 'b', value: '广东' },
+    { pid: 'b', id: 11, value: '广州' },
+    { pid: 'b', id: 12, value: '深圳' },
+    { pid: 'b', id: 13, value: '潮汕' },
+    { pid: 0, id: 'c', value: '湖南' },
+    { pid: 'c', id: 21, value: '长沙' },
+    { pid: 'c', id: 22, value: '常德' },
+    { pid: 'c', id: 23, value: '岳阳' },
+  ];
+  function toTree(data) {
+    let cloneData = JSON.parse(JSON.stringify(data))    // 对源数据深度克隆
+    let tree = cloneData.filter((father) => {              //循环所有项
+      let branchArr = cloneData.filter((child) => {
+        return father.id == child.pid;//返回每一项的子级数组
+      });
+
+      if (branchArr.length > 0) {
+        father.children = branchArr; //如果存在子级，则给父级添加一个children属性，并赋值
+      }
+      return father.pid == 0;//返回第一层
+    });
+    return tree;    //返回树形数据
+  }
+  var tree = toTree(data);
+  console.log(tree);
+
+
+</script>
+
+</html>
