@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
+import ButtonCom from './demoCom/Button';
+import { FullscreenOutlined } from '@ant-design/icons';
+import EchartsArea from './EchartsCom';
 
 function TestDemo() {
     // 声明一个新的叫做 “count” 的 state 变量
@@ -20,14 +23,14 @@ class Clock extends React.Component {
     constructor(props: any) {
         super(props);
         this.state = { date: new Date(), arr: [1, 23, 123, 1231, 5123] };
-        console.log('constructor');
+        // console.log('constructor');
     }
     /**
      * getDerivedStateFromProps 这个生命周期函数是类的静态方法，并不是原型中的方法，所以在其内部使用 this 访问到的不是组件实例。
      * 此生命周期钩子不常用，如果可以的话，我们也尽可能不会使用它。
      */
     static getDerivedStateFromProps(props: any, state: any) {
-        console.log(props, state, 'getDerivedStateFromProps');
+        // console.log(props, state, 'getDerivedStateFromProps');
         return null;
     }
     /**
@@ -40,13 +43,13 @@ class Clock extends React.Component {
      * @returns
      */
     shouldComponentUpdate(nextprops: unknown, nextState: any) {
-        console.log(
-            `
-            ${this.state.date.toLocaleTimeString()}
-            ${nextState.date.toLocaleTimeString()}
-            ++++++shouldComponentUpdate+++++++++++++
-            `
-        );
+        // console.log(
+        //     `
+        //     ${this.state.date.toLocaleTimeString()}
+        //     ${nextState.date.toLocaleTimeString()}
+        //     ++++++shouldComponentUpdate+++++++++++++
+        //     `
+        // );
         return true;
     }
     state: { date: Date; arr: number[] };
@@ -58,7 +61,7 @@ class Clock extends React.Component {
 
     // 组件更新时
     componentDidUpdate() {
-        console.log('componentDidUpdate');
+        // console.log('componentDidUpdate');
     }
 
     // 组件卸载时
@@ -72,10 +75,13 @@ class Clock extends React.Component {
     }
     stopClick(event: Event) {
         event.preventDefault();
-        console.log('stop');
+        // console.log('stop');
+    }
+    buttonClick(e: Event): any {
+        console.log(e, 'buttonClick');
     }
     render(): React.ReactNode {
-        console.log('render');
+        // console.log('render');
 
         return (
             <div>
@@ -91,6 +97,36 @@ class Clock extends React.Component {
                 ))}
                 <FormattedDate date={this.state.date}></FormattedDate>
                 <TestDemo></TestDemo>
+                <ButtonCom
+                    text={'按钮'}
+                    color={''}
+                    size={''}
+                    type={''}
+                    shape={'round'}
+                    disabled={false}
+                    loading={false}
+                    danger={false}
+                    ghost={false}
+                    loadingColor={''}
+                    onClick={this.buttonClick}
+                    children={<FullscreenOutlined />}
+                ></ButtonCom>
+
+                <ButtonCom
+                    text={<div style={{ color: 'aqua' }}>123</div>}
+                    color={'aqua'}
+                    size={''}
+                    type={''}
+                    shape={'round'}
+                    disabled={false}
+                    loading={false}
+                    danger={true}
+                    ghost={false}
+                    loadingColor={''}
+                    onClick={this.buttonClick}
+                    children={<FullscreenOutlined />}
+                ></ButtonCom>
+                <EchartsArea></EchartsArea>
             </div>
         );
     }

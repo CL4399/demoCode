@@ -1,0 +1,97 @@
+.button-com {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    line-height: 1.5715;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    height: 32px;
+    padding: 4px 15px;
+    font-size: 14px;
+    border-radius: 2px;
+    background: #fff;
+}
+
+.button-com:hover {
+    box-shadow: 1px 1px 10px rgb(192, 189, 189) !important;
+}
+
+.button-content {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    line-height: 100%;
+}
+
+.button-text {
+    margin: 0 5px;
+}
+
+.button-round {
+    height: 32px;
+    padding: 4px 16px;
+    font-size: 14px;
+    border-radius: 32px;
+}
+
+.button-circle {
+    text-align: center;
+    border-radius: 50%;
+}
+
+.button-disabled {
+    background-color: #f5f5f5 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+    border: 1px solid #d1cdcd;
+}
+
+.button-disabled:hover {
+    box-shadow: none !important;
+}
+
+.button-loading {
+    cursor: default;
+}
+
+.button-link {
+    border: none;
+    align-items: center;
+    text-align: center;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.button-danger {
+    border-color: red !important;
+    align-items: center;
+    text-align: center;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.button-dashed {
+    border: 1px dashed rgb(187, 186, 186);
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.button-ghost {
+    background-color: transparent !important;
+    border-color: #fff;
+    box-shadow: none !important;
+}
