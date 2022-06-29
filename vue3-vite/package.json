@@ -18,9 +18,12 @@
     "postcss-import": "^14.1.0",
     "qs": "^6.10.3",
     "vue": "^3.2.25",
+    "vue-layer": "^1.2.5",
+    "vue-layer-shadow": "^1.1.7",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
+    "@arco-design/web-vue": "^2.32.0",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^17.0.38",
     "@types/qs": "^6.9.7",

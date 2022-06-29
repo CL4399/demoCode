@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Button } from 'antd';
 import ButtonCom from './demoCom/Button';
 import { FullscreenOutlined } from '@ant-design/icons';
@@ -126,10 +126,61 @@ class Clock extends React.Component {
                     onClick={this.buttonClick}
                     children={<FullscreenOutlined />}
                 ></ButtonCom>
-                <EchartsArea></EchartsArea>
+                <MemoDemo></MemoDemo>
+                {/* <EchartsArea></EchartsArea> */}
             </div>
         );
     }
 }
 
 export default Clock;
+
+/**
+ *用React.memo包裹的组件每次渲染时会和props会和旧的props进行浅比较，如果没有变化则组件不渲染
+ */
+const Childone = React.memo((props: any) => {
+    console.log('子组件一被重新渲染', props);
+    return <p>子组件一{props.num}</p>;
+});
+function MemoDemo() {
+    let [count, setCount] = useState(0);
+    let [render, setRender] = useState(false);
+    let [num, setNum] = useState(2);
+    const handleAdd = () => {
+        setCount(count + 1);
+    };
+
+    const Childtwo = (props: any) => {
+        return (
+            <div>
+                <p>子组件二</p>
+                <p>count的值为：{props.count}</p>
+            </div>
+        );
+    };
+    const handleRender = useCallback(() => {
+        setRender(true);
+    }, [num]);
+    return (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                flexDirection: 'column',
+            }}
+        >
+            {/* {
+                useMemo(() => {
+                    return <Childone />
+                }, [render])
+            } */}
+            <Childone num={num} onClick={handleRender} />
+            <Childtwo count={count} />
+            <button onClick={handleAdd}>增加</button>
+            <br />
+            <button onClick={handleRender}>子组件一渲染</button>
+        </div>
+    );
+}

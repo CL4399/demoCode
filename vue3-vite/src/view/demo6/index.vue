@@ -1,10 +1,7 @@
 <template>
-  <div>
-    <RoleAuthority
-      :checkedKeys="checkedKeys"
-      :data="treeData"
-      :treeObj="treeObj"
-    ></RoleAuthority>
+  <div class="role-content">
+    <RoleAuthority :checkedKeys="checkedKeys" :data="treeData" :treeObj="treeObj"></RoleAuthority>
+    <Button @click="clickOne">确定</Button>
   </div>
 </template>
 <script lang="ts">
@@ -18,53 +15,54 @@ import {
 } from "vue";
 import { useRouter } from "vue-router";
 import RoleAuthority from "./role_authority.vue";
+import { Input, Button } from "ant-design-vue"
 export default defineComponent({
-  components: { RoleAuthority },
+  components: { RoleAuthority, Input, Button },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
-      checkedKeys: [],
+      checkedKeys: [] as string[],
       treeData: [
         {
           id: 1,
           pid: 0,
           name: "顶级权限",
-          checked: 1,
+          checked: 0,
           children: [
             {
               id: 2,
               pid: 1,
               name: "资产管理",
-              checked: 1,
+              checked: 0,
               children: [
                 {
                   id: 3,
                   pid: 2,
                   name: "资产列表",
-                  checked: 1,
+                  checked: 0,
                   children: [
                     {
                       id: 33,
                       pid: 3,
                       name: "资产详细信息",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 34,
                       pid: 3,
                       name: "资产信息添加",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 35,
                       pid: 3,
                       name: "资产信息修改",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 36,
                       pid: 3,
                       name: "资产信息删除",
-                      checked: 1,
+                      checked: 0,
                     },
                   ],
                 },
@@ -72,31 +70,31 @@ export default defineComponent({
                   id: 4,
                   pid: 2,
                   name: "资产位置",
-                  checked: 1,
+                  checked: 0,
                   children: [
                     {
                       id: 37,
                       pid: 4,
                       name: "资产位置详情",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 38,
                       pid: 4,
                       name: "资产位置添加",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 39,
                       pid: 4,
                       name: "资产位置修改",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 40,
                       pid: 4,
                       name: "资产位置删除",
-                      checked: 1,
+                      checked: 0,
                     },
                   ],
                 },
@@ -104,31 +102,31 @@ export default defineComponent({
                   id: 41,
                   pid: 2,
                   name: "业务系统列表",
-                  checked: 1,
+                  checked: 0,
                   children: [
                     {
                       id: 42,
                       pid: 41,
                       name: "业务系统详情",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 43,
                       pid: 41,
                       name: "业务系统添加",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 44,
                       pid: 41,
                       name: "业务系统修改",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 45,
                       pid: 41,
                       name: "业务系统删除",
-                      checked: 1,
+                      checked: 0,
                     },
                   ],
                 },
@@ -136,73 +134,73 @@ export default defineComponent({
                   id: 88,
                   pid: 2,
                   name: "下载客户端安装包",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 93,
                   pid: 2,
                   name: "绑定主机",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 94,
                   pid: 2,
                   name: "主机解绑",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 95,
                   pid: 2,
                   name: "业务系统筛选",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 96,
                   pid: 2,
                   name: "资产位置筛选",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 97,
                   pid: 2,
                   name: "组信息筛选",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 98,
                   pid: 2,
                   name: "主机信息筛选",
-                  checked: 1,
+                  checked: 0,
                 },
                 {
                   id: 315,
                   pid: 2,
                   name: "责任人列表",
-                  checked: 1,
+                  checked: 0,
                   children: [
                     {
                       id: 316,
                       pid: 315,
                       name: "责任人详情",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 317,
                       pid: 315,
                       name: "责任人添加",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 318,
                       pid: 315,
                       name: "责任人修改",
-                      checked: 1,
+                      checked: 0,
                     },
                     {
                       id: 319,
                       pid: 315,
                       name: "责任人删除",
-                      checked: 1,
+                      checked: 0,
                     },
                   ],
                 },
@@ -210,7 +208,7 @@ export default defineComponent({
                   id: 320,
                   pid: 2,
                   name: "责任人筛选",
-                  checked: 1,
+                  checked: 0,
                 },
               ],
             },
@@ -2146,12 +2144,41 @@ export default defineComponent({
         }
       }
     };
+    const clickOne = () => {
+      getCheckedKeys(dataInfo.treeData)
+    }
+    const getCheckedKeys = (data: any) => {
+      data.forEach((item: any) => {
+        // @ts-ignore
+        if (dataInfo.treeData[0].indeterminate == false) {
+          dataInfo.checkedKeys.push(item.id)
+          if (item.children) {
+            getCheckedKeys(item.children)
+          }
+        } else {
+          console.log(item, "????????");
+          if (item.checked) dataInfo.checkedKeys.push(item.id)
+          if (item.children && item.children.length !== 0) {
+            getCheckedKeys(item.children)
+          }
+        }
+      })
+      dataInfo.checkedKeys = [...new Set(dataInfo.checkedKeys)]
+      console.log(dataInfo.checkedKeys, "checkedKeys");
+
+    }
     onMounted(() => {
       isNav(dataInfo.treeData);
     });
 
-    return { ...toRefs(dataInfo) };
+    return { ...toRefs(dataInfo), clickOne, };
   },
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+.role-content {
+  height:80vh;
+  padding-bottom: 100px;
+  overflow: auto;
+}
+</style>
