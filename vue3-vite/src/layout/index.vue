@@ -2,18 +2,9 @@
   <Layout id="layout-content">
     <LayoutHeader class="header" style="background-color: #fff;">
       <div class="logo" />
-      <Menu
-        :multiple="false"
-        theme="light"
-        mode="horizontal"
-        :style="{ lineHeight: '64px' }"
-      >
-        <MenuItem
-          :key="(item.id as string)"
-          @click="chooseMenu(item)"
-          v-for="item of routerInfo"
-          >{{ item.name }}</MenuItem
-        >
+      <Menu :multiple="false" theme="light" mode="horizontal" :style="{ lineHeight: '64px' }">
+        <MenuItem :key="(item.id as string)" @click="chooseMenu(item)" v-for="item of routerInfo">{{ item.name }}
+        </MenuItem>
       </Menu>
     </LayoutHeader>
     <LayoutContent>
@@ -24,28 +15,16 @@
       </Breadcrumb>
       <Layout style="background: #fff; height: 100%;">
         <LayoutSider width="200" style="background: #fff;">
-          <Menu
-            v-model:selectedKeys="selectedKeys2"
-            v-model:openKeys="openKeys"
-            mode="inline"
-          >
-            <SubMenu
-              :key="(item.id as string)"
-              v-for="item of navItemInfo"
-              @click="chooseSubMenu(item)"
-            >
+          <Menu v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys" mode="inline">
+            <SubMenu :key="(item.id as string)" v-for="item of navItemInfo" @click="chooseSubMenu(item)">
               <template #title>
                 <span>
                   <user-outlined />
                   {{ item.name }}
                 </span>
               </template>
-              <MenuItem
-                v-for="i of item.children"
-                :key="(i.id as string)"
-                @click="chooseItem(i)"
-                >{{ i.name }}</MenuItem
-              >
+              <MenuItem v-for="i of item.children" :key="(i.id as string)" @click="chooseItem(i)">{{ i.name }}
+              </MenuItem>
             </SubMenu>
           </Menu>
         </LayoutSider>
@@ -201,6 +180,11 @@ export default defineComponent({
                 name: "demo6",
                 id: "2-2-3",
                 path: "/demo6",
+              },
+              {
+                name: "demo7",
+                id: "2-2-4",
+                path: "/demo7",
               },
             ],
           },

@@ -6,6 +6,7 @@ import "./assets/css/styles.css"
 import { useCounterStore } from './store/index'
 import 'ant-design-vue/dist/antd.css';
 import '@arco-design/web-vue/dist/arco.css';
+import 'element-plus/dist/index.css'
 
 import { message } from 'ant-design-vue';
 const pinia = createPinia()

@@ -51,8 +51,8 @@ export const https = ({
         const error = new Error('请传入url')
         return Promise.reject(error)
     }
-    const fullUrl = `/${baseUrl ? baseUrl : prefixUrl}/${url}`
-    console.log(fullUrl, "?????????????????????????????????????")
+    const fullUrl = `${baseUrl ? baseUrl : prefixUrl}/${url}`
+    console.log(fullUrl, "https")
 
     const newOptions = {
         ...defaultOptions,
