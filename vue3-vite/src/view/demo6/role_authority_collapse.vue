@@ -1,80 +1,42 @@
 <template>
   <div class="role_authority_collapse">
-    <div
-      v-for="(item, index) of data"
-      :key="item.id"
-      style="padding-left: 10px;"
-    >
-      <div
-        v-if="!item.children || (item.children && !item?.children[0].isNav)"
-        class="role_authority_collapse_item"
-      >
+    <div v-for="(item, index) of data" :key="item.id" style="padding-left: 10px;">
+      <div v-if="!item.children || (item.children && !item?.children[0].isNav)" class="role_authority_collapse_item">
         <div style="width: 200px; display: flex; align-items: center;">
           {{ item.name }}
         </div>
         <div style="flex: 1;">
           <template v-if="item.children">
-            <Checkbox
-              v-for="secitem of item.children"
-              class="role_authority_collapse_subitem role_checkbox"
-              :key="secitem.id"
-              :value="secitem.id"
-              :name="secitem.name"
-              style="margin-left: 0;"
-              v-model:checked="secitem.checked"
-              @change="checkChange(secitem)"
-            >
+            <Checkbox v-for="secitem of item.children" class="role_authority_collapse_subitem role_checkbox"
+              :key="secitem.id" :value="secitem.id" :name="secitem.name" style="margin-left: 0;"
+              v-model:checked="secitem.checked" @change="checkChange(secitem)">
               {{ secitem.name }}
             </Checkbox>
           </template>
         </div>
         <div style="width: 100px; display: flex; align-items: center;">
-          <!-- <input type="checkbox" /> -->
-          <Checkbox
-            class="role_checkbox"
-            :key="item.id"
-            :value="item.id"
-            :name="item.name"
-            v-model:checked="item.checked"
-            :indeterminate="item.indeterminate"
-            @change="checkChange(item)"
-          ></Checkbox>
+          <Checkbox class="role_checkbox" :key="item.id" :value="item.id" :name="item.name"
+            :checked="isTrue(item.checked)" :indeterminate="item.indeterminate" @change="checkChange(item)"></Checkbox>
         </div>
       </div>
       <template v-if="item.children && item.children[0]?.isNav">
         <div class="role_authority_collapse_item">
           <div style="width: 200px; display: flex; align-items: center;">
             <template v-if="!data[index].isShow">
-              <PlusOutlined
-                @click="() => (item.isShow = !item.isShow)"
-                style="padding-right: 5px;"
-              />{{ item.name }}
+              <PlusOutlined @click="() => (item.isShow = !item.isShow)" style="padding-right: 5px;" />{{ item.name }}
             </template>
             <template v-if="data[index].isShow">
-              <MinusOutlined
-                @click="() => (item.isShow = !item.isShow)"
-                style="padding-right: 5px;"
-              />{{ item.name }}
+              <MinusOutlined @click="() => (item.isShow = !item.isShow)" style="padding-right: 5px;" />{{ item.name }}
             </template>
           </div>
           <div style="flex: 1;"></div>
           <div style="width: 100px; display: flex; align-items: center;">
-            <Checkbox
-              :key="item.id"
-              :value="item.id"
-              :name="item.name"
-              v-model:checked="item.checked"
-              :indeterminate="item.indeterminate"
-              @change="checkChange(item)"
-            ></Checkbox>
+            <Checkbox :key="item.id" :value="item.id" :name="item.name" :checked="isTrue(item.checked)"
+              :indeterminate="item.indeterminate" @change="checkChange(item)"></Checkbox>
           </div>
         </div>
-        <RoleAuthorityCollapse
-          :class="item.isShow ? '' : 'height0'"
-          :collapsedata="item.children"
-          :originData="data"
-          :treeObj="treeObj"
-        ></RoleAuthorityCollapse>
+        <RoleAuthorityCollapse :class="item.isShow ? '' : 'height0'" :collapsedata="item.children" :originData="data"
+          :treeObj="treeObj"></RoleAuthorityCollapse>
       </template>
     </div>
   </div>
@@ -162,7 +124,7 @@ export default defineComponent({
       dataInfo.Status[id].isShow = !dataInfo.Status[id].isShow;
     };
     const isTrue = (el: number) => {
-      return el == 1 ? false : true;
+      return el == 0 ? false : true;
     };
     return {
       ...toRefs(dataInfo),

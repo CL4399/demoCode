@@ -1,19 +1,9 @@
 <template>
   <div class="role_authority">
     <div class="role_authority_item" v-for="item of dataInfo" :key="item.id">
-      <h3
-        class="title"
-        style="height: 40px; line-height: 40px; font-size: 18px;"
-      >
-        <Checkbox
-          class="role_checkbox"
-          :key="item.id"
-          :value="item.id"
-          :checked="isTrue(item.checked)"
-          :indeterminate="item.indeterminate"
-          :name="item.name"
-          @change="selectchange(item)"
-          >{{ item.name }}
+      <h3 class="title" style="height: 40px; line-height: 40px; font-size: 18px;">
+        <Checkbox class="role_checkbox" :key="item.id" :value="item.id" :checked="isTrue(item.checked)"
+          :indeterminate="item.indeterminate" :name="item.name" @change="selectchange(item)">{{ item.name }}
         </Checkbox>
       </h3>
       <div style="width: 100%;" border="1">
@@ -22,11 +12,7 @@
           <div style="flex: 1;">权限</div>
           <div style="width: 100px;">选择</div>
         </div>
-        <roleAuthorityCollapse
-          :collapsedata="item.children"
-          :originData="dataInfo"
-          :treeObj="treeObj"
-        >
+        <roleAuthorityCollapse :collapsedata="item.children" :originData="dataInfo" :treeObj="treeObj">
         </roleAuthorityCollapse>
       </div>
     </div>
@@ -65,25 +51,24 @@ export default defineComponent({
       if (data.children) {
         let list = data.children;
         list.forEach((item: any) => {
-          item.checked = data.checked;
-          item.indeterminate = false;
+          item.checked = props.data[0].indeterminate ? 1 : 0;
+          item.indeterminate = false
           setChild(item);
         });
       }
     };
     const selectchange = (data: any) => {
-      if (data.indeterminate === true) {
-        data.indeterminate = false;
-      }
+      data.indeterminate = !data.indeterminate
       setChild(data);
     };
 
     const isTrue = (el: number) => {
-      return el == 1 ? false : true;
+      return el == 0 ? false : true;
     };
 
     return { activeKey, setChild, selectchange, dataInfo, isTrue };
   },
 });
 </script>
-<style scoped></style>
+<style scoped>
+</style>

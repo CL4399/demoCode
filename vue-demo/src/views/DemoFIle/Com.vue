@@ -9,6 +9,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'Com',
   props: ["isShow"],
@@ -19,15 +20,16 @@ export default {
   computed: {
     ...mapGetters(['displayName']),
   },
-  mounted() {},
+  mounted() { },
   methods: {
     change() {
       this.$emit('update:title', Math.ceil(Math.random() * 10000));
     },
-    clickDiv(){
-        console.log("clickDiv",this.$parent)
+    clickDiv() {
+      console.log("clickDiv", this.$parent)
     }
   },
 };
 </script>
-<style lang='less'></style>
+<style lang='less'>
+</style>
