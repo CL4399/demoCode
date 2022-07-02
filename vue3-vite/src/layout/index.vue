@@ -201,6 +201,10 @@ export default defineComponent({
                 name: "demo6",
                 id: "2-2-3",
                 path: "/demo6",
+              }, {
+                name: "demo7",
+                id: "2-2-4",
+                path: "/demo7",
               },
             ],
           },
