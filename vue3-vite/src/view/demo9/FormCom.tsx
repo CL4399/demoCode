@@ -64,42 +64,27 @@ const FormCom = defineComponent({
             console.log(e, "form", info)
             formState[info] = e
         }
-        
+
         const comfirm = () => {
             console.log(formState, "comfirm")
         }
         const treeSelectItem = (title: string, i: string, fragment: string) => {
             if (typeof formState.searchValue == "string" && formState.searchValue !== "") {
-                if (fragment.toLowerCase() == formState.searchValue.toLowerCase()) {
+                if (title.toLowerCase() == formState.searchValue.toLowerCase()) {
                     return <span style="color: aqua">{title}</span>
                 } else {
-                    let arr: JSX.Element[] = []
-                    let fragmentArr: string[] = []
-                    let titleArr: string[] = []
-                    let arrObj: StrObj[] = []
-                    for (let i = 0; i < fragment.length; i++) {
-                        fragmentArr.push(fragment[i])
-                    }
-                    for (let i = 0; i < title.length; i++) {
-                        titleArr.push(title[i])
-                    }
-                    titleArr.forEach((item) => {
-                        arrObj.push({
-                            item: item,
-                            color: fragmentArr.indexOf(item) !== -1 ? "color:#000" : "color:aqua",
-                        })
-                    })
-                    console.log(arrObj, "arrObj")
-                    arrObj.forEach((info) => {
-                        arr.push(<span style={info.color}>{info.item}</span>)
-                    })
-                    console.log(arr, "arrObj")
-                    return arr
+                    return <div v-html={test(title, formState.searchValue)}></div>
                 }
             } else {
                 return <span>{title}</span>
             }
         }
+        const test = (item: string, value: string) => {
+            let reg = new RegExp(`${value}`, "gi")
+            return item.replace(reg, `<span style="color:aqua">${value}</span>`)
+        }
+
+
         const formElement = (item: FormOptions) => {
             if (item.type == "input") {
                 return <Input onChange={(e) => changeInput(e, item.field)} placeholder={item.placeholder} value={formState[item.field]}></Input>
