@@ -88,6 +88,10 @@ export default defineComponent({
                 return { y: "calc(100vh - 400px)" };
             },
         },
+        arrData: {
+            type: Array,
+            default: undefined
+        }
     },
     setup(props: any, { emit, slots, attr, expose }: any) {
         const { appContext: { config: { globalProperties: { $message } } } } = getCurrentInstance() as any
@@ -263,16 +267,9 @@ export default defineComponent({
             reload();
         }
         // init()
-        for (let i = 0; i < 1000; i++) {
-            dataInfo.dataSource.push({
-                key: i,
-                name: '胡彦祖' + i,
-                age: 42,
-                address: '西湖区湖底公园1号',
-                id: i
-            })
+        if (props.arrData) {
+            dataInfo.dataSource = props.arrData
         }
-
         onMounted(() => {
             console.log(slots, "slot");
         })

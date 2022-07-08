@@ -4,9 +4,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
-  opacity: 0.5;
+  background-color: rgba(128, 128, 131, 0.5);
   color: #000;
+  z-index: 999999999999999999999;
 }
 
 .modal-com-body {

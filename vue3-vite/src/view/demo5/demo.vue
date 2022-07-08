@@ -143,9 +143,11 @@ export default defineComponent({
       selected: [],
     })
     const clickButton = () => {
-      console.log(myComRef.value.showCom, "myComRef");
-      isVisible.value = !isVisible.value;
-      myComRef.value.showCom = !myComRef.value.showCom
+      // console.log(myComRef.value.showCom, "myComRef");
+      // isVisible.value = !isVisible.value;
+      // myComRef.value.showCom = !myComRef.value.showCom
+      console.log(dataInfo.value,"??????");
+      
     };
     const cancel = () => {
       console.log("cancel");

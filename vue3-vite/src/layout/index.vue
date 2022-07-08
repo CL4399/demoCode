@@ -190,6 +190,28 @@ export default defineComponent({
           },
         ],
       },
+      {
+        name: "nav 3",
+        id: "3",
+        children: [
+          {
+            name: "SubNav 3-1",
+            id: "3-1",
+            children: [
+              {
+                name: "option 1",
+                id: "3-1-1",
+                path: "/demo8",
+              },
+              {
+                name: "option 2",
+                id: "3-1-2",
+                path: "/demo9",
+              },
+            ],
+          },
+        ],
+      },
     ]);
     dataInfo.navItemInfo = routerInfo[0].children as [];
     dataInfo.breadcrumb[0] = routerInfo[0].name;

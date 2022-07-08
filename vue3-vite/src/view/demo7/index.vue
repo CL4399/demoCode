@@ -1,8 +1,8 @@
 <template>
     <div>
-        <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'id'">
+        <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'id'" :arrData="dataSource">
             <template v-slot:title>
-                <Button>新增</Button>
+                <Button @click="addNew">新增</Button>
                 <Button @click="del">删除</Button>
             </template>
             <template v-slot:address="{ data, text }">
@@ -124,9 +124,18 @@ export default defineComponent({
                     ],
                 },
             ],
-            selectedRowKeys: []
+            selectedRowKeys: [],
+            dataSource: [] as any[]
         })
-
+        for (let i = 0; i < 3; i++) {
+            dataInfo.dataSource.push({
+                key: i,
+                name: '胡彦祖' + i,
+                age: 42,
+                address: '西湖区湖底公园1号',
+                id: i
+            })
+        }
         const rowSelection: TableProps['rowSelection'] = {
             onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -137,7 +146,16 @@ export default defineComponent({
             console.log(dataInfo.selectedRowKeys, "del");
 
         }
-        return { ...toRefs(dataInfo), del, rowSelection }
+        const addNew = () => {
+            dataInfo.dataSource.push({
+                key: dataInfo.dataSource.length + 1,
+                name: '胡彦祖' + dataInfo.dataSource.length + 1,
+                age: 42,
+                address: '西湖区湖底公园1号',
+                id: dataInfo.dataSource.length + 1
+            })
+        }
+        return { ...toRefs(dataInfo), del, rowSelection, addNew }
     },
 })
 </script>

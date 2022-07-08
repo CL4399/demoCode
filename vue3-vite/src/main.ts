@@ -7,6 +7,7 @@ import { useCounterStore } from './store/index'
 import 'ant-design-vue/dist/antd.css';
 import '@arco-design/web-vue/dist/arco.css';
 import 'element-plus/dist/index.css'
+import tracing from 'web-tracing'
 
 import { message } from 'ant-design-vue';
 const pinia = createPinia()
@@ -23,7 +24,16 @@ const app = createApp(App)
 //     }
 // })
 
-app.use(router).use(pinia).mount('#app')
+app.use(router).use(pinia)
+// .use(tracing, {
+//     requestUrl: 'false',
+//     appName: 'chengxh',
+//     event: true,
+//     performance: true,
+//     pv: true,
+//     error: true,
+// })
+.mount('#app')
 app.config.globalProperties.$message = message;
 
 
