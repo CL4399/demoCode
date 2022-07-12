@@ -30,7 +30,7 @@ interface StrObj {
     [key: string]: any
 }
 const FormCom = defineComponent({
-    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Icons },
+    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker },
     props: {
         options: {
             type: Array,
