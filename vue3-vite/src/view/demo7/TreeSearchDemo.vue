@@ -1,9 +1,9 @@
 <template>
     <InputSearch v-model:value="searchStr" style="margin-bottom: 8px" placeholder="Search" @search="onSearchT" />
-    <div>
+    <div style="overflow: auto;height:77vh;">
         <Tree :expanded-keys="expandedKeys" :auto-expand-parent="autoExpandParent" :tree-data="treeData"
-            @select="onSelect" @check="onCheck" @dragleave="rightClick" :replaceFields="myReplaceFieldsT"
-            @expand="onExpand">
+            :showIcon="true" @select="onSelect" @check="onCheck" @dragleave="rightClick" :field-names="myReplaceFieldsT"
+            @expand="onExpand" :multiple="true" :checkable="true">
             <template #title="{ menuName }">
                 <span v-if="menuName.indexOf(searchValue) > -1">
                     {{ menuName.substr(0, menuName.indexOf(searchValue)) }}
@@ -12,6 +12,17 @@
                 </span>
                 <span v-else>{{ menuName }}</span>
             </template>
+            <template #switcherIcon="{ switcherCls }">
+                <PlusOutlined :class="switcherCls" />
+            </template>
+            <!-- <template #icon="{ key }">
+                <template>
+                    <AuditOutlined />
+                </template>
+                <template v-if="key === '402881f73e39afbd013e39b48d2e0003'">
+                    <SendOutlined />
+                </template>
+            </template> -->
         </Tree>
     </div>
 </template>
@@ -22,8 +33,9 @@ import { useRouter } from "vue-router"
 import { departmentList, powerList } from "./mock"
 import { getkeyList, getParentKeyT } from "./method"
 import { Tree, Input } from "ant-design-vue"
+import { DownOutlined, PlusOutlined, SendOutlined, AuditOutlined } from "@ant-design/icons-vue"
 export default defineComponent({
-    components: { Tree, InputSearch: Input.Search },
+    components: { Tree, InputSearch: Input.Search, DownOutlined, PlusOutlined, SendOutlined, AuditOutlined },
     setup(props: any) {
         const treeData = ref<any>([])
         const selectedKeys = ref()
@@ -39,9 +51,9 @@ export default defineComponent({
             data.forEach((item) => {
                 let parent = map[item.menuSuperId]
                 if (parent) {
-                    ; (parent.children || (parent.children = [])).push({ ...item, title: item.menuName, key: item.id, slots: { icon: "smile" } })
+                    ; (parent.children || (parent.children = [])).push({ ...item, title: item.menuName, key: item.id, })
                 } else {
-                    result.push({ ...item, title: item.menuName, key: item.id, slots: { icon: "smile" } })
+                    result.push({ ...item, title: item.menuName, key: item.id, })
                 }
             })
             return result
@@ -68,7 +80,7 @@ export default defineComponent({
         }
         let arrA = handleData(arr)
         treeData.value = arrA
-        const onSelect = (selectedKeys: string[], info: any) => {
+        const onSelect: any = (selectedKeys: string[], info: any) => {
             console.log(selectedKeys, "chooseNode")
             devInfoT.areaId = selectedKeys[selectedKeys.length - 1] as string
             areaId.value = selectedKeys[selectedKeys.length - 1] as string
@@ -136,7 +148,7 @@ export default defineComponent({
         const rightClick = (e: any) => {
             console.log(e, "rightClick")
         }
-        const onExpand = (expandedKeys: string[]) => {
+        const onExpand: any = (expandedKeys: string[]) => {
             console.log(expandedKeys, "onExpand")
             gData.expandedKeys = expandedKeys as string[]
             autoExpandParent.value = false

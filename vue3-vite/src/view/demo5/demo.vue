@@ -139,7 +139,6 @@ export default defineComponent({
       //     ],
       //   },
       // ]
-      replaceFields: { children: 'children', label: 'title', key: 'title', value: 'title' },
       selected: [],
     })
     const clickButton = () => {

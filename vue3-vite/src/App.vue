@@ -3,7 +3,9 @@
     <div class="color-item" @click="changeColor">
       <SettingOutlined style="font-size: 20px;"></SettingOutlined>
     </div>
-    <router-view />
+    <ConfigProvider :locale="locale">
+      <router-view />
+    </ConfigProvider>
   </div>
   <Drawer :visible="visible" class="custom-class" title="主题颜色" placement="right" @close="close">
     <color-picker v-model:pureColor="pureColor" :isWidget="visible" format="hex6" shape="circle" useType="pure"
@@ -18,14 +20,20 @@ import { SettingOutlined } from "@ant-design/icons-vue"
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 import { useCounterStore } from './store/index'
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+dayjs.locale('zh-cn');
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+
 export default {
   name: "app",
-  components: { SettingOutlined, ColorPicker, Drawer, Button },
+  components: { SettingOutlined, ColorPicker, Drawer, Button, ConfigProvider },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
       pureColor: "aqua",
       gradientColor: "linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%)",
-      visible: false
+      visible: false,
+      locale: zhCN
     })
     const store = useCounterStore()
     ConfigProvider.config({

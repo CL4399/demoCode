@@ -1,7 +1,6 @@
 <template>
     <div>
-        <FormCom :options="options" :rules="rules" @clickInputIcon="clickInputIcon">
-
+        <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm">
         </FormCom>
     </div>
 </template>
@@ -72,6 +71,7 @@ export default defineComponent({
                     type: "treeSelect",
                     searchValue: "searchValue",
                     filterTreeOption: filterTreeOption,
+                    treeCheckble: true,
                     treeData: [
                         {
                             title: 'Node1',
@@ -121,6 +121,12 @@ export default defineComponent({
                     type: "datePicker",
                     picker: "date"
                 },
+                {
+                    field: "timeAll",
+                    label: "日期",
+                    type: "rangePicker",
+                    picker: "date"
+                },
             ],
             rules: {
                 name: [
@@ -135,12 +141,17 @@ export default defineComponent({
         const clickInputIcon = (e: any, type: string) => {
             console.log(e, type, "clickInputIcon");
         }
+        const confirm = (e: any) => {
+            console.log(e, "confirm");
+
+        }
         return {
             ...toRefs(dataInfo),
-            clickInputIcon
+            clickInputIcon,
+            confirm
         }
     },
 })
 </script>
-<style lang='scss' scoped>
+<style lang='less' scoped>
 </style>
