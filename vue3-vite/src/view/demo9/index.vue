@@ -1,6 +1,8 @@
 <template>
     <div>
-        <FormCom :options="options" :rules="rules"></FormCom>
+        <FormCom :options="options" :rules="rules" @clickInputIcon="clickInputIcon">
+
+        </FormCom>
     </div>
 </template>
 <script lang='ts'>
@@ -8,11 +10,12 @@ import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import FormCom from "./FormCom"
 import type { FormProps } from "ant-design-vue"
+import { UserAddOutlined, UserOutlined, InfoCircleOutlined } from "@ant-design/icons-vue"
 interface Key {
     [key: string]: string
 }
 export default defineComponent({
-    components: { FormCom },
+    components: { FormCom, InfoCircleOutlined, UserOutlined },
     setup(props: any, { emit }: any) {
         const filterTreeOption = (input: string, treeNode: Key) => {
             if (treeNode.value.includes(input)) return treeNode.value.includes(input)
@@ -25,6 +28,16 @@ export default defineComponent({
                     label: "名称",
                     placeholder: "请输入名称",
                     type: "input",
+                    prefix: true,
+                    suffix: true,
+                    prefixIcon: UserOutlined,
+                    suffixIcon: InfoCircleOutlined
+                },
+                {
+                    field: "text",
+                    label: "备注",
+                    placeholder: "请输入备注",
+                    type: "textarea",
                 },
                 {
                     field: "age",
@@ -101,6 +114,13 @@ export default defineComponent({
                         },
                     ]
                 },
+                {
+                    field: "time",
+                    label: "日期",
+                    placeholder: "请选择日期",
+                    type: "datePicker",
+                    picker: "date"
+                },
             ],
             rules: {
                 name: [
@@ -112,8 +132,12 @@ export default defineComponent({
                 ],
             }
         })
+        const clickInputIcon = (e: any, type: string) => {
+            console.log(e, type, "clickInputIcon");
+        }
         return {
-            ...toRefs(dataInfo)
+            ...toRefs(dataInfo),
+            clickInputIcon
         }
     },
 })

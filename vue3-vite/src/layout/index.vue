@@ -1,22 +1,39 @@
 <template>
   <Layout id="layout-content">
-    <LayoutHeader class="header" style="background-color: #fff;">
-      <div class="logo" />
-      <Menu :multiple="false" theme="light" mode="horizontal" :style="{ lineHeight: '64px' }">
+    <LayoutHeader class="header" style="display: flex;"
+      :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
+      <div>
+        <Image :width="120" :src="img"></Image>
+      </div>
+      <Menu :multiple="false" theme="light" mode="horizontal" :style="{
+        lineHeight: '64px', backgroundColor: storeObj.primaryColor, marginLeft: '10px', color: storeObj.textColor
+      }" style="flex:9;border-bottom:none">
         <MenuItem :key="(item.id as string)" @click="chooseMenu(item)" v-for="item of routerInfo">{{ item.name }}
         </MenuItem>
       </Menu>
+      <div>
+        <Dropdown>
+          <div class="ant-dropdown-link" @click.prevent style="color:#000" :style="{ color: storeObj.textColor }">
+            {{ userInfo.userName }}
+            <DownOutlined />
+          </div>
+          <template #overlay>
+            <Menu>
+              <MenuItem>
+              <Button type="link">登出</Button>
+              </MenuItem>
+            </Menu>
+          </template>
+        </Dropdown>
+      </div>
     </LayoutHeader>
     <LayoutContent>
-      <Breadcrumb style="margin: 16px 0;">
-        <template v-for="item of breadcrumb">
-          <BreadcrumbItem v-show="item">{{ item }}</BreadcrumbItem>
-        </template>
-      </Breadcrumb>
-      <Layout style="background: #fff; height: 100%;">
-        <LayoutSider width="200" style="background: #fff;">
-          <Menu v-model:selectedKeys="selectedKeys2" v-model:openKeys="openKeys" mode="inline">
-            <SubMenu :key="(item.id as string)" v-for="item of navItemInfo" @click="chooseSubMenu(item)">
+      <Layout style="height: 100%;">
+        <LayoutSider width="200" :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
+          <Menu :style="{ backgroundColor: storeObj.primaryColor }" v-model:selectedKeys="selectedKeys2"
+            v-model:openKeys="openKeys" mode="inline">
+            <SubMenu :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }"
+              :key="(item.id as string)" v-for="item of navItemInfo" @click="chooseSubMenu(item)">
               <template #title>
                 <span>
                   <user-outlined />
@@ -29,6 +46,11 @@
           </Menu>
         </LayoutSider>
         <LayoutContent :style="{ padding: '24px', minHeight: '280px' }">
+          <Breadcrumb>
+            <template v-for="item of breadcrumb">
+              <BreadcrumbItem v-show="item">{{ item }}</BreadcrumbItem>
+            </template>
+          </Breadcrumb>
           <router-view></router-view>
         </LayoutContent>
       </Layout>
@@ -43,8 +65,9 @@ import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
+  DownOutlined
 } from "@ant-design/icons-vue";
-import { defineComponent, reactive, ref, toRefs, watch } from "vue";
+import { defineComponent, reactive, ref, toRefs, watch, computed } from "vue";
 import {
   Layout,
   LayoutHeader,
@@ -56,6 +79,9 @@ import {
   SubMenu,
   Breadcrumb,
   BreadcrumbItem,
+  Dropdown,
+  Button,
+  Image
 } from "ant-design-vue";
 import { useRouter, useRoute } from "vue-router";
 interface Obj {
@@ -72,6 +98,9 @@ interface RouterInfo {
     children?: Array<Obj>;
   }>;
 }
+import { useCounterStore } from '../store/index'
+import img from "../assets/logo.png"
+import demoApi from "../router/routerApi/demoApi"
 export default defineComponent({
   components: {
     UserOutlined,
@@ -87,6 +116,10 @@ export default defineComponent({
     SubMenu,
     Breadcrumb,
     BreadcrumbItem,
+    Dropdown,
+    DownOutlined,
+    Button,
+    Image
   },
   setup() {
     const router = useRouter(),
@@ -96,127 +129,14 @@ export default defineComponent({
       breadcrumb: [] as string[],
       selectedKeys1: ref<string[]>(["2"]),
       selectedKeys2: ref<string[]>(["1"]),
+      userInfo: { userName: "超级管理员" },
+      img: img
     });
-    let routerInfo: Array<RouterInfo> = reactive([
-      {
-        name: "nav 1",
-        id: "1",
-        children: [
-          {
-            name: "SubNav 1-1",
-            id: "1-1",
-            children: [
-              {
-                name: "option 1",
-                id: "1-1-1",
-                path: "/demo1",
-              },
-            ],
-          },
-          {
-            name: "SubNav 1-2",
-            id: "1-2",
-            children: [
-              {
-                name: "option 1",
-                id: "1-2-1",
-                path: "/demo2",
-              },
-            ],
-          },
-          {
-            name: "Canvas",
-            id: "1-3",
-            children: [
-              {
-                name: "demo1",
-                id: "1-3-1",
-                path: "/canvas-demo1",
-              },
-              {
-                name: "demo2",
-                id: "1-3-2",
-                path: "/canvas-demo2",
-              },
-              {
-                name: "demo3",
-                id: "1-3-3",
-                path: "/canvas-demo3",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: "nav 2",
-        id: "2",
-        children: [
-          {
-            name: "SubNav 2-1",
-            id: "2-1",
-            children: [
-              {
-                name: "option 1",
-                id: "2-1-1",
-                path: "/demo3",
-              },
-            ],
-          },
-          {
-            name: "SubNav 2-2",
-            id: "2-2",
-            children: [
-              {
-                name: "option 1",
-                id: "2-2-1",
-                path: "/demo4",
-              },
-              {
-                name: "demo5",
-                id: "2-2-2",
-                path: "/demo5",
-              },
-              {
-                name: "demo6",
-                id: "2-2-3",
-                path: "/demo6",
-              }, {
-                name: "demo7",
-                id: "2-2-4",
-                path: "/demo7",
-              },
-              {
-                name: "demo7",
-                id: "2-2-4",
-                path: "/demo7",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: "nav 3",
-        id: "3",
-        children: [
-          {
-            name: "SubNav 3-1",
-            id: "3-1",
-            children: [
-              {
-                name: "option 1",
-                id: "3-1-1",
-                path: "/demo8",
-              },
-              {
-                name: "option 2",
-                id: "3-1-2",
-                path: "/demo9",
-              },
-            ],
-          },
-        ],
-      },
-    ]);
+    let routerInfo: Array<RouterInfo> = reactive(demoApi);
+    const store = useCounterStore()
+    let storeObj = computed(() => {
+      return store
+    })
     dataInfo.navItemInfo = routerInfo[0].children as [];
     dataInfo.breadcrumb[0] = routerInfo[0].name;
     //@ts-ignore
@@ -235,14 +155,12 @@ export default defineComponent({
       dataInfo.breadcrumb[1] = el.name;
       dataInfo.breadcrumb[2] = "";
     };
-
     const chooseItem = (el: Obj) => {
       //@ts-ignore
       dataInfo.breadcrumb[2] = el.name;
       console.log(el, "chooseMenu");
       router.push(el.path as string);
     };
-
     return {
       openKeys: ref<string[]>(["sub1"]),
       routerInfo,
@@ -250,6 +168,7 @@ export default defineComponent({
       chooseMenu,
       chooseSubMenu,
       chooseItem,
+      storeObj
     };
   },
 });
@@ -265,7 +184,7 @@ export default defineComponent({
   width: 120px;
   height: 31px;
   margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.3);
+  /* background: rgba(255, 255, 255, 0.3); */
 }
 
 .ant-row-rtl #components-layout-demo-top-side .logo {
@@ -274,6 +193,6 @@ export default defineComponent({
 }
 
 .site-layout-background {
-  background: #fff;
+  /* background: #fff; */
 }
 </style>

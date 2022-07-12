@@ -22,7 +22,7 @@ function FormattedDate(props: any) {
 class Clock extends React.Component {
     constructor(props: any) {
         super(props);
-        this.state = { date: new Date(), arr: [1, 23, 123, 1231, 5123] };
+        this.state = { date: new Date(), arr: [1, 23, 123, 1231, 5123], num: 0 };
         // console.log('constructor');
     }
     /**
@@ -52,11 +52,14 @@ class Clock extends React.Component {
         // );
         return true;
     }
-    state: { date: Date; arr: number[] };
+    state: { date: Date; arr: number[]; num: number };
     timerID: any;
     // componentDidMount 在组件已经被渲染到 DOM 中后运行
     componentDidMount() {
         this.timerID = setInterval(() => this.tick(), 1000);
+        this.setState({
+            num: 1,
+        });
     }
 
     // 组件更新时
@@ -72,6 +75,7 @@ class Clock extends React.Component {
         this.setState({
             date: new Date(),
         });
+        console.log(this.state.num, '?????????????');
     }
     stopClick(event: Event) {
         event.preventDefault();

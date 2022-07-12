@@ -13,4 +13,19 @@ export default defineConfig({
     jsxFactory: 'h',
     jsxFragment: 'Fragment'
   },
+  // css: {
+  //   // css预处理器
+  //   preprocessorOptions: {
+  //     less: {
+  //       javascriptEnabled: true,
+  //       charset: false,
+  //       modifyVars: {
+  //         // "@primary-color": "red",
+  //         'primary-color': '#1DA57A',
+  //         'link-color': '#1DA57A',
+  //         'border-radius-base': '2px',
+  //       },
+  //     },
+  //   },
+  // },
 })

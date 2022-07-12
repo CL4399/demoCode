@@ -13,7 +13,9 @@ export const useCounterStore = defineStore('counter', {
             isAdmin: true,
             objInfo: {
                 name: "1"
-            } as object
+            } as object,
+            primaryColor: "#1890ff",
+            textColor: "#fff"
         }
     },
     getters: {
@@ -28,6 +30,12 @@ export const useCounterStore = defineStore('counter', {
         },
         setObj(obj: object) {
             this.objInfo = obj
+        },
+        setPrimaryColor(str: string) {
+            this.primaryColor = str
+        },
+        setTextColor(str: string) {
+            this.textColor = str
         }
     },
 })
