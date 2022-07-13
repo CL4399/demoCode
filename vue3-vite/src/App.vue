@@ -4,6 +4,13 @@
       <SettingOutlined style="font-size: 20px;"></SettingOutlined>
     </div>
     <ConfigProvider :locale="locale">
+      <!-- <router-view v-slot="{ Component, route }">
+        <transition name="app-main-fade" mode="out-in">
+          <keep-alive :max="10">
+            <component :is="Component" :key="route"></component>
+          </keep-alive>
+        </transition>
+      </router-view> -->
       <router-view />
     </ConfigProvider>
   </div>
@@ -30,7 +37,7 @@ export default {
   components: { SettingOutlined, ColorPicker, Drawer, Button, ConfigProvider },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
-      pureColor: "aqua",
+      pureColor: "4b4b4b",
       gradientColor: "linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%)",
       visible: false,
       locale: zhCN

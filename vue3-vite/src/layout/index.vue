@@ -1,8 +1,8 @@
 <template>
   <Layout id="layout-content">
-    <LayoutHeader class="header" style="display: flex;"
+    <LayoutHeader class="header" style="display:flex;align-items:center;justify-content:center;"
       :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
-      <div>
+      <div style="margin-top: 30px;">
         <Image :width="120" :src="img"></Image>
       </div>
       <Menu :multiple="false" theme="light" mode="horizontal" :style="{
@@ -11,7 +11,7 @@
         <MenuItem :key="(item.id as string)" @click="chooseMenu(item)" v-for="item of routerInfo">{{ item.name }}
         </MenuItem>
       </Menu>
-      <div>
+      <div style="margin: 5px 10px 0 0;">
         <Dropdown>
           <div class="ant-dropdown-link" @click.prevent style="color:#000" :style="{ color: storeObj.textColor }">
             {{ userInfo.userName }}
@@ -25,6 +25,13 @@
             </Menu>
           </template>
         </Dropdown>
+      </div>
+
+      <div>
+        <div @click="fullscreen">
+          <FullscreenOutlined v-if="!fullscreenis"></FullscreenOutlined>
+          <FullscreenExitOutlined v-else></FullscreenExitOutlined>
+        </div>
       </div>
     </LayoutHeader>
     <LayoutContent>
@@ -65,7 +72,9 @@ import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
-  DownOutlined
+  DownOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined
 } from "@ant-design/icons-vue";
 import { defineComponent, reactive, ref, toRefs, watch, computed } from "vue";
 import {
@@ -119,7 +128,9 @@ export default defineComponent({
     Dropdown,
     DownOutlined,
     Button,
-    Image
+    Image,
+    FullscreenExitOutlined,
+    FullscreenOutlined
   },
   setup() {
     const router = useRouter(),
@@ -130,7 +141,8 @@ export default defineComponent({
       selectedKeys1: ref<string[]>(["2"]),
       selectedKeys2: ref<string[]>(["1"]),
       userInfo: { userName: "超级管理员" },
-      img: img
+      img: img,
+      fullscreenis: false
     });
     let routerInfo: Array<RouterInfo> = reactive(demoApi);
     const store = useCounterStore()
@@ -161,6 +173,17 @@ export default defineComponent({
       console.log(el, "chooseMenu");
       router.push(el.path as string);
     };
+    const fullscreen = () => {
+      dataInfo.fullscreenis = !dataInfo.fullscreenis
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+
+    }
     return {
       openKeys: ref<string[]>(["sub1"]),
       routerInfo,
@@ -168,7 +191,8 @@ export default defineComponent({
       chooseMenu,
       chooseSubMenu,
       chooseItem,
-      storeObj
+      storeObj,
+      fullscreen
     };
   },
 });

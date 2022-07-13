@@ -10,15 +10,19 @@ import { useRouter } from 'vue-router'
 import FormCom from "./FormCom"
 import type { FormProps } from "ant-design-vue"
 import { UserAddOutlined, UserOutlined, InfoCircleOutlined } from "@ant-design/icons-vue"
+import com from "./com.vue"
 interface Key {
     [key: string]: string
 }
 export default defineComponent({
-    components: { FormCom, InfoCircleOutlined, UserOutlined },
+    components: { FormCom, InfoCircleOutlined, UserOutlined, com },
     setup(props: any, { emit }: any) {
         const filterTreeOption = (input: string, treeNode: Key) => {
             if (treeNode.value.includes(input)) return treeNode.value.includes(input)
             if (treeNode.title.includes(input)) return treeNode.title.includes(input)
+        }
+        const filterSelectOption = (input: string, option: any) => {
+            return String(option.label).toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
         let dataInfo = reactive({
             options: [
@@ -49,6 +53,8 @@ export default defineComponent({
                     label: "性别",
                     placeholder: "请选择性别",
                     type: "select",
+                    showSelectSearch: true,
+                    filterSelectOption: filterSelectOption,
                     options: [
                         { label: "男", value: 1 },
                         { label: "女", value: 2 },
@@ -126,7 +132,18 @@ export default defineComponent({
                     label: "日期",
                     type: "rangePicker",
                     picker: "date"
-                },
+                }, {
+                    field: "picFile",
+                    label: "图片",
+                    type: "upload",
+                    url: "localhost:2333"
+                }, {
+                    field: "switchValue",
+                    label: "开关",
+                    type: "switch",
+                    switchCheckedChildren: 1,
+                    switchUnCheckedChildren: 2,
+                }
             ],
             rules: {
                 name: [
@@ -136,7 +153,8 @@ export default defineComponent({
                         trigger: "change",
                     },
                 ],
-            }
+            },
+            demo: "com"
         })
         const clickInputIcon = (e: any, type: string) => {
             console.log(e, type, "clickInputIcon");
@@ -145,10 +163,13 @@ export default defineComponent({
             console.log(e, "confirm");
 
         }
+
+        let router = useRouter()
+
         return {
             ...toRefs(dataInfo),
             clickInputIcon,
-            confirm
+            confirm,
         }
     },
 })

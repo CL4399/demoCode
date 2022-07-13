@@ -1,12 +1,14 @@
 import { defineComponent, render, renderSlot, PropType, ref, reactive, h, createVNode, nextTick, toRaw } from "vue"
-import { Form, FormItem, Input, Select, Radio, RadioGroup, Button, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col } from "ant-design-vue"
+import { Form, FormItem, Input, Select, Radio, RadioGroup, Button, TreeSelect, Textarea, DatePicker, RangePicker, Upload, Switch, Row, Col } from "ant-design-vue"
 import type { Rule } from "ant-design-vue/es/form"
 import type { ChangeEventExtra, DefaultOptionType } from "../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect"
 import { RuleObject } from "ant-design-vue/lib/form"
+import { UploadOutlined } from "@ant-design/icons-vue"
 // 统一导入el-icon图标
 // import * as Icons from "@ant-design/icons-vue"
 // type SelectTree = PropType<(value: string, labelList: string[], extra: import("../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect").ChangeEventExtra) => void>
 type Picker = import("../../../node_modules/ant-design-vue/lib/vc-picker/interface").PickerMode
+type UploadRequestOption = import("../../../node_modules/ant-design-vue/lib/vc-upload/interface").UploadRequestOption
 interface FormOptions {
     field: string // 字段名称
     label: string // 字段描述
@@ -20,6 +22,8 @@ interface FormOptions {
 
     mode?: "multiple" | "tags" | "combobox" | undefined // select 组件的mode
     options?: { label: string; value: string | number; disabled?: boolean }[] // select 组件的数据
+    showSelectSearch?: boolean
+    filterSelectOption: (input: string, option: any) => boolean
 
     treeData?: any[] // 树形select 组件数据
     SHOW_PARENT?: string // 定义选中项回填的方式。TreeSelect.SHOW_ALL: 显示所有选中节点(包括父节点). TreeSelect.SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认只显示子节点.
@@ -28,13 +32,26 @@ interface FormOptions {
     treeCheckble?: Boolean // 是否显示树形选择组件的checkBox
 
     picker?: Picker // date | week | month | quarter | year 日期选择组件的类型
+
+    url: String // 文件上传路径
+    customRequest?: (options: UploadRequestOption) => void // 文件自定义上传方法
+    maxCount?: Number // 文件上传限制数量
+    listType?: String // 文件上传类型限制
+    multiple?: boolean // 是否支持多选 (按住ctrl)
+    fileName: string // 发到后台的文件参数名
+
+    switchDisabled?: boolean
+    switchSize?: "default" | "small" | undefined
+    switchCheckedChildren?: Element | string | number
+    switchUnCheckedChildren?: Element | string | number
 }
 interface StrObj {
     [key: string]: any
 }
 type Layout = "horizontal" | "vertical" | "inline"
+
 const FormCom = defineComponent({
-    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col },
+    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col, Upload, Button, Switch },
     props: {
         options: {
             type: Array,
@@ -87,6 +104,16 @@ const FormCom = defineComponent({
         }
         const panelChange = (e: any, info: string) => {
             formState[info] = e
+        }
+        const uploadChange = (e: any) => {
+            console.log(e, "uploadChange")
+            // e.fileList.forEach((item: any) => {
+
+            // })
+        }
+        const switchChange = (e: any, info: string) => {
+            formState[info] = e
+            console.log(e, "switchChange")
         }
         const confirm = () => {
             nextTick(async () => {
@@ -150,7 +177,20 @@ const FormCom = defineComponent({
                 return <Textarea onChange={(e) => changeInput(e, item.field)} placeholder={item.placeholder} value={formState[item.field]}></Textarea>
             }
             if (item.type == "select") {
-                return <Select value={formState[item.field]} mode={item.mode as "multiple" | "tags" | "SECRET_COMBOBOX_MODE_DO_NOT_USE" | undefined} style="width: 100%" placeholder={item.placeholder} options={item.options} onChange={(e) => selectChange(e, item.field)}></Select>
+                return (
+                    <Select
+                        value={formState[item.field]}
+                        filterOption={(input: string, option: any) => {
+                            return item.filterSelectOption(input, option)
+                        }}
+                        mode={item.mode as "multiple" | "tags" | "SECRET_COMBOBOX_MODE_DO_NOT_USE" | undefined}
+                        style="width: 100%"
+                        placeholder={item.placeholder}
+                        show-search={item.showSelectSearch}
+                        options={item.options}
+                        onChange={(e) => selectChange(e, item.field)}
+                    ></Select>
+                )
             }
             if (item.type == "radioGroup") {
                 return <RadioGroup value={formState[item.field]} options={item.options} onChange={(e) => radioChange(e, item.field)}></RadioGroup>
@@ -191,6 +231,37 @@ const FormCom = defineComponent({
             }
             if (item.type == "rangePicker") {
                 return <RangePicker picker={item.picker} value={formState[item.field]} onChange={(e) => panelChange(e, item.field)}></RangePicker>
+            }
+            if (item.type == "upload") {
+                return (
+                    <Upload file-list={formState[item.field]} name={item.fileName} multiple={item.multiple} max-count={item.maxCount} list-type={item.listType} action={item.url as string} onChange={uploadChange} customRequest={item.customRequest}>
+                        <Button>
+                            <UploadOutlined></UploadOutlined>上传
+                        </Button>
+                    </Upload>
+                )
+            }
+            if (item.type == "switch") {
+                return (
+                    <Switch
+                        checked={formState[item.field]}
+                        disabled={item.switchDisabled}
+                        size={item.switchSize}
+                        onChange={(e) => switchChange(e, item.field)}
+                        v-slots={{
+                            checkedChildren: (info: { value: string; title: string }) => {
+                                let SwitchCheckedChildren = item.switchCheckedChildren as any
+                                let dom: JSX.Element[] | JSX.Element | Element | "" = typeof SwitchCheckedChildren == "function" ? <SwitchCheckedChildren /> : <span>{item.switchCheckedChildren}</span>
+                                return dom
+                            },
+                            unCheckedChildren: (info: { value: string; title: string }) => {
+                                let SwitchUnCheckedChildren = item.switchUnCheckedChildren as any
+                                let dom: JSX.Element[] | JSX.Element | Element | "" = typeof SwitchUnCheckedChildren == "function" ? <SwitchUnCheckedChildren /> : <span>{item.switchUnCheckedChildren}</span>
+                                return dom
+                            },
+                        }}
+                    ></Switch>
+                )
             }
         }
         const formItemFun = () => {
