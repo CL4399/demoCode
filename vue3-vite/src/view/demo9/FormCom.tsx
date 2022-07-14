@@ -1,5 +1,5 @@
 import { defineComponent, render, renderSlot, PropType, ref, reactive, h, createVNode, nextTick, toRaw } from "vue"
-import { Form, FormItem, Input, Select, Radio, RadioGroup, Button, TreeSelect, Textarea, DatePicker, RangePicker, Upload, Switch, Row, Col } from "ant-design-vue"
+import { Form, FormItem, Input, Select, Radio, RadioGroup, Button, TreeSelect, Textarea, DatePicker, RangePicker, Upload, Switch, CheckboxGroup, Row, Col } from "ant-design-vue"
 import type { Rule } from "ant-design-vue/es/form"
 import type { ChangeEventExtra, DefaultOptionType } from "../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect"
 import { RuleObject } from "ant-design-vue/lib/form"
@@ -10,6 +10,7 @@ import { UploadOutlined } from "@ant-design/icons-vue"
 type Picker = import("../../../node_modules/ant-design-vue/lib/vc-picker/interface").PickerMode
 type UploadRequestOption = import("../../../node_modules/ant-design-vue/lib/vc-upload/interface").UploadRequestOption
 interface FormOptions {
+    /** input */
     field: string // 字段名称
     label: string // 字段描述
     prefix?: Boolean //是否 input 的 左插槽
@@ -20,19 +21,22 @@ interface FormOptions {
     type: string // formItem 类型
     rule?: RuleObject[] // 表单校验规则
 
+    /** select */
     mode?: "multiple" | "tags" | "combobox" | undefined // select 组件的mode
-    options?: { label: string; value: string | number; disabled?: boolean }[] // select 组件的数据
     showSelectSearch?: boolean
     filterSelectOption: (input: string, option: any) => boolean
 
+    /** treeSelect */
     treeData?: any[] // 树形select 组件数据
     SHOW_PARENT?: string // 定义选中项回填的方式。TreeSelect.SHOW_ALL: 显示所有选中节点(包括父节点). TreeSelect.SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认只显示子节点.
     filterTreeOption?: boolean | ((inputValue: string, treeNode: DefaultOptionType) => boolean) | undefined // 自定义树形选择组件的过滤方法
     searchValue?: string // 树形选择组件的搜索文字
     treeCheckble?: Boolean // 是否显示树形选择组件的checkBox
 
+    /** time-picker */
     picker?: Picker // date | week | month | quarter | year 日期选择组件的类型
 
+    /** upload */
     url: String // 文件上传路径
     customRequest?: (options: UploadRequestOption) => void // 文件自定义上传方法
     maxCount?: Number // 文件上传限制数量
@@ -40,10 +44,13 @@ interface FormOptions {
     multiple?: boolean // 是否支持多选 (按住ctrl)
     fileName: string // 发到后台的文件参数名
 
+    /** switch */
     switchDisabled?: boolean
     switchSize?: "default" | "small" | undefined
     switchCheckedChildren?: Element | string | number
     switchUnCheckedChildren?: Element | string | number
+
+    options?: { label: string; value: string | number; disabled?: boolean }[] // select/checkboxGroup 组件的数据
 }
 interface StrObj {
     [key: string]: any
@@ -51,7 +58,7 @@ interface StrObj {
 type Layout = "horizontal" | "vertical" | "inline"
 
 const FormCom = defineComponent({
-    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col, Upload, Button, Switch },
+    components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col, Upload, Button, Switch, CheckboxGroup },
     props: {
         options: {
             type: Array,
@@ -114,6 +121,17 @@ const FormCom = defineComponent({
         const switchChange = (e: any, info: string) => {
             formState[info] = e
             console.log(e, "switchChange")
+        }
+        const checkboxChange = (e: any, info: string) => {
+            formState[info] = e
+            console.log(e, "checkboxChange")
+        }
+        const filterTreeOption = (input: string, treeNode: StrObj) => {
+            if (treeNode.value.includes(input)) return treeNode.value.includes(input)
+            if (treeNode.title.includes(input)) return treeNode.title.includes(input)
+        }
+        const filterSelectOption = (input: string, option: any) => {
+            return String(option.label).toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
         const confirm = () => {
             nextTick(async () => {
@@ -181,7 +199,7 @@ const FormCom = defineComponent({
                     <Select
                         value={formState[item.field]}
                         filterOption={(input: string, option: any) => {
-                            return item.filterSelectOption(input, option)
+                            return item.filterSelectOption ? item.filterSelectOption(input, option) : filterSelectOption(input, option)
                         }}
                         mode={item.mode as "multiple" | "tags" | "SECRET_COMBOBOX_MODE_DO_NOT_USE" | undefined}
                         style="width: 100%"
@@ -210,7 +228,7 @@ const FormCom = defineComponent({
                         allow-clear
                         show-checked-strategy={item.SHOW_PARENT}
                         placeholder={item.placeholder}
-                        filterTreeNode={item.filterTreeOption}
+                        filterTreeNode={item.filterTreeOption ? item.filterTreeOption : filterTreeOption}
                         v-slots={{
                             title: (info: { value: string; title: string }) => {
                                 let dom: JSX.Element[] | JSX.Element = []
@@ -263,6 +281,9 @@ const FormCom = defineComponent({
                     ></Switch>
                 )
             }
+            if (item.type == "checkboxGroup") {
+                return <CheckboxGroup onChange={(e) => checkboxChange(e, item.field)} value={formState[item.field]} options={item.options} />
+            }
         }
         const formItemFun = () => {
             let renderDom: JSX.Element[] = []
@@ -274,7 +295,7 @@ const FormCom = defineComponent({
                 )
             })
             return (
-                <Form ref={(e) => refFun(e)} name={`custom-validation${props.id ? "-" + props.id : ""}`} model={formState} rules={rules} layout={props.formLayout as Layout}>
+                <Form ref={(e) => refFun(e)} label-col={{ span: 4 }} wrapper-col={{ span: 14 }} name={`custom-validation${props.id ? "-" + props.id : ""}`} model={formState} rules={rules} layout={props.formLayout as Layout}>
                     {renderDom}
                     <div style={"width:100%;display:flex;justify-content: flex-end;"}>
                         <FormItem>

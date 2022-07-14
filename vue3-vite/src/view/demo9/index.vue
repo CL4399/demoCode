@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm">
-        </FormCom>
-    </div>
+    <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm">
+    </FormCom>
 </template>
 <script lang='ts'>
 import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
@@ -141,8 +139,17 @@ export default defineComponent({
                     field: "switchValue",
                     label: "开关",
                     type: "switch",
-                    switchCheckedChildren: 1,
-                    switchUnCheckedChildren: 2,
+                    switchCheckedChildren: "开",
+                    switchUnCheckedChildren: "关",
+                }, {
+                    field: "check",
+                    label: "多选",
+                    type: "checkboxGroup",
+                    options: [
+                        { label: "IT", value: 1 },
+                        { label: "work", value: 2 },
+                        { label: "order", value: 3, disabled: true },
+                    ],
                 }
             ],
             rules: {
@@ -150,11 +157,12 @@ export default defineComponent({
                     {
                         required: true,
                         message: "请输入名称",
-                        trigger: "change",
+                        trigger: "blur",// change|blur
                     },
                 ],
             },
-            demo: "com"
+            demo: "com",
+
         })
         const clickInputIcon = (e: any, type: string) => {
             console.log(e, type, "clickInputIcon");

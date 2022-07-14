@@ -62,7 +62,8 @@
         </LayoutContent>
       </Layout>
     </LayoutContent>
-    <LayoutFooter style="text-align: center;">
+    <LayoutFooter style="text-align: center;"
+      :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
       Ant Design ©2018 Created by Ant UED
     </LayoutFooter>
   </Layout>
