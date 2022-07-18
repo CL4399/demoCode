@@ -10,6 +10,7 @@
 <script lang='ts' setup>
 import { reactive, ref, toRefs, provide, defineComponent, getCurrentInstance, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import ComVue from './com.vue';
 // const internalInstance = getCurrentInstance()
 // const trace = internalInstance?.appContext.config.globalProperties.$trace
 // interface Str {
@@ -127,6 +128,13 @@ type T3 = TypeName<() => void>;  // "function"
 type T4 = TypeName<string[]>;  // "object"
 type T5 = TypeName<1>;  // "number"
 type T6 = TypeName<undefined>;  // "undefined"
+
+let arr = [["name", "jack"], ["age", "12"]]
+// Object.fromEntries() 方法把键值对列表转换为一个对象
+console.log(Object.fromEntries(arr), "???????????????????");
+
+
+
 
 </script>
 <style lang='scss' scoped>

@@ -47,7 +47,7 @@ const routes = [
       }, {
         path: "/demo7",
         name: "demo7",
-        component: () => import("../view/demo7/index.vue"),
+        component: () => import("../view/demo7/TreeSearchDemo.vue"),
       }, {
         path: "/demo8",
         name: "demo8",
@@ -56,11 +56,6 @@ const routes = [
         path: "/demo9",
         name: "demo9",
         component: () => import("../view/demo9/index.vue"),
-      },
-      {
-        path: "/demo7",
-        name: "demo7",
-        component: () => import("../view/demo7/TreeSearchDemo.vue"),
       },
       {
         path: "/canvas-demo1",

@@ -6,43 +6,51 @@ const demoApi = [
             {
                 name: "SubNav 1-1",
                 id: "1-1",
+                icon: "area-chart-outlined",
                 children: [
                     {
                         name: "option 1",
                         id: "1-1-1",
                         path: "/demo1",
+                        icon: "stock-outlined"
                     },
                 ],
             },
             {
                 name: "SubNav 1-2",
                 id: "1-2",
+                icon:"box-plot-outlined",
                 children: [
                     {
                         name: "option 1",
                         id: "1-2-1",
                         path: "/demo2",
+                        icon:"rader-chart-outlined"
                     },
                 ],
             },
             {
                 name: "Canvas",
                 id: "1-3",
+                icon:"fall-outlined",
                 children: [
                     {
                         name: "demo1",
                         id: "1-3-1",
                         path: "/canvas-demo1",
+                        icon:"android-outlined"
                     },
                     {
                         name: "demo2",
                         id: "1-3-2",
                         path: "/canvas-demo2",
+                        icon:"apple-outlined"
                     },
                     {
                         name: "demo3",
                         id: "1-3-3",
                         path: "/canvas-demo3",
+                        icon:"windows-outlined"
                     },
                 ],
             },
@@ -55,36 +63,43 @@ const demoApi = [
             {
                 name: "SubNav 2-1",
                 id: "2-1",
+                icon:"ie-outlined",
                 children: [
                     {
-                        name: "option 1",
+                        name: "Tailwindcss",
                         id: "2-1-1",
                         path: "/demo3",
+                        icon:"chrome-outlined"
                     },
                 ],
             },
             {
                 name: "SubNav 2-2",
                 id: "2-2",
+                icon:"youtube-outlined",
                 children: [
                     {
-                        name: "option 1",
+                        name: "Button",
                         id: "2-2-1",
                         path: "/demo4",
+                        icon:"html5-outlined"
                     },
                     {
-                        name: "demo5",
+                        name: "Modal",
                         id: "2-2-2",
                         path: "/demo5",
+                        icon:"html5-outlined"
                     },
                     {
-                        name: "demo6",
+                        name: "Role_Authority",
                         id: "2-2-3",
                         path: "/demo6",
+                        icon:"html5-outlined"
                     }, {
-                        name: "demo7",
+                        name: "TreeSearch",
                         id: "2-2-4",
                         path: "/demo7",
+                        icon:"html5-outlined"
                     },
                 ],
             },
@@ -97,16 +112,19 @@ const demoApi = [
             {
                 name: "SubNav 3-1",
                 id: "3-1",
+                icon:"strikethrough-outlined",
                 children: [
                     {
-                        name: "option 1",
+                        name: "Test",
                         id: "3-1-1",
                         path: "/demo8",
+                        icon:"font-colors-outlined"
                     },
                     {
-                        name: "option 2",
+                        name: "FormCom",
                         id: "3-1-2",
                         path: "/demo9",
+                        icon:"font-colors-outlined"
                     },
                 ],
             },

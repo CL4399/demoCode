@@ -5,6 +5,11 @@
       <div style="margin-top: 30px;">
         <Image :width="120" :src="img"></Image>
       </div>
+      <Button type="primary" style="margin-bottom: 16px" @click="toggleCollapsed">
+        <MenuUnfoldOutlined :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }"
+          v-if="collapsed" />
+        <MenuFoldOutlined :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }" v-else />
+      </Button>
       <Menu :multiple="false" theme="light" mode="horizontal" :style="{
         lineHeight: '64px', backgroundColor: storeObj.primaryColor, marginLeft: '10px', color: storeObj.textColor
       }" style="flex:9;border-bottom:none">
@@ -26,7 +31,6 @@
           </template>
         </Dropdown>
       </div>
-
       <div>
         <div @click="fullscreen">
           <FullscreenOutlined v-if="!fullscreenis"></FullscreenOutlined>
@@ -36,18 +40,23 @@
     </LayoutHeader>
     <LayoutContent>
       <Layout style="height: 100%;">
-        <LayoutSider width="200" :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
+        <LayoutSider width="200" :collapsed="collapsed"
+          :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }">
           <Menu :style="{ backgroundColor: storeObj.primaryColor }" v-model:selectedKeys="selectedKeys2"
             v-model:openKeys="openKeys" mode="inline">
             <SubMenu :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }"
               :key="(item.id as string)" v-for="item of navItemInfo" @click="chooseSubMenu(item)">
               <template #title>
                 <span>
-                  <user-outlined />
-                  {{ item.name }}
+                  <component :is="item.icon ? item.icon : ''"
+                    :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }" />
+                  <span v-if="!collapsed">{{ item.name }}</span>
                 </span>
               </template>
-              <MenuItem v-for="i of item.children" :key="(i.id as string)" @click="chooseItem(i)">{{ i.name }}
+              <MenuItem v-for="i of item.children" :key="(i.id as string)" @click="chooseItem(i)">
+              <component :is="item.icon ? item.icon : ''"
+                :style="{ backgroundColor: storeObj.primaryColor, color: storeObj.textColor }" />
+              {{ i.name }}
               </MenuItem>
             </SubMenu>
           </Menu>
@@ -69,14 +78,7 @@
   </Layout>
 </template>
 <script lang="ts">
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-  DownOutlined,
-  FullscreenExitOutlined,
-  FullscreenOutlined
-} from "@ant-design/icons-vue";
+import Icon from "@ant-design/icons-vue"
 import { defineComponent, reactive, ref, toRefs, watch, computed } from "vue";
 import {
   Layout,
@@ -91,21 +93,23 @@ import {
   BreadcrumbItem,
   Dropdown,
   Button,
-  Image
+  Image,
 } from "ant-design-vue";
 import { useRouter, useRoute } from "vue-router";
 interface Obj {
-  name: String;
-  id: String;
-  path?: String;
+  name: string;
+  id: string;
+  path?: string;
 }
 interface RouterInfo {
   name: string;
-  id: String;
+  id: string;
+  icon?: string;
   children?: Array<{
-    name: String;
-    id: String;
+    name: string;
+    id: string;
     children?: Array<Obj>;
+    icon?: string;
   }>;
 }
 import { useCounterStore } from '../store/index'
@@ -113,9 +117,6 @@ import img from "../assets/logo.png"
 import demoApi from "../router/routerApi/demoApi"
 export default defineComponent({
   components: {
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined,
     Layout,
     LayoutHeader,
     LayoutFooter,
@@ -127,11 +128,9 @@ export default defineComponent({
     Breadcrumb,
     BreadcrumbItem,
     Dropdown,
-    DownOutlined,
     Button,
     Image,
-    FullscreenExitOutlined,
-    FullscreenOutlined
+    Icon
   },
   setup() {
     const router = useRouter(),
@@ -143,7 +142,11 @@ export default defineComponent({
       selectedKeys2: ref<string[]>(["1"]),
       userInfo: { userName: "超级管理员" },
       img: img,
-      fullscreenis: false
+      fullscreenis: false,
+      collapsed: false,
+      selectedKeys: ['1'],
+      openKeys: ['sub1'],
+      preOpenKeys: ['sub1'],
     });
     let routerInfo: Array<RouterInfo> = reactive(demoApi);
     const store = useCounterStore()
@@ -156,22 +159,24 @@ export default defineComponent({
     watch(dataInfo.navItem, (newV) => {
       console.log(newV, "Watch");
     });
+    watch(dataInfo.openKeys, (newV) => {
+      console.log(newV, "Watch");
+      dataInfo.preOpenKeys = newV;
+    });
     const chooseMenu = (el: RouterInfo) => {
-      console.log(el, "chooseMenu");
       dataInfo.navItemInfo = el.children as [];
       dataInfo.breadcrumb[0] = el.name;
       dataInfo.breadcrumb[1] = "";
       dataInfo.breadcrumb[2] = "";
+      console.log(el, "chooseMenu");
     };
     const chooseSubMenu = (el: RouterInfo) => {
-      console.log(el, "chooseMenu");
       dataInfo.breadcrumb[1] = el.name;
-      dataInfo.breadcrumb[2] = "";
+      console.log(el, "chooseSubMenu");
     };
     const chooseItem = (el: Obj) => {
-      //@ts-ignore
-      dataInfo.breadcrumb[2] = el.name;
-      console.log(el, "chooseMenu");
+      dataInfo.breadcrumb[3] = el.name;
+      console.log(dataInfo.breadcrumb, "chooseItem");
       router.push(el.path as string);
     };
     const fullscreen = () => {
@@ -185,15 +190,20 @@ export default defineComponent({
       }
 
     }
+    const toggleCollapsed = () => {
+      dataInfo.collapsed = !dataInfo.collapsed;
+      dataInfo.openKeys = dataInfo.collapsed ? [] : dataInfo.preOpenKeys;
+    };
+
     return {
-      openKeys: ref<string[]>(["sub1"]),
       routerInfo,
       ...toRefs(dataInfo),
       chooseMenu,
       chooseSubMenu,
       chooseItem,
       storeObj,
-      fullscreen
+      fullscreen,
+      toggleCollapsed,
     };
   },
 });

@@ -13,7 +13,7 @@ import 'ant-design-vue/dist/antd.variable.min.css';
 // import 'ant-design-vue/es/message/style/css';
 import { message } from 'ant-design-vue';
 // import "./assets/css/antLess.less"
-
+import * as Icons from '@ant-design/icons-vue'
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -28,7 +28,10 @@ const app = createApp(App)
 
 //     }
 // })
-
+const icons: any = Icons
+for (const i in icons) {
+  app.component(i, icons[i])
+}
 app.use(router).use(pinia)
     // .use(tracing, {
     //     requestUrl: 'false',
