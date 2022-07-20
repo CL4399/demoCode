@@ -147,6 +147,7 @@ export default defineComponent({
       selectedKeys: ['1'],
       openKeys: ['sub1'],
       preOpenKeys: ['sub1'],
+      item: ""
     });
     let routerInfo: Array<RouterInfo> = reactive(demoApi);
     const store = useCounterStore()
@@ -155,14 +156,19 @@ export default defineComponent({
     })
     dataInfo.navItemInfo = routerInfo[0].children as [];
     dataInfo.breadcrumb[0] = routerInfo[0].name;
-    //@ts-ignore
-    watch(dataInfo.navItem, (newV) => {
+
+
+    watch(() => dataInfo.item, (newV) => {
       console.log(newV, "Watch");
     });
+
     watch(dataInfo.openKeys, (newV) => {
       console.log(newV, "Watch");
       dataInfo.preOpenKeys = newV;
     });
+
+
+
     const chooseMenu = (el: RouterInfo) => {
       dataInfo.navItemInfo = el.children as [];
       dataInfo.breadcrumb[0] = el.name;

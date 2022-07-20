@@ -2,6 +2,7 @@
   <div v-show="showCom">
     组件
   </div>
+  <div></div>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, toRefs, provide, defineComponent } from "vue";

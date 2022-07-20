@@ -1,12 +1,11 @@
-import { defineComponent, render, renderSlot, PropType, ref, reactive, h, createVNode, nextTick, toRaw } from "vue"
+import { defineComponent, reactive, nextTick } from "vue"
+// 按需引入组件
 import { Form, FormItem, Input, Select, Radio, RadioGroup, Button, TreeSelect, Textarea, DatePicker, RangePicker, Upload, Switch, CheckboxGroup, Row, Col } from "ant-design-vue"
+//引入组件所需类型
 import type { Rule } from "ant-design-vue/es/form"
-import type { ChangeEventExtra, DefaultOptionType } from "../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect"
+import type { DefaultOptionType } from "../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect"
 import { RuleObject } from "ant-design-vue/lib/form"
 import { UploadOutlined } from "@ant-design/icons-vue"
-// 统一导入el-icon图标
-// import * as Icons from "@ant-design/icons-vue"
-// type SelectTree = PropType<(value: string, labelList: string[], extra: import("../../../node_modules/ant-design-vue/lib/vc-tree-select/TreeSelect").ChangeEventExtra) => void>
 type Picker = import("../../../node_modules/ant-design-vue/lib/vc-picker/interface").PickerMode
 type UploadRequestOption = import("../../../node_modules/ant-design-vue/lib/vc-upload/interface").UploadRequestOption
 interface FormOptions {
@@ -56,7 +55,6 @@ interface StrObj {
     [key: string]: any
 }
 type Layout = "horizontal" | "vertical" | "inline"
-
 const FormCom = defineComponent({
     components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col, Upload, Button, Switch, CheckboxGroup },
     props: {
@@ -89,8 +87,8 @@ const FormCom = defineComponent({
         const refFun = (e: any) => {
             dataInfo[`${props.id}`] = e
         }
-        const changeInput = (e: any, info: string) => {
-            formState[info] = e.target.value
+        const changeInput = (e: Event, info: string) => {
+            formState[info] = (e.target as HTMLInputElement).value
             console.log(formState, "formState")
         }
         const selectChange = (e: any, info: string) => {
@@ -99,13 +97,13 @@ const FormCom = defineComponent({
         }
         const radioChange = (e: any, info: string) => {
             formState[info] = e.target.value
-            console.log(e.target.value, "radioChange")
+            console.log(e.target.vlaue, "radioChange")
         }
-        const changeTreeSelect = (e: any, info: string) => {
+        const changeTreeSelect = (e: string, info: string) => {
             console.log(e, "form", formState)
             formState[info] = e
         }
-        const searchChange = (e: any, info: string) => {
+        const searchChange = (e: string, info: string) => {
             console.log(e, "form", info)
             formState[info] = e
         }
@@ -115,7 +113,6 @@ const FormCom = defineComponent({
         const uploadChange = (e: any) => {
             console.log(e, "uploadChange")
             // e.fileList.forEach((item: any) => {
-
             // })
         }
         const switchChange = (e: any, info: string) => {
@@ -173,16 +170,12 @@ const FormCom = defineComponent({
                         placeholder={item.placeholder}
                         value={formState[item.field]}
                         v-slots={{
-                            prefix: (info: { value: string; title: string }) => {
+                            prefix: () => {
                                 let PrefixIconItem = item.prefixIcon as any
-                                // let Icon = require("@ant-design/icons-vue")["UserOutlined"]
-                                // let IconS: any = (await import("@ant-design/icons-vue"))["UserOutlined"]
-                                // console.log(IconS, "IconS")
-
                                 let dom: JSX.Element[] | JSX.Element | Element | "" = item.prefix ? <PrefixIconItem onClick={(e: Event) => clickInputIcon(e, "prefix")} /> : ""
                                 return dom
                             },
-                            suffix: (info: { value: string; title: string }) => {
+                            suffix: () => {
                                 let SuffixIconItem = item.suffixIcon as any
                                 let dom: JSX.Element[] | JSX.Element | "" = item.suffix ? <SuffixIconItem onClick={(e: Event) => clickInputIcon(e, "suffix")} /> : ""
                                 return dom

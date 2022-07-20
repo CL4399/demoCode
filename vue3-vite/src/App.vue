@@ -4,13 +4,6 @@
       <SettingOutlined style="font-size: 20px;"></SettingOutlined>
     </div>
     <ConfigProvider :locale="locale">
-      <!-- <router-view v-slot="{ Component, route }">
-        <transition name="app-main-fade" mode="out-in">
-          <keep-alive :max="10">
-            <component :is="Component" :key="route"></component>
-          </keep-alive>
-        </transition>
-      </router-view> -->
       <router-view />
     </ConfigProvider>
   </div>
@@ -23,7 +16,6 @@
 <script lang='ts'>
 import { reactive, ref, toRefs, provide, computed } from 'vue';
 import { ConfigProvider, Drawer, Button } from 'ant-design-vue';
-import { SettingOutlined } from "@ant-design/icons-vue"
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 import { useCounterStore } from './store/index'
@@ -34,7 +26,7 @@ import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 export default {
   name: "app",
-  components: { SettingOutlined, ColorPicker, Drawer, Button, ConfigProvider },
+  components: { ColorPicker, Drawer, Button, ConfigProvider },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
       pureColor: "4b4b4b",
@@ -54,7 +46,6 @@ export default {
     const close = () => {
       dataInfo.visible = false
     }
-
     const confirm = () => {
       store.setPrimaryColor(dataInfo.pureColor)
       ConfigProvider.config({

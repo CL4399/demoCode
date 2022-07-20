@@ -1,6 +1,9 @@
 <template>
     <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm">
     </FormCom>
+    <div>
+        <ComC></ComC>
+    </div>
 </template>
 <script lang='ts'>
 import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
@@ -9,11 +12,12 @@ import FormCom from "./FormCom"
 import type { FormProps } from "ant-design-vue"
 import { UserAddOutlined, UserOutlined, InfoCircleOutlined } from "@ant-design/icons-vue"
 import com from "./com.vue"
+import ComC from "./com"
 interface Key {
     [key: string]: string
 }
 export default defineComponent({
-    components: { FormCom, InfoCircleOutlined, UserOutlined, com },
+    components: { FormCom, InfoCircleOutlined, UserOutlined, com, ComC },
     setup(props: any, { emit }: any) {
         const filterTreeOption = (input: string, treeNode: Key) => {
             if (treeNode.value.includes(input)) return treeNode.value.includes(input)
@@ -162,7 +166,6 @@ export default defineComponent({
                 ],
             },
             demo: "com",
-
         })
         const clickInputIcon = (e: any, type: string) => {
             console.log(e, type, "clickInputIcon");
@@ -171,9 +174,21 @@ export default defineComponent({
             console.log(e, "confirm");
 
         }
-
+        const parseArea = async () => {
+            let result: any[] = []
+            await myAmapFun().then((res) => {
+                console.log(res, 'res111');
+                result.push(res)
+            })
+            console.log(result, 'res222');
+        }
+        const myAmapFun = () => {
+            return new Promise((resolve, reject) => {
+                resolve("123")
+            })
+        }
+        parseArea()
         let router = useRouter()
-
         return {
             ...toRefs(dataInfo),
             clickInputIcon,
