@@ -189,6 +189,48 @@ export default defineComponent({
         }
         parseArea()
         let router = useRouter()
+
+        const isObject = (target: any) => (typeof target === "object" || typeof target === "function") && target !== null;
+        // 深克隆
+        function deepClone(target: any, map = new WeakMap()) {
+            if (map.get(target)) {
+                return target;
+            }
+            // 获取当前值的构造函数：获取它的类型
+            let constructor = target.constructor;
+            // 检测当前对象target是否与正则、日期格式对象匹配
+            if (/^(RegExp|Date)$/i.test(constructor.name)) {
+                // 创建一个新的特殊对象(正则类/日期类)的实例
+                return new constructor(target);
+            }
+            if (isObject(target)) {
+                map.set(target, true);  // 为循环引用的对象做标记
+                const cloneTarget: any = Array.isArray(target) ? [] : {};
+                for (let prop in target) {
+                    if (target.hasOwnProperty(prop)) {
+                        cloneTarget[prop] = deepClone(target[prop], map);
+                    }
+                }
+                return cloneTarget;
+            } else {
+                return target;
+            }
+        }
+
+        let obj = {
+            name: "123",
+            fun: () => {
+                return 123
+            },
+            time: new Date()
+        }
+
+        let obj2 = deepClone(obj)
+        console.log(obj, obj2, "deepClone");
+
+
+
+
         return {
             ...toRefs(dataInfo),
             clickInputIcon,

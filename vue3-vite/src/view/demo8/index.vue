@@ -6,6 +6,7 @@
     <div ref="demo5">555</div>
     <div ref="demo6">666</div>
     <!-- <button data-warden-container value="xxxxxx" ref="bun">222</button> -->
+    <ComVue></ComVue>
 </template>
 <script lang='ts' setup>
 import { reactive, ref, toRefs, provide, defineComponent, getCurrentInstance, onMounted } from 'vue'
@@ -132,9 +133,6 @@ type T6 = TypeName<undefined>;  // "undefined"
 let arr = [["name", "jack"], ["age", "12"]]
 // Object.fromEntries() 方法把键值对列表转换为一个对象
 console.log(Object.fromEntries(arr), "???????????????????");
-
-
-
 
 </script>
 <style lang='scss' scoped>

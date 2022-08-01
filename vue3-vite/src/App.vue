@@ -14,7 +14,7 @@
   </Drawer>
 </template>
 <script lang='ts'>
-import { reactive, ref, toRefs, provide, computed } from 'vue';
+import { reactive, ref, toRefs, provide, computed, onMounted } from 'vue';
 import { ConfigProvider, Drawer, Button } from 'ant-design-vue';
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
@@ -55,8 +55,8 @@ export default {
       });
       const IsWhiteFooter = decideTxtColor(dataInfo.pureColor);
       console.log(IsWhiteFooter, 'IsWhiteFooter');
-
       store.setTextColor(IsWhiteFooter ? "#fff" : "#000")
+      sessionStorage.setItem("pureColor", dataInfo.pureColor)
     }
     // 根据色彩值判断，深色true 浅色false
     let decideTxtColor = (colorHexdecimal: any) => {
@@ -83,6 +83,13 @@ export default {
       let str = '000000' + (0xFFFFFF - oldColor).toString(16);
       return '#' + str.substring(str.length - 6, str.length);
     }
+    onMounted(() => {
+      window.addEventListener("load", (e) => {
+        dataInfo.pureColor = sessionStorage.getItem("pureColor") as string
+        confirm()
+        console.log(sessionStorage.getItem("pureColor"), "页面刷新之后");
+      });
+    })
     return { ...toRefs(dataInfo), changeColor, close, confirm };
   },
 };
