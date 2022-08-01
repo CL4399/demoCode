@@ -13,7 +13,6 @@
     <div>{{ resList }}</div>
 </template>
 <script lang='ts'>
-import { fi } from 'element-plus/es/locale'
 import { reactive, ref, toRefs, provide, defineComponent, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 export default defineComponent({
