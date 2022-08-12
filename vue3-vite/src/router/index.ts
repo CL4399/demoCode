@@ -47,7 +47,7 @@ const routes = [
       }, {
         path: "/demo7",
         name: "demo7",
-        component: () => import("../view/demo7/TreeSearchDemo.vue"),
+        component: () => import("../view/demo7/index.vue"),
       }, {
         path: "/demo8",
         name: "demo8",
