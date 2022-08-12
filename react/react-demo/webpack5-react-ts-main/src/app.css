@@ -1,0 +1,5 @@
+@import "antd/dist/antd.css";
+h2 {
+  color: red;
+  transform: translateY(100px);
+}

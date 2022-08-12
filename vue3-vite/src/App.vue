@@ -1,12 +1,19 @@
 <template>
-  <div>
+  <div class="app">
     <div class="color-item" @click="changeColor">
       <SettingOutlined style="font-size: 20px;"></SettingOutlined>
     </div>
     <ConfigProvider :locale="locale">
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition :name="transitionName">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </ConfigProvider>
   </div>
+
+
+
   <Drawer :visible="visible" class="custom-class" title="主题颜色" placement="right" @close="close">
     <color-picker v-model:pureColor="pureColor" :isWidget="visible" format="hex6" shape="circle" useType="pure"
       v-model:gradientColor="gradientColor" />
@@ -14,7 +21,7 @@
   </Drawer>
 </template>
 <script lang='ts'>
-import { reactive, ref, toRefs, provide, computed, onMounted } from 'vue';
+import { reactive, ref, toRefs, provide, computed, onMounted, onBeforeMount } from 'vue';
 import { ConfigProvider, Drawer, Button } from 'ant-design-vue';
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
@@ -23,13 +30,14 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 dayjs.locale('zh-cn');
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import { useRouter, useRoute, onBeforeRouteUpdate ,onBeforeRouteLeave} from "vue-router"
 
 export default {
   name: "app",
   components: { ColorPicker, Drawer, Button, ConfigProvider },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
-      pureColor: "4b4b4b",
+      pureColor: "#dedede",
       gradientColor: "linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%)",
       visible: false,
       locale: zhCN
@@ -83,25 +91,61 @@ export default {
       let str = '000000' + (0xFFFFFF - oldColor).toString(16);
       return '#' + str.substring(str.length - 6, str.length);
     }
+    const route = useRouter()
+
+    console.log(route.currentRoute.value.name, "router");
+    const isname = ref(route.currentRoute.value.name)
+    const transitionName = ref('slide-left')
+    let router = useRoute()
+
     onMounted(() => {
+      store.setPrimaryColor(dataInfo.pureColor)
       window.addEventListener("load", (e) => {
-        dataInfo.pureColor = sessionStorage.getItem("pureColor") as string
+        dataInfo.pureColor = sessionStorage.getItem("pureColor") ? sessionStorage.getItem("pureColor") as string : '#dedede'
         confirm()
         console.log(sessionStorage.getItem("pureColor"), "页面刷新之后");
+        // router.replace({ path: sessionStorage.getItem("nowPath") as string })
       });
+
+      // window.addEventListener("beforeunload", () => {
+      //   sessionStorage.setItem("nowPath", router.currentRoute.value.path)
+      //   console.log(router.currentRoute.value, "router");
+      // })
+
+      console.log(router, route, "useRoute");
+
     })
-    return { ...toRefs(dataInfo), changeColor, close, confirm };
+
+    onBeforeRouteUpdate((to) => {
+      console.log(to, "onBeforeRouteUpdate");
+      // const { index: toIndex } = to.meta
+      // const { index: fromIndex } = from.meta
+      // console.log(toIndex, fromIndex, toIndex < fromIndex)
+      // transitionName.value = toIndex < fromIndex ? 'slide-right' : 'slide-left'
+      // console.log(transitionName.value)
+      // isname.value = to.name
+    })
+
+    onBeforeRouteLeave((to)=>{
+      console.log(to,"onBeforeRouteLeave");
+      
+    })
+
+
+
+
+
+
+    return { ...toRefs(dataInfo), changeColor, close, confirm, transitionName };
   },
 };
 </script>
 <style lang="less" scoped>
-#app {
+.app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 
 .color-item {
@@ -115,5 +159,35 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  // position: absolute;
+}
+
+.slide-right-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 </style>

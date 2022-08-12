@@ -1,17 +1,14 @@
 <template>
     <div ref="demo1">111</div>
-    <div ref="demo2">222</div>
-    <div ref="demo3">333</div>
-    <div ref="demo4">444</div>
-    <div ref="demo5">555</div>
-    <div ref="demo6">666</div>
     <!-- <button data-warden-container value="xxxxxx" ref="bun">222</button> -->
     <ComVue></ComVue>
+    <FileSaver></FileSaver>
 </template>
 <script lang='ts' setup>
 import { reactive, ref, toRefs, provide, defineComponent, getCurrentInstance, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import ComVue from './com.vue';
+import FileSaver from './FileSaver.vue';
 // const internalInstance = getCurrentInstance()
 // const trace = internalInstance?.appContext.config.globalProperties.$trace
 // interface Str {

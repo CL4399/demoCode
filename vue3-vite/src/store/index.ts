@@ -14,7 +14,7 @@ export const useCounterStore = defineStore('counter', {
             objInfo: {
                 name: "1"
             } as object,
-            primaryColor: "#4b4b4b",
+            primaryColor: "#dedede",
             textColor: "#fff"
         }
     },

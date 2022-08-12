@@ -105,7 +105,6 @@ export default defineComponent({
             filterList: [] as any,
             resList: [] as any
         })
-
         const itemClick = (item: any, key: any, idx: any) => {
             const filterIdx = dataInfo.filterList.findIndex((item: any) => item.key === key)
             if (dataInfo.menuInfo[key].activeIdx === idx) {
