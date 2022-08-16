@@ -21,15 +21,9 @@
       </div>
     </div>
     <div>
-      <a-table
-        :dataSource="dataSource"
-        :columns="columns"
-        :expandRowByClick="false"
-        :expandIconAsCell="false"
-        :expandIconColumnIndex="columns.length"
-        :expandIcon="expandIcon"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-      >
+      <a-table :dataSource="dataSource" :columns="columns" :expandRowByClick="false" :expandIconAsCell="false"
+        :expandIconColumnIndex="columns.length" :expandIcon="expandIcon"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }">
         <template v-slot:expandedRowRender="record">
           <div style="line-height: 30px">
             <p>
@@ -51,6 +45,18 @@
       Start data &amp; time:
       <input type="datetime-local" />
     </label>
+
+
+    <a-button type="primary" @click="showModal = !showModal">Open Modal</a-button>
+    <a-modal v-model:visible="showModal" title="Basic Modal">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+
+
+
+
   </div>
 </template>
 <script>
@@ -114,6 +120,7 @@ export default {
         },
       ],
       selectedRowKeys: [],
+      showModal: false
     };
   },
   watch: {
@@ -122,7 +129,7 @@ export default {
     },
   },
   computed: {},
-  mounted() {},
+  mounted() { },
   provide() {
     return {
       name: '123',
@@ -233,4 +240,5 @@ export default {
   },
 };
 </script>
-<style lang='less'></style>
+<style lang='less'>
+</style>

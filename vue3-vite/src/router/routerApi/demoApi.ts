@@ -132,6 +132,12 @@ const demoApi = [
                         path: "/demo10",
                         icon: "font-colors-outlined"
                     },
+                    {
+                        name: "animation",
+                        id: "3-1-4",
+                        path: "/demo11",
+                        icon: "font-colors-outlined"
+                    },
                 ],
             },
         ],

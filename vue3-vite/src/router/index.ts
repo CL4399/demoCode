@@ -60,6 +60,10 @@ const routes = [
         path: "/demo10",
         name: "demo10",
         component: () => import("../view/demo10/index.vue"),
+      }, {
+        path: "/demo11",
+        name: "demo11",
+        component: () => import("../view/demo11/index.vue"),
       },
       {
         path: "/canvas-demo1",
