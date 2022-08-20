@@ -99,6 +99,7 @@ export default {
     let router = useRoute()
 
     onMounted(() => {
+      console.log("test-git")
       store.setPrimaryColor(dataInfo.pureColor)
       window.addEventListener("load", (e) => {
         dataInfo.pureColor = sessionStorage.getItem("pureColor") ? sessionStorage.getItem("pureColor") as string : '#dedede'
