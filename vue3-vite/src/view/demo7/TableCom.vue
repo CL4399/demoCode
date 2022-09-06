@@ -1,8 +1,8 @@
 <template>
     <div style="position: relative">
-        <Table :dataSource="dataSource" :columns="(columns as [])" :rowKey="(record) => record[rowKey] || record.id"
-            :pagination="pagination" :loading="loading" :rowSelection="rowSelection" @change="handlePageChange"
-            :scroll="scroll">
+        <Table :dataSource="arrData" :columns="(columns as [])"
+            :rowKey="(record: any) => record[rowKey] || record.id" :pagination="pagination" :loading="loading"
+            :rowSelection="rowSelection" @change="handlePageChange" :scroll="scroll">
             <template v-slot:title>
                 <template v-for="(index, name) in slots" :slot="name">
                     <template v-if="String(name) == 'title'">
@@ -19,6 +19,7 @@
                     </template>
                 </template>
             </template>
+
         </Table>
     </div>
 </template>
@@ -102,7 +103,6 @@ export default defineComponent({
                 page: 1,
                 limit: 10,
             } as Str,
-            dataSource: [] as Str[],
             self: null,
             ellipsis: [],
         })
@@ -267,9 +267,6 @@ export default defineComponent({
             reload();
         }
         // init()
-        if (props.arrData) {
-            dataInfo.dataSource = props.arrData
-        }
         onMounted(() => {
             console.log(slots, "slot");
         })

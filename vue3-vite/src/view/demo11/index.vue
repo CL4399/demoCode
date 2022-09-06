@@ -1,4 +1,13 @@
 <template>
+    <div>
+        <button type="button" class="bg-indigo-500 animate-wiggle" disabled>
+            <svg class="h-5 w-5 mr-3" viewBox="0 0 24 24">
+            </svg>
+        </button>
+    </div>
+    <span>312</span>
+    <span class="spacing-48">123</span>
+    <span>312</span>
     <div id="btnWrapper">
         <div class="btn active">开灯</div>
         <div class="btn">关灯</div>
@@ -6,19 +15,25 @@
     <br />
     <div class="box-content">
         <div class="box">box</div>
-        <Button style="width: 100px;" @click="change">change</Button>
+        <ButtonCom style="width: 100px;" @click="change">change</ButtonCom>
+        <ButtonCom style="width: 100px;" @click="changeNum">change</ButtonCom>
+        <comVue ref="comRef"></comVue>
+        <demo1Vue></demo1Vue>
     </div>
 </template>
 <script lang='ts'>
-import { reactive, ref, toRefs, provide, defineComponent, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch } from 'vue'
 import cssVars from 'css-vars-ponyfill'
-import { Button } from "ant-design-vue"
+import { Button, Input } from "ant-design-vue"
+import { https } from "../../serve/https"
+import comVue from './com.vue'
+import ButtonCom from "../demo4/Button/Button"
+import demo1Vue from './demo1.vue'
 export default defineComponent({
-    components: { Button },
+    components: { Button, comVue, ButtonCom, Input, demo1Vue },
     setup(props: any, { emit }: any) {
         let dataInfo = reactive({
-            show: false
+            show: false,
         })
         onMounted(() => {
             let wrapper = document.getElementById('btnWrapper') as any;
@@ -78,6 +93,14 @@ export default defineComponent({
                 let body = document.body;
                 // body.className = bol ? 'dark' : ''
             }
+            https({
+                baseUrl: "/api/v1/search",
+                method: "GET",
+                data: { query: "1" },
+            }).then((res) => {
+                console.log(res.hits, "https");
+            })
+
         })
         cssVars({
             onlyLegacy: true,
@@ -85,17 +108,24 @@ export default defineComponent({
                 '--width': "40px"
             },
         })
+        const comRef = ref()
         const change = () => {
             dataInfo.show = !dataInfo.show
-
             cssVars({
                 onlyLegacy: true,
                 variables: {
                     '--width': dataInfo.show ? "120px" : "40px"
                 },
             })
+
         }
-        return { change }
+        const changeNum = () => {
+            console.log(comRef.value, "comRef");
+            dataInfo.show = !dataInfo.show
+            localStorage.setItem("text", JSON.stringify(dataInfo.show))
+            comRef.value.getItem()
+        }
+        return { change, changeNum, comRef, }
     },
 })
 </script>

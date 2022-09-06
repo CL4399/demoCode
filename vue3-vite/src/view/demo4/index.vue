@@ -22,11 +22,13 @@
     </div>
     <div>
       边角
+      <ButtonCom :shape="'circle'"></ButtonCom>
+      <ButtonCom :shape="'round'"></ButtonCom>
+
       <ButtonCom :shape="'circle'">
         <!-- <div style="width:10px;height:10px;">123</div> -->
         <HeartFilled />
       </ButtonCom>
-      <ButtonCom :shape="'round'"></ButtonCom>
     </div>
     <div>
       插槽

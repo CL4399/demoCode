@@ -1,6 +1,7 @@
 <template>
     <div style="overflow: auto;height: 100%;">
-        <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'id'" :arrData="dataSource">
+        <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'created_at'"
+            :arrData="dataSource">
             <template v-slot:title>
                 <Button @click="addNew">新增</Button>
                 <Button @click="del">删除</Button>
@@ -25,6 +26,8 @@ import TreeSearchDemo from "./TreeSearchDemo.vue"
 import { Button } from "ant-design-vue"
 import { exportXLS } from "../../utils"
 import dayjs from 'dayjs';
+import { https } from "../../serve/https"
+import { list } from "../../serve/api/index"
 interface Str {
     [key: string]: string
 }
@@ -33,24 +36,23 @@ export default defineComponent({
     components: { TableComVue, TreeSelectComVue, TreeSearchDemo, Button },
     setup(props: any, proxy: any) {
         const { appContext: { config: { globalProperties: { $message } } } } = getCurrentInstance() as any
-
         let dataInfo = reactive({
             url: "user/list",
             columns: [
                 {
-                    title: '姓名',
-                    dataIndex: 'name',
-                    key: 'name',
+                    title: 'points',
+                    dataIndex: 'points',
+                    key: 'points',
                 },
                 {
-                    title: '年龄',
-                    dataIndex: 'age',
-                    key: 'age',
+                    title: 'num_comments',
+                    dataIndex: 'num_comments',
+                    key: 'num_comments',
                 },
                 {
-                    title: '住址',
-                    dataIndex: 'address',
-                    key: 'address',
+                    title: 'created_at',
+                    dataIndex: 'created_at',
+                    key: 'created_at',
                     isSlot: true
                 }, {
                     title: '操作',
@@ -135,16 +137,13 @@ export default defineComponent({
             selectedRows: [] as any[],
             dataSource: [] as any[]
         })
-        for (let i = 0; i < 3; i++) {
-            dataInfo.dataSource.push({
-                key: i,
-                name: '胡彦祖' + i,
-                age: 42,
-                address: '西湖区湖底公园1号',
-                id: i,
-                time: dayjs()
+        const getList = async () => {
+            await list({ query: 1 }).then((res) => {
+                dataInfo.dataSource = res.hits
+                console.log(dataInfo.dataSource, "https");
             })
         }
+        getList()
         const rowSelection: TableProps['rowSelection'] = {
             onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -165,42 +164,34 @@ export default defineComponent({
                 id: dataInfo.dataSource.length + 1
             })
         }
-
         const handleExport = () => {
             if (dataInfo.selectedRows.length == 0) return $message.warn("请选择！")
 
             let array = JSON.parse(JSON.stringify(dataInfo.selectedRows))
             let columns = [
                 {
-                    title: '姓名',
-                    dataIndex: 'name',
-                    key: 'name',
+                    title: 'points',
+                    dataIndex: 'points',
+                    key: 'points',
                 },
                 {
-                    title: '年龄',
-                    dataIndex: 'age',
-                    key: 'age',
-                },
-                {
-                    title: '住址',
-                    dataIndex: 'address',
-                    key: 'address',
-                    isSlot: true
+                    title: 'num_comments',
+                    dataIndex: 'num_comments',
+                    key: 'num_comments',
                 },
                 {
                     title: '时间',
-                    dataIndex: 'time',
-                    key: 'time',
+                    dataIndex: 'created_at',
+                    key: 'created_at',
                     isSlot: true
-                },
+                }
             ]
             let tableBody = array.map((item: any) => {
                 let body = JSON.parse(JSON.stringify(item))
                 body.time = dayjs(item.time).format("YYYY-MM-DD HH:mm:ss");
                 return body
             })
-            console.log(tableBody);
-
+            console.log(tableBody,"数据源");
             exportXLS(tableBody, columns, `日志`);
         }
         return { ...toRefs(dataInfo), del, rowSelection, addNew, handleExport }

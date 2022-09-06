@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ obj.testNum }}---{{ obj.count }} --- {{ obj.counter }}
+        {{  obj.testNum  }}---{{  obj.count  }} --- {{  obj.counter  }}
         <Button class="btn" @click="changeStore">赋值</Button>
         <Button class="btn" @click="allChangeStore">批量赋值</Button>
         <Button class="btn" @click="resetStore">重置</Button>
@@ -108,16 +108,11 @@ export default defineComponent({
             // 我们就可以在此处监听store中值的变化，当变化为某个值的时候，去做一些业务操作之类的
             console.log(mutation, state, "值变化的监听")
         }, { detached: true })
-
-
         // getUserList({ jacl: "123" })
         // editUser({ name: "123" })
         // console.log(store.testNum, "useCounterStore")
         // const ENV = import.meta.env
         // console.log(ENV, "ENV")
-
-
-
         return {
             obj,
             changeStore,

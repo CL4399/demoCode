@@ -43,12 +43,12 @@
   height: 32px;
   padding: 4px 16px;
   font-size: 14px;
-  border-radius: 32px;
+  border-radius: 32px !important;
 }
 
 .button-circle {
   text-align: center;
-  border-radius: 50%;
+  border-radius: 50% !important;
 }
 
 .button-disabled {

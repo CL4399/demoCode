@@ -7,7 +7,6 @@
 
       </a-table>
     </div>
-
   </div>
 </template>
 <script>

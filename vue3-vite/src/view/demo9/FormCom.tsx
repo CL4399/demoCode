@@ -8,6 +8,13 @@ import { RuleObject } from "ant-design-vue/lib/form"
 import { UploadOutlined } from "@ant-design/icons-vue"
 type Picker = import("../../../node_modules/ant-design-vue/lib/vc-picker/interface").PickerMode
 type UploadRequestOption = import("../../../node_modules/ant-design-vue/lib/vc-upload/interface").UploadRequestOption
+declare type RawValue = string | number
+interface LabeledValue {
+    key?: string
+    value: RawValue
+    label?: any
+}
+type SelectValue = RawValue | RawValue[] | LabeledValue | LabeledValue[] | undefined
 interface FormOptions {
     /** input */
     field: string // 字段名称
@@ -55,6 +62,8 @@ interface StrObj {
     [key: string]: any
 }
 type Layout = "horizontal" | "vertical" | "inline"
+import type { RadioChangeEvent } from "../../../node_modules/ant-design-vue/lib/radio/interface"
+import type { Dayjs } from "dayjs"
 const FormCom = defineComponent({
     components: { Form, FormItem, Input, Radio, RadioGroup, TreeSelect, Textarea, DatePicker, RangePicker, Row, Col, Upload, Button, Switch, CheckboxGroup },
     props: {
@@ -91,13 +100,13 @@ const FormCom = defineComponent({
             formState[info] = (e.target as HTMLInputElement).value
             console.log(formState, "formState")
         }
-        const selectChange = (e: any, info: string) => {
+        const selectChange = (e: SelectValue, info: string) => {
             formState[info] = e
             console.log(e, formState, "selectChange")
         }
-        const radioChange = (e: any, info: string) => {
+        const radioChange = (e: RadioChangeEvent, info: string) => {
             formState[info] = e.target.value
-            console.log(e.target.vlaue, "radioChange")
+            console.log(e.target.value, "radioChange")
         }
         const changeTreeSelect = (e: string, info: string) => {
             console.log(e, "form", formState)
@@ -107,7 +116,7 @@ const FormCom = defineComponent({
             console.log(e, "form", info)
             formState[info] = e
         }
-        const panelChange = (e: any, info: string) => {
+        const panelChange = (e: string | Dayjs | [string, string] | [Dayjs, Dayjs], info: string) => {
             formState[info] = e
         }
         const uploadChange = (e: any) => {
@@ -199,12 +208,12 @@ const FormCom = defineComponent({
                         placeholder={item.placeholder}
                         show-search={item.showSelectSearch}
                         options={item.options}
-                        onChange={(e) => selectChange(e, item.field)}
+                        onChange={(e: SelectValue) => selectChange(e, item.field)}
                     ></Select>
                 )
             }
             if (item.type == "radioGroup") {
-                return <RadioGroup value={formState[item.field]} options={item.options} onChange={(e) => radioChange(e, item.field)}></RadioGroup>
+                return <RadioGroup value={formState[item.field]} options={item.options} onChange={(e: RadioChangeEvent) => radioChange(e, item.field)}></RadioGroup>
             }
             if (item.type == "treeSelect") {
                 return (
@@ -238,10 +247,10 @@ const FormCom = defineComponent({
                 )
             }
             if (item.type == "datePicker") {
-                return <DatePicker placeholder={item.placeholder} picker={item.picker} value={formState[item.field]} onChange={(e) => panelChange(e, item.field)}></DatePicker>
+                return <DatePicker placeholder={item.placeholder} picker={item.picker} value={formState[item.field]} onChange={(e: string | Dayjs) => panelChange(e, item.field)}></DatePicker>
             }
             if (item.type == "rangePicker") {
-                return <RangePicker picker={item.picker} value={formState[item.field]} onChange={(e) => panelChange(e, item.field)}></RangePicker>
+                return <RangePicker picker={item.picker} value={formState[item.field]} onChange={(e: [string, string] | [Dayjs, Dayjs]) => panelChange(e, item.field)}></RangePicker>
             }
             if (item.type == "upload") {
                 return (
