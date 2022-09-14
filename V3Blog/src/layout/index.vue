@@ -31,7 +31,7 @@
                                         <template #title>
                                             <span :style="{ color: storeObj.textColor }">{{ i.name }}</span>
                                         </template>
-                                        <MenuItem style="opacity: 1;" v-for="t of i.children" :key="t.id" @click="chooseItem(t)"> {{ t.name }}</MenuItem>
+                                        <MenuItem style="opacity: 1" v-for="t of i.children" :key="t.id" @click="chooseItem(t)"> {{ t.name }}</MenuItem>
                                     </SubMenu>
                                 </template>
                             </Menu>
@@ -60,7 +60,7 @@
             </div>
         </LayoutHeader>
 
-        <LayoutContent :style="{ padding: '24px', minHeight: '280px' }">
+        <LayoutContent :style="{ padding: '0 24px', minHeight: '280px' }">
             <Breadcrumb>
                 <template v-for="item of breadcrumb">
                     <BreadcrumbItem v-show="item">{{ item }}</BreadcrumbItem>
@@ -74,7 +74,7 @@
 </template>
 <script lang="ts">
 import Icon from "@ant-design/icons-vue"
-import { defineComponent, reactive, ref, toRefs, watch, computed } from "vue"
+import { defineComponent, reactive, ref, toRefs, watch, computed, onMounted } from "vue"
 import { Layout, LayoutHeader, LayoutFooter, LayoutSider, LayoutContent, Menu, MenuItem, SubMenu, Breadcrumb, BreadcrumbItem, Dropdown, Button, Image } from "ant-design-vue"
 import { useRouter, useRoute } from "vue-router"
 interface Obj {
@@ -156,7 +156,10 @@ export default defineComponent({
                 console.log(newV, "textColor")
             }
         )
-
+        onMounted(() => {
+            dataInfo.breadcrumb[3] = "Home"
+            router.push("/HomePage" as string)
+        })
         const chooseMenu = (el: RouterInfo) => {
             dataInfo.navItemInfo = el.children as []
             dataInfo.breadcrumb[0] = el.name

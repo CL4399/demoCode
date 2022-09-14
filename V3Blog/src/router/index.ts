@@ -80,6 +80,11 @@ const routes = [
         name: "canvas-demo3",
         component: () => import("../view/canvas/demo3.vue"),
       },
+      {
+        path: "/HomePage",
+        name: "HomePage",
+        component: () => import("../view/home/Home.vue"),
+      },
     ],
   },
   {
