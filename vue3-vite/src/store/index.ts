@@ -1,6 +1,7 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
-
+// import { useRouter } from "vue-router"
+import router from "../router/index"
 // the first argument is a unique id of the store across your application
 export const useCounterStore = defineStore('counter', {
     state: () => {
@@ -36,6 +37,10 @@ export const useCounterStore = defineStore('counter', {
         },
         setTextColor(str: string) {
             this.textColor = str
+        },
+        setRouter(str: string) {
+            // let router = useRouter()
+            router.push(str)
         }
     },
 })

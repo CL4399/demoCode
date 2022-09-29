@@ -39,6 +39,17 @@ export default defineComponent({
         const onPanelChange = (e: any) => {
             console.log(e, "onPanelChange")
         }
+
+        let reg2 = /^《[^》《]*》$/,
+            reg3 = /^（[^）（]*》$/,
+            reg4 = /^<[^><]*》$/
+
+        let str = "《123》<123>"
+        if (reg2.test(str) || reg3.test(str) || reg4.test(str)) {
+            console.log(false)
+        }
+
+    
         return { ...toRefs(dataInfo), onPanelChange }
     },
 })

@@ -9,7 +9,9 @@
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent } from "vue"
 import { useRouter } from "vue-router"
+import { Card } from "ant-design-vue"
 export default defineComponent({
+    components: { Card },
     props: { info: { type: Object, default: {} } },
     setup(props: any, { emit }: any) {
         return {}
