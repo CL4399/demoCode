@@ -16,7 +16,10 @@ export const useCounterStore = defineStore('counter', {
                 name: "1"
             } as object,
             primaryColor: "#dedede",
-            textColor: "#fff"
+            textColor: "#fff",
+            showSettingOutlined: false,
+            // token
+            authorize: null as string | null
         }
     },
     getters: {
@@ -41,6 +44,12 @@ export const useCounterStore = defineStore('counter', {
         setRouter(str: string) {
             // let router = useRouter()
             router.push(str)
+        },
+        setShowSettingOutlined(data: boolean) {
+            this.showSettingOutlined = data
+        },
+        setAuthorize(str: string | null) {
+            this.authorize = str
         }
     },
 })

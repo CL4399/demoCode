@@ -4,7 +4,8 @@ import {
   createWebHistory,
 } from "vue-router";
 const routes = [
-  { path: "/", redirect: "/home" },
+  { path: "/", redirect: "/login" },
+  { path: "/404", name: "404", component: () => import("../view/Status/Error404.vue"), },
   {
     path: "/demoCom",
     name: "demoCom",
@@ -19,16 +20,6 @@ const routes = [
         path: "/demo1",
         name: "demo1",
         component: () => import("../view/demo1/Demo.vue"),
-      },
-      {
-        path: "/demo2",
-        name: "demo2",
-        component: () => import("../view/demo2/Demo.vue"),
-      },
-      {
-        path: "/demo3",
-        name: "demo3",
-        component: () => import("../view/demo3/Demo.vue"),
       },
       {
         path: "/demo4",
@@ -65,21 +56,6 @@ const routes = [
         name: "demo11",
         component: () => import("../view/demo11/index.vue"),
       },
-      {
-        path: "/canvas-demo1",
-        name: "canvas-demo1",
-        component: () => import("../view/canvas/demo1.vue"),
-      },
-      {
-        path: "/canvas-demo2",
-        name: "canvas-demo2",
-        component: () => import("../view/canvas/demo2.vue"),
-      },
-      {
-        path: "/canvas-demo3",
-        name: "canvas-demo3",
-        component: () => import("../view/canvas/demo3.vue"),
-      },
     ],
   },
   {
@@ -87,24 +63,25 @@ const routes = [
     name: "Login",
     component: () => import("../view/login/Login.vue"),
   },
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '/404'
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes: routes,
 });
-// router.beforeEach((to, from, next) => {
-//     document.title = `${to.meta.title} | vue-manage-system`;
-//     const role = localStorage.getItem('ms_username');
-//     if (!role && to.path !== '/login') {
-//         next('/login');
-//     } else if (to.meta.permission) {
-//         // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-//         role === 'admin'
-//             ? next()
-//             : next('/403');
-//     } else {
-//         next();
-//     }
-// });
+
+router.beforeEach(async (to, from, next) => {
+  console.log(to, from, "router.beforeEach", !sessionStorage.getItem('authorize'));
+  if (to.path === '/login') next()
+  if (!sessionStorage.getItem('authorize')) {
+    next({ path: '/login' })
+  } else {
+    next()
+  }
+})
+
 export default router;

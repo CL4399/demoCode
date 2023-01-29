@@ -15,6 +15,7 @@
                     color: storeObj.textColor,
                 }"
                 style="flex: 2; border-bottom: none; background: none"
+                id="menu"
             >
                 <MenuItem :key="(item.id as string)" @click="chooseMenu(item)" v-for="item of routerInfo">
                     <Dropdown>
@@ -63,7 +64,7 @@
         <LayoutContent :style="{ padding: '0 24px', minHeight: '280px' }">
             <Breadcrumb>
                 <template v-for="item of breadcrumb">
-                    <BreadcrumbItem v-show="item">{{ item }}</BreadcrumbItem>
+                    <BreadcrumbItem v-show="item" :style="{ color: storeObj.textColor }">{{ item }}</BreadcrumbItem>
                 </template>
             </Breadcrumb>
             <router-view></router-view>
@@ -219,7 +220,9 @@ export default defineComponent({
     margin: 16px 24px 16px 0;
     /* background: rgba(255, 255, 255, 0.3); */
 }
-
+/* .ant-layout-header .header :hover {
+    background-color: #ccc;
+} */
 .ant-row-rtl #components-layout-demo-top-side .logo {
     float: right;
     margin: 16px 0 16px 24px;

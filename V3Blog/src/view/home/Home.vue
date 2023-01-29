@@ -11,6 +11,7 @@
                 <div :style="{ border: '1px solid #d9d9d9', borderRadius: '4px' }">
                     <Calendar v-model:value="value" :fullscreen="false" @panelChange="onPanelChange" />
                 </div>
+                <div :style="{ border: '1px solid #d9d9d9', borderRadius: '4px' }"></div>
             </Col>
         </Row>
     </div>
@@ -20,8 +21,9 @@ import { reactive, ref, toRefs, provide, defineComponent } from "vue"
 import { useRouter } from "vue-router"
 import { Calendar, Row, Col, Card } from "ant-design-vue"
 import CardComVue from "./components/CardCom.vue"
+import ClockVue from "./components/Clock.vue"
 export default defineComponent({
-    components: { Calendar, Row, Col, Card, CardComVue },
+    components: { Calendar, Row, Col, Card, CardComVue, ClockVue },
     setup(props: any, { emit }: any) {
         let dataInfo = reactive({
             value: "",
@@ -49,7 +51,6 @@ export default defineComponent({
             console.log(false)
         }
 
-    
         return { ...toRefs(dataInfo), onPanelChange }
     },
 })

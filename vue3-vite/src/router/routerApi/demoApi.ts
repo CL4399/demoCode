@@ -9,57 +9,13 @@ const demoApi = [
                 icon: "area-chart-outlined",
                 children: [
                     {
-                        name: "option 1",
+                        name: "鼠标拖拽和store",
                         id: "1-1-1",
                         path: "/demo1",
                         icon: "stock-outlined"
                     },
                 ],
             },
-            {
-                name: "SubNav 1-2",
-                id: "1-2",
-                icon: "box-plot-outlined",
-                children: [
-                    {
-                        name: "option 1",
-                        id: "1-2-1",
-                        path: "/demo2",
-                        icon: "rader-chart-outlined"
-                    },
-                ],
-            },
-            {
-                name: "Canvas",
-                id: "1-3",
-                icon: "fall-outlined",
-                children: [
-                    {
-                        name: "demo1",
-                        id: "1-3-1",
-                        path: "/canvas-demo1",
-                        icon: "android-outlined"
-                    },
-                    {
-                        name: "demo2",
-                        id: "1-3-2",
-                        path: "/canvas-demo2",
-                        icon: "apple-outlined"
-                    },
-                    {
-                        name: "demo3",
-                        id: "1-3-3",
-                        path: "/canvas-demo3",
-                        icon: "windows-outlined"
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        name: "测试",
-        id: "2",
-        children: [
             {
                 name: "SubNav 2-1",
                 id: "2-1",
@@ -85,13 +41,13 @@ const demoApi = [
                         icon: "html5-outlined"
                     },
                     {
-                        name: "Modal",
+                        name: "Modal与ant树形选择",
                         id: "2-2-2",
                         path: "/demo5",
                         icon: "html5-outlined"
                     },
                     {
-                        name: "Role_Authority",
+                        name: "权限树",
                         id: "2-2-3",
                         path: "/demo6",
                         icon: "html5-outlined"
@@ -106,11 +62,11 @@ const demoApi = [
         ],
     },
     {
-        name: "测试2",
+        name: "组件",
         id: "3",
         children: [
             {
-                name: "SubNav 3-1",
+                name: "自定义组件",
                 id: "3-1",
                 icon: "strikethrough-outlined",
                 children: [

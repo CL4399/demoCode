@@ -30,8 +30,8 @@
 <script lang="ts">
 import { reactive, ref, toRefs, provide, unref, defineComponent } from "vue"
 import { useRouter } from "vue-router"
-import { departmentList, powerList } from "./mock"
-import { getkeyList, getParentKeyT } from "./method"
+import { departmentList, powerList } from "../demo7/mock"
+import { getkeyList, getParentKeyT } from "../demo7/method"
 import { Tree, Input } from "ant-design-vue"
 import { DownOutlined, PlusOutlined, SendOutlined, AuditOutlined } from "@ant-design/icons-vue"
 export default defineComponent({

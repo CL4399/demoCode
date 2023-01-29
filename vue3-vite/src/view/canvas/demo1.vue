@@ -13,6 +13,8 @@ export default {
         })
         const int = () => {
             let canvas: any = document.getElementById('canvas');
+            console.log(canvas,"canvas");
+            
             // 获取到屏幕倒是是几倍屏。
             let getPixelRatio = (context: any) => {
                 var backingStore = context.backingStorePixelRatio ||
@@ -30,6 +32,8 @@ export default {
             canvas.height = pixelRatio * canvas.offsetHeight;
             /** @type {HTMLCanvasElement} */
             const ctx = canvas.getContext('2d')
+            console.log(ctx,"ctx");
+            
             //@ts-ignore
             rectangle(ctx)
         }

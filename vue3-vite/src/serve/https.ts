@@ -96,23 +96,23 @@ export const https = ({
         .catch((error) => {
             console.log(error, "error");
             if (error.response) {
-                const { data, status } = error.response
-                console.log(error, "error");
-                const resMsg = data ? data.message : '服务异常'
-                // if (resCode === 401) { // 与服务端约定
-                //     // 登录校验失败
-                // } else if (data.code === 403) { // 与服务端约定
-                //     // 无权限
-                //     router.replace({ path: '/403' })
-                // }
-                // if (!errorMsgObj[resMsg]) {
-                //     //@ts-ignore
-                //     errorMsgObj[resMsg] = resMsg
-                // }
-                // setTimeout(debounce(toastMsg, 1000, true), 1000)
-                // const err = { code: resCode, respMsg: resMsg }
-                message.error(resMsg)
-                return Promise.reject(resMsg)
+                if (error.message == "Request failed with status code 500") {
+                    error.message = "请求失败";
+                }
+                if (error.message == "Network Error") {
+                    error.message = "网络错误";
+                }
+                if (error.message == "Request aborted") {
+                    error.message = "请求失败";
+                }
+                if (
+                    error.code === "ECONNABORTED" &&
+                    error.message.indexOf("timeout") !== -1
+                ) {
+                    error.message = "请求超时";
+                }
+                message.error(error.message)
+                return Promise.reject(error.message)
             } else {
                 const err = { type: 'canceled', respMsg: '数据请求超时' }
                 return Promise.reject(err)

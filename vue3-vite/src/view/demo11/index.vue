@@ -34,6 +34,8 @@ export default defineComponent({
         let dataInfo = reactive({
             show: false,
         })
+        console.log(dataInfo,"//////////////////");
+        
         let demo1ref = ref()
         onMounted(() => {
             console.log(demo1ref.value, "demo1ref")
