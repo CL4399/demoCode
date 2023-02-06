@@ -7,11 +7,6 @@ const routes = [
   { path: "/", redirect: "/login" },
   { path: "/404", name: "404", component: () => import("../view/Status/Error404.vue"), },
   {
-    path: "/demoCom",
-    name: "demoCom",
-    component: () => import("../view/demo9/com.vue"),
-  },
-  {
     path: "/home",
     name: "home",
     component: () => import("../layout/index.vue"),
@@ -39,10 +34,6 @@ const routes = [
         path: "/demo7",
         name: "demo7",
         component: () => import("../view/demo7/index.vue"),
-      }, {
-        path: "/demo8",
-        name: "demo8",
-        component: () => import("../view/demo8/index.vue"),
       }, {
         path: "/demo9",
         name: "demo9",

@@ -22,7 +22,7 @@ const demoApi = [
                 icon: "ie-outlined",
                 children: [
                     {
-                        name: "Tailwindcss",
+                        name: "404",
                         id: "2-1-1",
                         path: "/demo3",
                         icon: "chrome-outlined"
@@ -70,12 +70,6 @@ const demoApi = [
                 id: "3-1",
                 icon: "strikethrough-outlined",
                 children: [
-                    {
-                        name: "Test",
-                        id: "3-1-1",
-                        path: "/demo8",
-                        icon: "font-colors-outlined"
-                    },
                     {
                         name: "FormCom",
                         id: "3-1-2",

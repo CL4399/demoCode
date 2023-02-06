@@ -19,7 +19,6 @@
                     </template>
                 </template>
             </template>
-
         </Table>
     </div>
 </template>

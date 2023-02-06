@@ -4,9 +4,6 @@
             <svg class="h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
         </button>
     </div>
-    <span>312</span>
-    <span class="spacing-48">123</span>
-    <span>312</span>
     <div id="btnWrapper">
         <div class="btn active">开灯</div>
         <div class="btn">关灯</div>
@@ -34,8 +31,8 @@ export default defineComponent({
         let dataInfo = reactive({
             show: false,
         })
-        console.log(dataInfo,"//////////////////");
-        
+        console.log(dataInfo, "//////////////////")
+
         let demo1ref = ref()
         onMounted(() => {
             console.log(demo1ref.value, "demo1ref")
@@ -95,18 +92,12 @@ export default defineComponent({
                 let body = document.body
                 // body.className = bol ? 'dark' : ''
             }
-            https({
-                baseUrl: "/api/v1/search",
-                method: "GET",
-                data: { query: "1" },
-            }).then((res) => {
-                console.log(res.hits, "https")
-            })
         })
         cssVars({
             onlyLegacy: true,
             variables: {
                 "--width": "40px",
+                "--c-boxc": "green",
             },
         })
         const comRef = ref()
@@ -116,6 +107,7 @@ export default defineComponent({
                 onlyLegacy: true,
                 variables: {
                     "--width": dataInfo.show ? "120px" : "40px",
+                    "--c-boxc": dataInfo.show ? "#fff" : "#000",
                 },
             })
         }
@@ -175,7 +167,7 @@ body {
     width: 380px;
     height: 80px;
     padding: 12px 16px;
-    margin: 300px auto 0;
+    margin: 50px auto 50px;
     border-radius: 12px;
     overflow: hidden;
     background-color: var(--c-wrap-bg);
@@ -258,6 +250,7 @@ body {
     .box {
         width: var(--width);
         background-color: red;
+        color: var(--c-boxc);
     }
 }
 </style>

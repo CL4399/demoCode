@@ -10,7 +10,6 @@
 </template>
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent, onMounted, getCurrentInstance } from "vue"
-import { useRouter } from "vue-router"
 import { Button, Input } from "ant-design-vue"
 export default defineComponent({
     components: { Button, Input },
@@ -53,7 +52,6 @@ export default defineComponent({
                 dom.style.display = "block"
             }
         }
-        const fun = (a = dataInfo.isShow) => {}
         return { ...toRefs(dataInfo), boxRef, change, change2 }
     },
 })

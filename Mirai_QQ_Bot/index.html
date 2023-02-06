@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/mirai-js/dist/browser/mirai-js.js"></script>
+    <script setup lang="ts">
+        const { Bot, Message } = window.miraiJs;
+        const bot = new Bot();
+
+        console.log(bot, "bot",);
+        // 连接到一个 mirai-api-http 服务
+        bot.open({
+            baseUrl: 'http://example.com:8023',
+            verifyKey: 'verifyKey',
+            // 要绑定的 qq，须确保该用户已在 mirai-console 登录
+            qq: 2381557206,
+        });
+        console.log(bot, "bot");
+        bot.sendMessage({
+            // 好友 qq 号
+            friend: '439621652',
+            // Message 实例，表示一条消息
+            message: '1'
+        });
+        console.log(bot, "bot");
+    </script>
+
+</body>
+
+</html>

@@ -1,23 +1,17 @@
 <template>
-    <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm">
-    </FormCom>
-    <div>
-        <ComC></ComC>
-    </div>
+    <FormCom id="demoRef" :options="options" :rules="rules" @clickInputIcon="clickInputIcon" @confirm="confirm"> </FormCom>
 </template>
-<script lang='ts'>
-import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
+<script lang="ts">
+import { reactive, ref, toRefs, provide, defineComponent } from "vue"
+import { useRouter } from "vue-router"
 import FormCom from "./FormCom"
 import type { FormProps } from "ant-design-vue"
-import { UserAddOutlined, UserOutlined, InfoCircleOutlined } from "@ant-design/icons-vue"
-import com from "./com.vue"
-import ComC from "./com"
+import { UserOutlined, InfoCircleOutlined } from "@ant-design/icons-vue"
 interface Key {
     [key: string]: string
 }
 export default defineComponent({
-    components: { FormCom, InfoCircleOutlined, UserOutlined, com, ComC },
+    components: { FormCom, InfoCircleOutlined, UserOutlined },
     setup(props: any, { emit }: any) {
         const filterTreeOption = (input: string, treeNode: Key) => {
             if (treeNode.value.includes(input)) return treeNode.value.includes(input)
@@ -36,7 +30,7 @@ export default defineComponent({
                     prefix: true,
                     suffix: true,
                     prefixIcon: UserOutlined,
-                    suffixIcon: InfoCircleOutlined
+                    suffixIcon: InfoCircleOutlined,
                 },
                 {
                     field: "text",
@@ -72,7 +66,8 @@ export default defineComponent({
                         { label: "IT", value: 1 },
                         { label: "work", value: 2 },
                     ],
-                }, {
+                },
+                {
                     field: "treeInfo",
                     label: "树选择",
                     placeholder: "请选择",
@@ -82,70 +77,73 @@ export default defineComponent({
                     treeCheckble: true,
                     treeData: [
                         {
-                            title: 'Node1',
-                            value: '0-0',
+                            title: "Node1",
+                            value: "0-0",
                             children: [
                                 {
-                                    title: 'Child Node1',
-                                    value: '0-0-0',
+                                    title: "Child Node1",
+                                    value: "0-0-0",
                                 },
                             ],
                         },
                         {
-                            title: 'Node2',
-                            value: '0-1',
+                            title: "Node2",
+                            value: "0-1",
                             children: [
                                 {
-                                    title: 'Child Node3',
-                                    value: '0-1-0',
+                                    title: "Child Node3",
+                                    value: "0-1-0",
                                     disabled: true,
                                 },
                                 {
-                                    title: 'Child Node4',
-                                    value: '0-1-1',
+                                    title: "Child Node4",
+                                    value: "0-1-1",
                                 },
                                 {
-                                    title: 'Child Node5',
-                                    value: '0-1-2',
+                                    title: "Child Node5",
+                                    value: "0-1-2",
                                 },
                             ],
                         },
                         {
-                            title: 'tree',
-                            value: '0-2',
+                            title: "tree",
+                            value: "0-2",
                             children: [
                                 {
-                                    title: 'csgo',
-                                    value: '0-2-1',
+                                    title: "csgo",
+                                    value: "0-2-1",
                                 },
                             ],
                         },
-                    ]
+                    ],
                 },
                 {
                     field: "time",
                     label: "日期",
                     placeholder: "请选择日期",
                     type: "datePicker",
-                    picker: "date"
+                    picker: "date",
                 },
                 {
                     field: "timeAll",
                     label: "日期",
                     type: "rangePicker",
-                    picker: "date"
-                }, {
+                    picker: "date",
+                },
+                {
                     field: "picFile",
                     label: "图片",
                     type: "upload",
-                    url: "localhost:2333"
-                }, {
+                    url: "localhost:2333",
+                },
+                {
                     field: "switchValue",
                     label: "开关",
                     type: "switch",
                     switchCheckedChildren: "开",
                     switchUnCheckedChildren: "关",
-                }, {
+                },
+                {
                     field: "check",
                     label: "多选",
                     type: "checkboxGroup",
@@ -154,33 +152,32 @@ export default defineComponent({
                         { label: "work", value: 2 },
                         { label: "order", value: 3, disabled: true },
                     ],
-                }
+                },
             ],
             rules: {
                 name: [
                     {
                         required: true,
                         message: "请输入名称",
-                        trigger: "blur",// change|blur
+                        trigger: "blur", // change|blur
                     },
                 ],
             },
             demo: "com",
         })
         const clickInputIcon = (e: any, type: string) => {
-            console.log(e, type, "clickInputIcon");
+            console.log(e, type, "clickInputIcon")
         }
         const confirm = (e: any) => {
-            console.log(e, "confirm");
-
+            console.log(e, "confirm")
         }
         const parseArea = async () => {
             let result: any[] = []
             await myAmapFun().then((res) => {
-                console.log(res, 'res111');
+                console.log(res, "res111")
                 result.push(res)
             })
-            console.log(result, 'res222');
+            console.log(result, "res222")
         }
         const myAmapFun = () => {
             return new Promise((resolve, reject) => {
@@ -190,30 +187,30 @@ export default defineComponent({
         parseArea()
         let router = useRouter()
 
-        const isObject = (target: any) => (typeof target === "object" || typeof target === "function") && target !== null;
+        const isObject = (target: any) => (typeof target === "object" || typeof target === "function") && target !== null
         // 深克隆
         function deepClone(target: any, map = new WeakMap()) {
             if (map.get(target)) {
-                return target;
+                return target
             }
             // 获取当前值的构造函数：获取它的类型
-            let constructor = target.constructor;
+            let constructor = target.constructor
             // 检测当前对象target是否与正则、日期格式对象匹配
             if (/^(RegExp|Date)$/i.test(constructor.name)) {
                 // 创建一个新的特殊对象(正则类/日期类)的实例
-                return new constructor(target);
+                return new constructor(target)
             }
             if (isObject(target)) {
-                map.set(target, true);  // 为循环引用的对象做标记
-                const cloneTarget: any = Array.isArray(target) ? [] : {};
+                map.set(target, true) // 为循环引用的对象做标记
+                const cloneTarget: any = Array.isArray(target) ? [] : {}
                 for (let prop in target) {
                     if (target.hasOwnProperty(prop)) {
-                        cloneTarget[prop] = deepClone(target[prop], map);
+                        cloneTarget[prop] = deepClone(target[prop], map)
                     }
                 }
-                return cloneTarget;
+                return cloneTarget
             } else {
-                return target;
+                return target
             }
         }
 
@@ -222,14 +219,11 @@ export default defineComponent({
             fun: () => {
                 return 123
             },
-            time: new Date()
+            time: new Date(),
         }
 
         let obj2 = deepClone(obj)
-        console.log(obj, obj2, "deepClone");
-
-
-
+        console.log(obj, obj2, "deepClone")
 
         return {
             ...toRefs(dataInfo),
@@ -239,5 +233,4 @@ export default defineComponent({
     },
 })
 </script>
-<style lang='less' scoped>
-</style>
+<style lang="less" scoped></style>

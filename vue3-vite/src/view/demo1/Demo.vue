@@ -10,10 +10,13 @@
         </SelectionArea>
         <div @click="check">check</div>
 
-        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+        /**文件下载 */
+        <Button :loading="loading" @click="save">下载文件</Button>
+
+        <div class="md:w-auto max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-full">
             <div class="md:flex">
-                <div class="md:flex-shrink-0">
-                    <img class="h-48 w-full object-cover md:h-full md:w-48" src="../../assets/logo.png" alt="Man looking at item at a store" />
+                <div class="md:flex-shrink">
+                    <img class="w-full object-scale-down md:h-full md:w-48" src="../../assets/logo.png" alt="Man looking at item at a store" />
                 </div>
                 <div class="p-8">
                     <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">tailwindcss</div>
@@ -25,8 +28,7 @@
     </div>
 </template>
 <script lang="ts">
-import { reactive, ref, computed, getCurrentInstance, defineComponent } from "vue"
-import { useRouter } from "vue-router"
+import { reactive, ref, computed, getCurrentInstance, defineComponent, toRefs } from "vue"
 import { useCounterStore } from "../../store/index"
 import { Button } from "ant-design-vue"
 import router from "../../router"
@@ -35,6 +37,8 @@ import { getDates } from "../../static/index"
 import { login } from "../../api/src/login"
 // 鼠标拖拽选择 组件
 import SelectionArea, { SelectionEvent } from "@viselect/vue"
+//@ts-ignore
+import fileSaver from "../../static/FileSaver.js"
 export default defineComponent({
     components: { Button, SelectionArea },
     setup(props: any, { emit }: any) {
@@ -172,6 +176,24 @@ export default defineComponent({
         const range = (to: number, offset = 0): number[] => {
             return new Array(to).fill(0).map((_, i) => offset + i)
         }
+
+        let dataInfo = reactive({
+            loading: false,
+        })
+        const save = () => {
+            dataInfo.loading = true
+            new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" })
+                    fileSaver.saveAs(blob, "hello world.txt")
+                    resolve("over")
+                }, 3000)
+            }).then(() => {
+                dataInfo.loading = false
+                console.log("over")
+            })
+        }
+
         return {
             obj,
             changeStore,
@@ -183,6 +205,8 @@ export default defineComponent({
             onStart,
             onMove,
             range,
+            save,
+            ...toRefs(dataInfo),
         }
     },
 })
