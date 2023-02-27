@@ -13,20 +13,47 @@
         <div class="box">box</div>
         <ButtonCom style="width: 100px" @click="change">change</ButtonCom>
         <ButtonCom style="width: 100px" @click="changeNum">change</ButtonCom>
-        <comVue ref="comRef"></comVue>
+        <ComVue ref="comRef">123123</ComVue>
         <demo1Vue ref="demo1ref"></demo1Vue>
+        <demoCom></demoCom>
+    </div>
+    <BUTTON></BUTTON>
+    <div class="video-stage">
+        <video id="video" src="./1.mp4"></video>
+        <button @click="toggle">Toogle Fullscreen</button>
     </div>
 </template>
 <script lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch } from "vue"
+import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch, defineAsyncComponent } from "vue"
 import cssVars from "css-vars-ponyfill"
 import { Button, Input } from "ant-design-vue"
 import { https } from "../../serve/https"
-import comVue from "./com.vue"
-import ButtonCom from "../demo4/Button/Button"
-import demo1Vue from "./demo1.vue"
 export default defineComponent({
-    components: { Button, comVue, ButtonCom, Input, demo1Vue },
+    components: {
+        Button,
+        Input,
+        ButtonCom: defineAsyncComponent(() => import("../demo4/Button/Button")),
+        demo1Vue: defineAsyncComponent(() => import("./demo1.vue")),
+        ComVue: defineAsyncComponent(() => import("./com.vue")),
+        demoCom: defineAsyncComponent({
+            // 加载函数
+            loader: () => import("./demo1.vue"),
+
+            // 加载异步组件时使用的组件
+            // loadingComponent: Component,
+
+            // 展示加载组件前的延迟时间，默认为 200ms
+            delay: 200,
+
+            // 加载失败后展示的组件
+            // errorComponent: Component,
+
+            // 如果提供了一个 timeout 时间限制，并超时了
+            // 也会显示这里配置的报错组件，默认值是：Infinity
+            timeout: 3000,
+        }),
+        BUTTON: defineAsyncComponent(() => import("./BUTTON")),
+    },
     setup(props: any, { emit }: any) {
         let dataInfo = reactive({
             show: false,
@@ -117,7 +144,19 @@ export default defineComponent({
             localStorage.setItem("text", JSON.stringify(dataInfo.show))
             comRef.value.getItem()
         }
-        return { change, changeNum, comRef, demo1ref }
+        const toggle = () => {
+            const videoStageEl = document.querySelector(".video-stage")
+            if (videoStageEl?.requestFullscreen) {
+                if (!document.fullscreenElement) {
+                    videoStageEl.requestFullscreen()
+                } else {
+                    document.exitFullscreen()
+                }
+            } else {
+                console.log("此设备不支持 Fullscreen API")
+            }
+        }
+        return { change, changeNum, comRef, demo1ref, toggle }
     },
 })
 </script>

@@ -9,17 +9,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
+      title: '上方标题栏配置',
       theme: ThemeData(
           colorScheme: const ColorScheme(
-              primary: Colors.greenAccent, //上方标题栏颜色
+              primary: Colors.lightBlueAccent,
+              //上方标题栏颜色
               secondary: Colors.green,
               background: Colors.white,
               error: Colors.red,
               brightness: Brightness.light,
               onBackground: Colors.pink,
               onError: Colors.yellow,
-              onPrimary: Colors.white, //字体颜色
+              onPrimary: Colors.white,
+              //字体颜色
               onSecondary: Colors.redAccent,
               onSurface: Colors.redAccent,
               surface: Colors.redAccent
@@ -65,7 +67,7 @@ class RandomWordsState extends State<RandomWords> {
     // return Text(wordPair.asPascalCase);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Startup Name Generator'),
+        title: const Text('标题栏1'),
         actions: <Widget>[
           IconButton(onPressed: _pushSaved, icon: const Icon(Icons.list))
         ],
@@ -73,6 +75,7 @@ class RandomWordsState extends State<RandomWords> {
       body: _buildSuggestions(),
     );
   }
+
   // 构建列表
   Widget _buildSuggestions() {
     return ListView.builder(
@@ -106,7 +109,7 @@ class RandomWordsState extends State<RandomWords> {
       ),
       trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
+        color: alreadySaved ? Colors.lightBlue : null,
       ),
       onTap: () {
         setState(() {

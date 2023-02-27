@@ -1,14 +1,23 @@
 {
-  "name": "mirai_qq_bot",
+  "name": "bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![GitHub release](https://img.shields.io/github/v/release/itxtech/mirai-console-loader?label=stable)](https://github.com/iTXTech/mirai-console-loader/releases)\r [![Maven Central](https://img.shields.io/maven-central/v/org.itxtech/mcl)](https://repo.maven.apache.org/maven2/org/itxtech/mcl/)\r [![MiraiForum](https://img.shields.io/badge/post-on%20MiraiForum-yellow)](https://mirai.mamoe.net/topic/177)",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mirai-js": "^2.8.9"
+    "axios": "^1.3.2",
+    "chatgpt": "^4.3.2",
+    "dayjs": "^1.11.7",
+    "mirai-js": "^2.8.9",
+    "node-fetch": "^2.6.7",
+    "openai": "^3.1.0",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23"
   }
 }

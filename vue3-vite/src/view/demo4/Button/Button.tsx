@@ -60,7 +60,7 @@ const ButtonCom = defineComponent({
             if (props.disabled) return "button-disabled"
             if (props.loading) return "button-loading"
             if (props.danger) return "button-danger"
-            if (props.ghost) return "button-ghost"
+            if (props.ghost) return "button-ghost" 
             return ""
         }
         let style: StrObj = {

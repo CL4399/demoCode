@@ -1,5 +1,5 @@
 <template>
-    <div @click="routerPush">{{ text }}store中使用router</div>
+    <div @click="routerPush">[[[ {{ text }} ]]]----store中使用router</div>
 </template>
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent, watch, computed } from "vue"
