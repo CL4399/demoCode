@@ -22,6 +22,11 @@
         <video id="video" src="./1.mp4"></video>
         <button @click="toggle">Toogle Fullscreen</button>
     </div>
+    <div class="for-box">
+        <template class="for-item" v-for="item of [1, 2, 3, 4, 5, 6, 7]" :key="item">
+            <span>{{ item }}</span>
+        </template>
+    </div>
 </template>
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch, defineAsyncComponent } from "vue"
@@ -161,15 +166,17 @@ export default defineComponent({
 })
 </script>
 <style lang="less" scoped>
+.for-item:nth-child(-n + 3) {
+    span {
+        color: red;
+    }
+}
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
-
 body {
-    background-color: #edf1f4;
-    perspective: 500px;
     --c-wrap-shadow1: #f5f9fd;
     --c-wrap-shadow2: #d8dbe5;
     --c-wrap-bg: #e2e6eb;
@@ -177,11 +184,11 @@ body {
     --c-btn-shadow2: #f5f9fd;
     --c-txt1: #aaa;
     --c-txt2: #111;
+    background-color: #edf1f4;
+    perspective: 500px;
     transition: background-color 0.4s linear;
 }
-
 .dark {
-    background-color: #333;
     --c-wrap-shadow1: #292929;
     --c-wrap-shadow2: #202020;
     --c-wrap-bg: #505050;
@@ -189,8 +196,8 @@ body {
     --c-btn-shadow2: #444;
     --c-txt1: #888;
     --c-txt2: #fff;
+    background-color: #333;
 }
-
 .write {
     --c-wrap-shadow1: #f5f9fd;
     --c-wrap-shadow2: #d8dbe5;
@@ -200,92 +207,79 @@ body {
     --c-txt1: #aaa;
     --c-txt2: #111;
 }
-
 #btnWrapper {
+    overflow: hidden;
     position: relative;
+    margin: 50px auto;
+    padding: 12px 16px;
+    border-radius: 12px;
     width: 380px;
     height: 80px;
-    padding: 12px 16px;
-    margin: 50px auto 50px;
-    border-radius: 12px;
-    overflow: hidden;
     background-color: var(--c-wrap-bg);
     box-shadow: 5px 5px 10px var(--c-wrap-shadow1), 5px 5px 5px var(--c-wrap-shadow2);
     transform-origin: var(--wraper-origin);
     transition: transform 0.4s cubic-bezier(0, 0, 0.48, 1), box-shadow 0.4s linear, background-color 0.4s linear;
 }
-
 .rotateWrap {
     transform: rotateY(var(--wraper-rotate));
 }
-
 #btnWrapper::before {
-    content: "";
     position: absolute;
     left: var(--groove-left);
     top: 12px;
+    border-radius: 12px;
     width: calc(50% - 16px - 8px);
     height: calc(100% - 24px);
-    border-radius: 12px;
     box-shadow: inset 8px 8px 6px var(--c-btn-shadow1), inset -5px -5px 15px var(--c-btn-shadow2), inset -5px -5px 15px var(--c-btn-shadow2), inset 7px 7px 6px var(--c-btn-shadow1);
+    content: "";
     transition: left 1s cubic-bezier(0.82, 0.12, 0.18, 0.88), box-shadow 0.4s linear;
 }
-
 .btn {
-    float: left;
     display: flex;
-    align-items: center;
+    float: left;
     justify-content: center;
+    align-items: center;
+    padding: inherit;
     width: 50%;
     height: 100%;
-    padding: inherit;
+    cursor: pointer;
     color: var(--c-txt1);
     transition: color 0.4s linear;
     animation: txtOutScale 0.6s linear;
-    cursor: pointer;
 }
-
 .active {
     color: var(--c-txt2);
     transform: scale(1.1);
     animation: txtEnterScale 0.4s linear;
 }
-
 @keyframes txtEnterScale {
     0% {
         transform: scale(1);
     }
-
     80% {
         transform: scale(1.15);
     }
-
     100% {
         transform: scale(1.1);
     }
 }
-
 @keyframes txtOutScale {
     0% {
         transform: scale(1.1);
     }
-
     80% {
         transform: scale(0.95);
     }
-
     100% {
         transform: scale(1);
     }
 }
-
 .box-content {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    width: 100%;
     .box {
         width: var(--width);
         background-color: red;

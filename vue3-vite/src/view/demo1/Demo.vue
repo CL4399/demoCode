@@ -1,18 +1,5 @@
 <template>
     <div>
-        {{ obj.testNum }}---{{ obj.count }} --- {{ obj.counter }}
-        <Button class="btn" @click="changeStore">赋值</Button>
-        <Button class="btn" @click="allChangeStore">批量赋值</Button>
-        <Button class="btn" @click="resetStore">重置</Button>
-        <div class="div-com"></div>
-        <SelectionArea class="container green" :options="{ selectables: '.selectable' }" :on-move="onMove" :on-start="onStart">
-            <div v-for="id of range(20)" :key="id" :data-key="id" class="selectable" :class="{ selected: selected.has(id) }" />
-        </SelectionArea>
-        <div @click="check">check</div>
-
-        /**文件下载 */
-        <Button :loading="loading" @click="save">下载文件</Button>
-
         <div class="md:w-auto max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-full">
             <div class="md:flex">
                 <div class="md:flex-shrink">
@@ -25,10 +12,21 @@
                 </div>
             </div>
         </div>
+        <bindStyle></bindStyle>
+        <SelectionArea class="container green" :options="{ selectables: '.selectable' }" :on-move="onMove" :on-start="onStart">
+            <div v-for="id of range(20)" :key="id" :data-key="id" class="selectable" :class="{ selected: selected.has(id) }" />
+        </SelectionArea>
+        <div @click="check">check</div>
+        <!-- 文件下载  -->
+        <Button :loading="loading" @click="save">下载文件</Button>
+        <div>{{ obj.testNum }}---{{ obj.count }} --- {{ obj.counter }}</div>
+        <Button class="btn" @click="changeStore">赋值</Button>
+        <Button class="btn" @click="allChangeStore">批量赋值</Button>
+        <Button class="btn" @click="resetStore">重置</Button>
     </div>
 </template>
 <script lang="ts">
-import { reactive, ref, computed, getCurrentInstance, defineComponent, toRefs } from "vue"
+import { reactive, ref, computed, getCurrentInstance, ComponentInternalInstance, defineComponent, toRefs } from "vue"
 import { useCounterStore } from "../../store/index"
 import { Button } from "ant-design-vue"
 import router from "../../router"
@@ -39,8 +37,9 @@ import { login } from "../../api/src/login"
 import SelectionArea, { SelectionEvent } from "@viselect/vue"
 //@ts-ignore
 import fileSaver from "../../static/FileSaver.js"
+import bindStyle from "./bindStyle.vue"
 export default defineComponent({
-    components: { Button, SelectionArea },
+    components: { Button, SelectionArea, bindStyle },
     setup(props: any, { emit }: any) {
         const {
             appContext: {
@@ -48,7 +47,7 @@ export default defineComponent({
                     globalProperties: { $message },
                 },
             },
-        } = getCurrentInstance() as any
+        } = getCurrentInstance() as ComponentInternalInstance
         // 获取路由器实例
         const { proxy }: any = getCurrentInstance()
         const info = getCurrentInstance()
@@ -139,14 +138,14 @@ export default defineComponent({
             },
             { detached: true }
         )
-        const loginData = async (param: any) => {
-            const data = await login(param)
-            console.log(data, "loginData")
-        }
-        loginData({})
-        console.log(getDates(dayjs(dayjs().subtract(1, "week").unix() * 1000).format("YYYY-MM-DD HH:mm:ss"), dayjs(dayjs().unix() * 1000).format("YYYY-MM-DD HH:mm:ss")))
-        console.log(getDates(dayjs().subtract(1, "week").unix() * 1000, dayjs().unix() * 1000))
-        console.log(getDates(dayjs().subtract(1, "week").format("YYYY-MM-DD HH:mm:ss"), dayjs().format("YYYY-MM-DD HH:mm:ss")))
+        // const loginData = async (param: any) => {
+        //     const data = await login(param)
+        //     console.log(data, "loginData")
+        // }
+        // loginData({})
+        console.log(getDates(dayjs(dayjs().subtract(1, "week").unix() * 1000).format("YYYY-MM-DD HH:mm:ss"), dayjs(dayjs().unix() * 1000).format("YYYY-MM-DD HH:mm:ss")), "getDates")
+        console.log(getDates(dayjs().subtract(1, "week").unix() * 1000, dayjs().unix() * 1000), "getDates")
+        console.log(getDates(dayjs().subtract(1, "week").format("YYYY-MM-DD HH:mm:ss"), dayjs().format("YYYY-MM-DD HH:mm:ss")), "getDates")
 
         // 鼠标拖拽相关代码
         const selected = ref(new Set())
@@ -187,19 +186,29 @@ export default defineComponent({
                     var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" })
                     fileSaver.saveAs(blob, "hello world.txt")
                     resolve("over")
+
+                    let blob2 = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" })
+                    let reader = new FileReader()
+                    reader.readAsDataURL(blob2)
+                    reader.onload = (e) => {
+                        let a = document.createElement("a")
+                        a.download = '文件名称'
+                        a.href = e.target!.result as string
+                        document.body.appendChild(a)
+                        a.click()
+                        document.body.removeChild(a)
+                    }
                 }, 3000)
             }).then(() => {
                 dataInfo.loading = false
                 console.log("over")
             })
         }
-
         return {
             obj,
             changeStore,
             resetStore,
             allChangeStore,
-            color: ref("red"),
             selected,
             check,
             onStart,
@@ -211,16 +220,10 @@ export default defineComponent({
     },
 })
 </script>
-<style scoped>
+<style lang="less" scoped>
 .btn {
     width: 100px;
     margin: 20px;
-}
-
-.div-com {
-    width: 100px;
-    height: 100px;
-    /* background-color: v-bind('color') */
 }
 
 .container {

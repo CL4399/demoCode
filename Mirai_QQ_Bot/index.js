@@ -153,9 +153,9 @@ async function startBot() {
         ) {
             let list = [
                 "死肥宅！死肥宅！",
-                "小飞机冲晕了，快报警！",
+                // "小飞机冲晕了，快报警！",
                 "别@了，无不无聊呀，臭傻逼",
-                "老王，机机炸了!"
+                // "老王，机机炸了!"
             ];
             const regexTwo = new RegExp(/傻逼|sb|nmd|cnm|傻屌|沙雕/);
             const regexS = new RegExp(/设置上班时间/);

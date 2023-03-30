@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@layui/layer-vue": "^1.6.0",
     "@viselect/vue": "^3.0.0-beta.13",
     "@vitejs/plugin-vue-jsx": "^1.3.10",
     "@web-tracing/vue": "^1.5.1",

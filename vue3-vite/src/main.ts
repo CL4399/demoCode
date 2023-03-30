@@ -25,6 +25,8 @@ const icons: any = Icons
 for (const i in icons) {
   app.component(i, icons[i])
 }
+import { layer } from "@layui/layer-vue"
+import '@layui/layer-vue/lib/index.css';
 app.use(router).use(pinia)
   // .use(tracing, {
   //     requestUrl: 'false',
@@ -35,7 +37,13 @@ app.use(router).use(pinia)
   //     error: true,
   // })
   .mount('#app')
+// import layer from "vue-layer-shadow";
+// import "vue-layer-shadow/lib/vue-layer.css";
+// import layer from "vue-layer";
+// import "vue-layer/lib/vue-layer.css";
+// app.config.globalProperties.$layer = layer(app);
 app.config.globalProperties.$message = message;
+app.config.globalProperties.$layer = layer;
 
 
 
