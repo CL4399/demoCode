@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <!-- <div>
         <button type="button" class="bg-indigo-500 animate-wiggle" disabled>
             <svg class="h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
         </button>
-    </div>
+    </div> -->
     <div id="btnWrapper">
         <div class="btn active">开灯</div>
         <div class="btn">关灯</div>
     </div>
     <br />
-    <div class="box-content">
+    <!-- <div class="box-content">
         <div class="box">box</div>
         <ButtonCom style="width: 100px" @click="change">change</ButtonCom>
         <ButtonCom style="width: 100px" @click="changeNum">change</ButtonCom>
@@ -26,7 +26,7 @@
         <template class="for-item" v-for="item of [1, 2, 3, 4, 5, 6, 7]" :key="item">
             <span>{{ item }}</span>
         </template>
-    </div>
+    </div> -->
 </template>
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch, defineAsyncComponent } from "vue"

@@ -1,5 +1,5 @@
 <template>
-    <div :style="{ backgroundColor: '#fff', margin: '10px', borderRadius: '10px', minHeight: '15vh' }">
+    <div :style="{ backgroundColor: '#fff', margin: '10px', borderRadius: '10px', minHeight: '40vh' }">
         <Card :bordered="false">
             <div>{{ info.title }}</div>
             <div>{{ info.content }}</div>

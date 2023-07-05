@@ -17,10 +17,9 @@ export default defineComponent({
                 },
             },
         } = getCurrentInstance() as ComponentInternalInstance
-
+        let layer: any = null
         const open = () => {
-            $message.success("open")
-            $layer.open({
+            layer = $layer.open({
                 title: "标题",
                 content: h(com, {
                     name: "123", //子组件参数传递
@@ -28,9 +27,16 @@ export default defineComponent({
                 }),
                 area: ["400px", "400px"],
             })
+            // $layer.drawer({
+            //     title: "标题",
+            //     content: "内容",
+            //     area: ["300px", "100%"],// 宽、高
+            //     offset: "r",
+            // })
         }
         const handleAdd = (e: any) => {
             console.log(e, "handleAdd")
+            $layer.close(layer)
         }
         return {
             open,
