@@ -10,7 +10,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-export default {
+export default { 
   name: 'Com',
   props: ["isShow"],
   data() {
