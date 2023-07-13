@@ -12,8 +12,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getCurrentInstance, ComponentInternalInstance, onMounted, ref, reactive } from 'vue'
-import { Button, message, Layout, LayoutContent, LayoutHeader, LayoutFooter } from 'ant-design-vue'
+import { onMounted, reactive } from 'vue'
+import {  Layout, LayoutContent, LayoutHeader, LayoutFooter } from 'ant-design-vue'
 import LeftVue from './Left.vue'
 import CenterVue from './Center.vue'
 import RightVue from './Right.vue'

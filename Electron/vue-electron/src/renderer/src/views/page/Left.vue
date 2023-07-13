@@ -17,7 +17,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
 import { Image } from 'ant-design-vue'
 </script>
 <style lang="less" scoped>

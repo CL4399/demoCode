@@ -27,7 +27,7 @@
   </div>
 </template>
 <script lang="ts">
-import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
+import { reactive, toRefs, defineComponent, onMounted } from 'vue'
 import { List, ListItem, ListItemMeta, Select, SelectOption } from 'ant-design-vue'
 //@ts-ignore
 import axios from 'axios'
@@ -48,7 +48,7 @@ interface DataType {
 
 export default defineComponent({
   components: { List, ListItem, ListItemMeta, Select, SelectOption },
-  setup(props: any, { emit }: any) {
+  setup() {
     let dataInfo = reactive({
       info: {
         success: true,

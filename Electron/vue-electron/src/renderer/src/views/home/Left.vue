@@ -12,16 +12,22 @@
       <!-- <div class="left_top_right"></div> -->
     </div>
     <div class="left_bottom">
-      <div class="left_bottom_center"></div>
+      <div class="left_bottom_center">
+        <Image
+          style="border-radius: 10px"
+          width="98%"
+          height="98%"
+          src=" https://api.vvhan.com/api/moyu"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
 import { Image } from 'ant-design-vue'
 </script>
 <style lang="less" scoped>
-@import "../../assets/css/styles.less";
+@import '../../assets/css/styles.less';
 .left {
   width: 100%;
   opacity: 0.9;
@@ -43,7 +49,7 @@ import { Image } from 'ant-design-vue'
   .left_bottom {
     margin: 5% 5% 0 5%;
     height: 62.5%;
-    background-color: #b3e6fa73;
+    background-color: #b3e6fa3a;
     border-radius: 60px 30px 60px 30px;
     display: flex;
     justify-content: center;
@@ -53,7 +59,7 @@ import { Image } from 'ant-design-vue'
       width: 90%;
       height: 90%;
       border-radius: 50px 90px 50px 90px;
-      background-color: #ffffffe0;
+      // background-color: #ffffffe0;
     }
   }
   .left_top_left:hover {

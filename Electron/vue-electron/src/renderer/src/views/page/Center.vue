@@ -53,7 +53,7 @@
   </div>
 </template>
 <script lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent, onMounted } from 'vue'
+import { reactive, toRefs, defineComponent, onMounted } from 'vue'
 import axios from 'axios'
 import { Descriptions, DescriptionsItem, Select, SelectOption } from 'ant-design-vue'
 // @ts-ignore
@@ -65,7 +65,7 @@ export default defineComponent({
     Select,
     SelectOption
   },
-  setup(props: any, { emit }: any) {
+  setup() {
     let dataInfo = reactive({
       info: {
         title: '',

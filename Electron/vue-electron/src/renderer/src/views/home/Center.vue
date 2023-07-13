@@ -34,28 +34,39 @@
         </Descriptions>
         <div class="container">
           <p>
-            <a href="#"> {{ info.fortunetext.all }} </a>
+            <a> {{ info.fortunetext.all }} </a>
           </p>
           <p>
-            <a href="#"> {{ info.fortunetext.work }} </a>
+            <a> {{ info.fortunetext.work }} </a>
           </p>
         </div>
       </div>
     </div>
     <div class="center_bottom">
-      <div class="center_bottom_left">
+      <!-- <div class="center_bottom_left">
         <div calss="container">
           <p><a href="#" @click="clickOpen"> RED </a></p>
         </div>
+      </div> -->
+      <div class="center_bottom_right" :style="{ 'background-image': `url(${msgInfo.pic})` }">
+        <Carousel :autoplay="true" :autoplaySpeed="1000 * 30" :beforeChange="beforeChange">
+          <div class="center_bottom_right_content">
+            <div>{{ msgInfo.en }}</div>
+            <div>{{ msgInfo.zh }}</div>
+          </div>
+          <div class="center_bottom_right_content">
+            <div>{{ msgInfo.en }}</div>
+            <div>{{ msgInfo.zh }}</div>
+          </div>
+        </Carousel>
       </div>
-      <div class="center_bottom_right"></div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent, onMounted } from 'vue'
+import { reactive, toRefs, defineComponent, onMounted } from 'vue'
 import axios from 'axios'
-import { Descriptions, DescriptionsItem, Select, SelectOption } from 'ant-design-vue'
+import { Descriptions, DescriptionsItem, Select, SelectOption, Carousel } from 'ant-design-vue'
 // @ts-ignore
 import { useRouter } from 'vue-router'
 export default defineComponent({
@@ -63,9 +74,10 @@ export default defineComponent({
     Descriptions,
     DescriptionsItem,
     Select,
-    SelectOption
+    SelectOption,
+    Carousel
   },
-  setup(props: any, { emit }: any) {
+  setup() {
     let dataInfo = reactive({
       info: {
         title: '',
@@ -115,14 +127,20 @@ export default defineComponent({
         { value: 'capricorn', label: '摩羯座' },
         { value: 'aquarius', label: '水瓶座' },
         { value: 'pisces', label: '双鱼座' }
-      ]
+      ],
+      msgInfo: {
+        month: '7',
+        day: '13',
+        zh: '无数人走进和走出你的生活，但只有真正的朋友会在你的心里留下足迹。',
+        en: 'Many people will walk in and out of your life, but only true friends will leave footprints in your heart.',
+        pic: 'https://staticedu-wps.cache.iciba.com/image/7eec7cadfcc61cbebc851e1d4ef748ad.jpg'
+      }
     })
     let router = useRouter()
     const getInfo = () => {
       axios
         .get(`https://api.vvhan.com/api/horoscope?type=${dataInfo.type}&time=today`)
         .then((response) => {
-          console.log(response.data.data, 'response')
           dataInfo.info = response.data.data
         })
         .catch((error) => {
@@ -133,8 +151,25 @@ export default defineComponent({
           // 总是会执行
         })
     }
+
+    const getMsg = () => {
+      axios
+        .get('https://api.vvhan.com/api/en?type=sj')
+        .then((response) => {
+          dataInfo.msgInfo = response.data.data
+        })
+        .catch((error) => {
+          // 处理错误情况
+          console.log(error, 'error')
+        })
+        .then(() => {
+          // 总是会执行
+        })
+    }
+
     onMounted(() => {
       getInfo()
+      getMsg()
     })
     const handleChange = () => {
       getInfo()
@@ -142,10 +177,14 @@ export default defineComponent({
     const clickOpen = () => {
       router.push('/page')
     }
+    const beforeChange = () => {
+      getMsg()
+    }
     return {
       ...toRefs(dataInfo),
       handleChange,
-      clickOpen
+      clickOpen,
+      beforeChange
     }
   }
 })
@@ -189,9 +228,25 @@ export default defineComponent({
       border-radius: 20px;
     }
     .center_bottom_right {
-      width: 55%;
-      background-color: #6dc9ee83;
+      width: 100%;
+      background-color: #ceeaf554;
+      background-size: 100% 100%;
       border-radius: 20px;
+      padding: 10px;
+
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+      .center_bottom_right_content {
+        height: 200px;
+        font-size: 20px;
+        color: #fff;
+        font-weight: 1000;
+        padding-top: 6%;
+        text-shadow: 0 0 100px #fff, 0 0 500px #fff, 0 0 1000px #fff, 0 0 10px #11ffcb,
+          0 0 10px #11ffcb, 0 0 10px #11ffcb, 0 0 10px #11ffcb, 0 0 10px #11ffcb;
+      }
     }
   }
   .center_top:hover {
@@ -206,10 +261,10 @@ export default defineComponent({
   }
 
   .center_bottom_left:hover {
-    animation: move 0.5s linear forwards;
+    animation: move 1s linear forwards;
   }
   .center_bottom_right:hover {
-    animation: move 0.5s linear forwards;
+    animation: move 1s linear forwards;
   }
 }
 </style>

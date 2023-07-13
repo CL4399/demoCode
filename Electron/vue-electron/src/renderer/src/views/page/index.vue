@@ -4,11 +4,11 @@
   </div>
 </template>
 <script lang="ts">
-import { reactive, ref, toRefs, provide, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 // @ts-ignore
 import { useRouter } from 'vue-router'
 export default defineComponent({
-  setup(props: any, { emit }: any) {
+  setup() {
     let router = useRouter()
     const toHome = () => {
       router.push('/home')
