@@ -1,0 +1,34 @@
+{
+  "files": [],
+
+  "references": [{
+    "path": "./tsconfig.node.json"
+  }, {
+    "path": "./tsconfig.web.json"
+  }],
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["node"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "views/*": ["src/views/*"],
+      "common/*": ["src/common/*"],
+      "assets/*": ["src/assets/*"],
+      "req/*": ["src/req/*"],
+      "store/*": ["src/store/*"],
+      "router/*": ["src/router/*"],
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+}
