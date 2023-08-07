@@ -151,7 +151,7 @@ export default defineComponent({
           // 总是会执行
         })
     }
-
+  
     const getMsg = () => {
       axios
         .get('https://api.vvhan.com/api/en?type=sj')
@@ -166,7 +166,6 @@ export default defineComponent({
           // 总是会执行
         })
     }
-
     onMounted(() => {
       getInfo()
       getMsg()
