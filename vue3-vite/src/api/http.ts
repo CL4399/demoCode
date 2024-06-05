@@ -7,7 +7,7 @@ export const BaseUrl_TEST = 'http://localhost:3000'
 const ERR_OK = 0
 const requestAxios = axios.create({
     // baseURL: 'http://mcs.snssdk.com',
-    baseURL: '/api'
+    // baseURL: '/api'
 })
 
 interface errorCodeType {

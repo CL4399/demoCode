@@ -60,10 +60,6 @@ export default defineComponent({
       type: 'itInfo',
       selectData: [
         {
-          value: 'itInfo',
-          label: 'IT资讯热榜'
-        },
-        {
           value: 'zhihuHot',
           label: '知乎热榜'
         },
@@ -90,7 +86,7 @@ export default defineComponent({
     })
     const getInfo = () => {
       axios
-        .get(`https://api.vvhan.com/api/hotlist?type=${dataInfo.type}`)
+        .get(`https://api.vvhan.com/api/hotlist/${dataInfo.type}`)
         .then((response) => {
           // 处理成功情况
           // console.log(response.data, 'response')

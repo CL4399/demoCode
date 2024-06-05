@@ -4,13 +4,13 @@
       <Select
         ref="select"
         v-model:value="type"
-        style="width: 20%; font-size: 22px; letter-spacing: 5px"
+        style="width: 25%; font-size: 22px; letter-spacing: 5px"
         @change="handleChange"
         :bordered="false"
         :showArrow="false"
       >
         <SelectOption v-for="item of selectData" :value="item.value">
-          <span class="center_top_title_text"> {{ item.label }}</span>
+          <span class="center_top_title_text">{{ item.label }}</span>
         </SelectOption>
       </Select>
       <div class="center_top_content">

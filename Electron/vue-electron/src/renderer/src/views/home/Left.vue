@@ -6,7 +6,7 @@
           style="border-radius: 10px"
           width="100%"
           height="100%"
-          src="https://api.vvhan.com/api/ip"
+          src="https://api.vvhan.com/api/wallpaper/views"
         />
       </div>
       <!-- <div class="left_top_right"></div> -->

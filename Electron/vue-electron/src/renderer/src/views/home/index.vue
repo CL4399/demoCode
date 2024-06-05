@@ -7,7 +7,7 @@
         <CenterVue style="width: 50%"></CenterVue>
         <RightVue style="width: 25%"></RightVue>
       </LayoutContent>
-      <LayoutFooter class="footer" style="padding: 0 15px">凡是过往 皆是序章</LayoutFooter>
+      <LayoutFooter class="footer" style="padding: 0 15px" @click="clickPage">凡是过往 皆是序章</LayoutFooter>
     </Layout>
   </div>
 </template>
@@ -18,10 +18,16 @@ import LeftVue from './Left.vue'
 import CenterVue from './Center.vue'
 import RightVue from './Right.vue'
 import moment from 'moment'
+// @ts-ignore
+import { useRouter } from 'vue-router'
+let router = useRouter()
 let dataInfo = reactive({
   timer: null as NodeJS.Timeout | null,
   time: moment().format('YYYY-MM-DD HH:mm:ss')
 })
+let clickPage = ()=>{
+    router.push('/read')
+}
 onMounted(() => {
   dataInfo.timer = setInterval(() => {
     dataInfo.time = moment().format('YYYY-MM-DD HH:mm:ss')

@@ -7,7 +7,8 @@ import 'element-plus/dist/index.css'
 import 'ant-design-vue/dist/antd.variable.min.css';
 import { message, } from 'ant-design-vue';
 import * as Icons from '@ant-design/icons-vue'
-
+import vue3TreeOrg from 'vue3-tree-org'
+import 'vue3-tree-org/lib/vue3-tree-org.css'
 const pinia = createPinia()
 const app = createApp(App)
 // 引入弹窗组件v3layer
@@ -18,7 +19,6 @@ const app = createApp(App)
 //         // 聚焦元素
 //         el.focus()
 //         el.innerText = "123"
-
 //     }
 // })
 const icons: any = Icons
@@ -27,7 +27,9 @@ for (const i in icons) {
 }
 import { layer } from "@layui/layer-vue"
 import '@layui/layer-vue/lib/index.css';
-app.use(router).use(pinia)
+//@ts-ignore
+import i18n from './locals'
+app.use(router).use(pinia).use(i18n).use(vue3TreeOrg)
   // .use(tracing, {
   //     requestUrl: 'false',
   //     appName: 'chengxh',

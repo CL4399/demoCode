@@ -2,7 +2,17 @@ import loadingAjax from '../http'
 
 export function login(params: any) {
     return loadingAjax({
-        url: '/admin/login',
+        url: '/api/login',
+        type: 'post',
+        data: params
+    })
+        ?.then(res => res).catch(err => {
+            return Promise.reject(err)
+        })
+}
+export function loginT(params: any) {
+    return loadingAjax({
+        url: '/home/login',
         type: 'post',
         data: params
     })

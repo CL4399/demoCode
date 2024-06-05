@@ -3,7 +3,7 @@
     <div class="page-content" @click="toHome">Welcome to my Electron</div>
   </div>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue'
 // @ts-ignore
 import { useRouter } from 'vue-router'

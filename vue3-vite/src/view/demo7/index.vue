@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: auto; height: 100%">
-        <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'created_at'" :arrData="dataSource">
+        <!-- <TableComVue :url="url" :columns="columns" :rowSelection="rowSelection" :rowKey="'created_at'" :arrData="dataSource">
             <template v-slot:title>
                 <Button @click="addNew">新增</Button>
                 <Button @click="del">删除</Button>
@@ -10,7 +10,9 @@
             <template v-slot:action>
                 <Button>删除</Button>
             </template>
-        </TableComVue>
+        </TableComVue> -->
+            <TableVue></TableVue>
+    
     </div>
 </template>
 <script lang="ts">
@@ -27,8 +29,9 @@ interface Str {
     [key: string]: string
 }
 import type { TableProps } from "ant-design-vue"
+import TableVue from "./BaseTable.vue"
 export default defineComponent({
-    components: { TableComVue, TreeSelectComVue, Button },
+    components: { TableComVue, TreeSelectComVue, Button, TableVue},
     setup(props: any, proxy: any) {
         const {
             appContext: {
