@@ -41,42 +41,63 @@ export default {
       tableList: [
         {
           process: 0.0,
-          planNo: 'BP2022060701',
+          planNo: '1',
           endDate: '2022-06-07',
           type: '砌块',
           startDate: '2022-06-07',
         },
         {
           process: 0.0,
-          planNo: 'BP2022060701',
+          planNo: '2',
           endDate: '2022-06-07',
           type: '砌块',
           startDate: '2022-06-07',
         },
         {
           process: 0.0,
-          planNo: 'BP2022060701',
+          planNo: '3',
           endDate: '2022-06-07',
           type: '砌块',
           startDate: '2022-06-07',
         },
         {
           process: 0.0,
-          planNo: 'BP2022060701',
+          planNo: '4',
           endDate: '2022-06-07',
           type: '砌块',
           startDate: '2022-06-07',
         },
         {
           process: 0.0,
-          planNo: 'BP2022060701',
+          planNo: '5',
           endDate: '2022-06-07',
           type: '砌块',
           startDate: '2022-06-07',
         },
         {
           process: 0.0,
-          planNo: 'WP2022061301',
+          planNo: '6',
+          endDate: '2022-06-13',
+          type: '墙板',
+          startDate: '2022-06-13',
+        },
+        {
+          process: 0.0,
+          planNo: '7',
+          endDate: '2022-06-13',
+          type: '墙板',
+          startDate: '2022-06-13',
+        },
+        {
+          process: 0.0,
+          planNo: '8',
+          endDate: '2022-06-13',
+          type: '墙板',
+          startDate: '2022-06-13',
+        },
+        {
+          process: 0.0,
+          planNo: '9',
           endDate: '2022-06-13',
           type: '墙板',
           startDate: '2022-06-13',
@@ -114,7 +135,7 @@ export default {
         this.tableList = this.tableList.concat(this.tableList);
         this.tableTimerFun();
       } else {
-        //this.fillTableList();
+        this.fillTableList();
       }
     },
     //当数据过少时，不触发自动轮播事件，并填充没有数据的行，参数根据实际情况修改即可

@@ -61,6 +61,21 @@ const routes = [
         name: "Read",
         component: () => import("../view/read/index.vue"),
       },
+      {
+        path: "/LazyImageLoading",
+        name: "LazyImageLoading",
+        component: () => import("../view/lazyImageLoading/index.vue"),
+      },
+      {
+        path: "/vueComponent",
+        name: "VueComponent",
+        component: () => import("../view/vueComponent/index.vue"),
+      },
+      {
+        path: "/canvas",
+        name: "canvas",
+        component: () => import("../view/canvas/index.vue"),
+      },
     ],
   },
   {

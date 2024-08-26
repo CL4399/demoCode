@@ -19,7 +19,7 @@ export default defineComponent({
     const store = useCounterStore();
     const login = () => {
       sessionStorage.setItem('authorize', '1235465465435145634');
-      route.push('/demo1');
+      route.push('/other');
       store.setShowSettingOutlined(true);
     };
 

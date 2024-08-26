@@ -44,7 +44,7 @@ const demoApi = [
                     {
                         name: "Modal与ant树形选择",
                         id: "2-2-2",
-                        path: "/demo5",
+                        path: "/demo6",
                         icon: "html5-outlined"
                     },
                     {
@@ -112,6 +112,24 @@ const demoApi = [
                         name: "Read",
                         id: "3-1-7",
                         path: "/read",
+                        icon: "font-colors-outlined"
+                    },
+                    {
+                        name: "LazyImageLoading",
+                        id: "3-1-8",
+                        path: "/lazyImageLoading",
+                        icon: "font-colors-outlined"
+                    },
+                    {
+                        name: "VueComponent",
+                        id: "3-1-9",
+                        path: "/vueComponent",
+                        icon: "font-colors-outlined"
+                    },
+                    {
+                        name: "Canvas",
+                        id: "3-1-9",
+                        path: "/canvas",
                         icon: "font-colors-outlined"
                     },
                 ],

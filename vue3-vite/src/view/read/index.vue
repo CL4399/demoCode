@@ -34,7 +34,7 @@
       </div>
     </Card>
     <Card title="原生滚动列表" style="width: 100%; height: 300px; margin-top: 20px">
-      <scrollTable ref="refScroll" :datas="datas" />
+      <scrollTable />
     </Card>
     <Card title="ELement滚动列表" style="width: 100%; height: auto; margin-top: 20px">
       <dt-srcoll :newData="dutyRateData" :menuData="menuData" :lineHeight="3" :tableHeight="50" :isAgain="true">
