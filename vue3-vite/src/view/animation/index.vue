@@ -4,11 +4,121 @@
             <svg class="h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
         </button>
     </div> -->
-  <div id="btnWrapper" v-back="isVisible">
-    <div class="btn active">开灯</div>
-    <div class="btn">关灯</div>
+  <div style="width: 100%; height: 100%; overflow: auto">
+    <div id="btnWrapper" v-back="isVisible">
+      <div class="btn active">开灯</div>
+      <div class="btn">关灯</div>
+    </div>
+    <br />
+    <Card title="Snow Scratch" style="width: 100%">
+      <div id="snow">
+        <p>Emilia</p>
+        <div class="card">
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+          <div class="snow"></div>
+        </div>
+      </div>
+    </Card>
   </div>
-  <br />
+
   <!-- <div class="box-content">
         <div class="box">box</div>
         <ButtonCom style="width: 100px" @click="change">change</ButtonCom>
@@ -31,12 +141,13 @@
 <script lang="ts">
 import { reactive, ref, toRefs, provide, defineComponent, onMounted, watch, defineAsyncComponent } from 'vue';
 import cssVars from 'css-vars-ponyfill';
-import { Button, Input } from 'ant-design-vue';
+import { Button, Input, Card } from 'ant-design-vue';
 import { https } from '../../serve/https';
 export default defineComponent({
   components: {
     Button,
     Input,
+    Card,
     ButtonCom: defineAsyncComponent(() => import('../customButton/Button/Button')),
     demo1Vue: defineAsyncComponent(() => import('./demo1.vue')),
     ComVue: defineAsyncComponent(() => import('./com.vue')),
@@ -289,5 +400,61 @@ body {
     background-color: red;
     color: var(--c-boxc);
   }
+}
+
+#snow {
+  display: flex;
+  height: 500px;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: black;
+}
+
+.card {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  background: black;
+  filter: blur(10px) contrast(50);
+
+  .snow {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+
+    &::after {
+      position: absolute;
+      content: '';
+      left: 0;
+      width: inherit;
+      height: inherit;
+      background: white;
+      transition: 30s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    &:hover::after {
+      transform: scale(0);
+      transition-duration: 0.3s;
+    }
+  }
+}
+
+p {
+  position: absolute;
+  top: 60%;
+  left: 20%;
+  z-index: 9999;
+  color: white;
+  font-family: Lato, sans-serif;
+  font-size: 4em;
+  line-height: 1em;
+  letter-spacing: 0.1em;
+  transform: translate(-47%, -160%);
+  pointer-events: none;
+  filter: blur(1px) contrast(20);
 }
 </style>

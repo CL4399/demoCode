@@ -128,7 +128,7 @@ const demoApi = [
                     },
                     {
                         name: "Canvas",
-                        id: "3-1-9",
+                        id: "3-1-10",
                         path: "/canvas",
                         icon: "font-colors-outlined"
                     },

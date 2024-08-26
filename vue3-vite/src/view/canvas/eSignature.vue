@@ -24,7 +24,6 @@ export default defineComponent({
       const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
       const clearButton = document.getElementById('clearButton') as HTMLButtonElement;
       const saveButton = document.getElementById('saveButton') as HTMLButtonElement;
-
       let drawing = false;
       let lastX = 0;
       let lastY = 0;
