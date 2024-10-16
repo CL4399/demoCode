@@ -117,6 +117,13 @@
         </div>
       </div>
     </Card>
+    <Card title="Responsive Navigation Bar" style="margin: 10px 0; width: 100%; background: #111">
+      <ResponsiveNavigationBar></ResponsiveNavigationBar>
+    </Card>
+    <Card title="Glass Panel" style="margin: 10px 0; width: 100%; background: linear-gradient(to bottom, #ccc, #333)"><GlassPanel></GlassPanel></Card>
+    <Card title="Table Wrapper" style="margin: 10px 0; background: linear-gradient(200deg, #e8e8e8, #a8edea, #d1fffc, #e8e8e8); overflow: hidden">
+      <TableWrapper></TableWrapper>
+    </Card>
   </div>
 
   <!-- <div class="box-content">
@@ -169,6 +176,9 @@ export default defineComponent({
       timeout: 3000,
     }),
     BUTTON: defineAsyncComponent(() => import('./BUTTON')),
+    ResponsiveNavigationBar: defineAsyncComponent(() => import('./ResponsiveNavigationBar/index.vue')),
+    GlassPanel: defineAsyncComponent(() => import('./GlassPanel/index.vue')),
+    TableWrapper: defineAsyncComponent(() => import('./TableWrapper/index.vue')),
   },
   setup(props: any, { emit }: any) {
     let dataInfo = reactive({
@@ -446,7 +456,7 @@ body {
 p {
   position: absolute;
   top: 60%;
-  left: 20%;
+  left: 16%;
   z-index: 9999;
   color: white;
   font-family: Lato, sans-serif;

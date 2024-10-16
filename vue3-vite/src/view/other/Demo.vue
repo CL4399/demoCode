@@ -71,7 +71,6 @@ export default defineComponent({
     const { proxy }: any = getCurrentInstance();
     const info = getCurrentInstance();
     console.log(router, info, proxy, 'routerrouterrouter?');
-    $message.success('asd');
     const store = useCounterStore();
     let obj = computed(() => {
       return store;

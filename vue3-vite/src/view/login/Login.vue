@@ -1,372 +1,289 @@
 <template>
   <div class="login-wrap">
-    <div class="container right-panel-active">
-      <!-- Sign Up -->
-      <div class="container__form container--signup">
-        <Form action="#" class="form" id="form1">
-          <h2 class="form__title">Sign Up</h2>
-
-          <FormItem label="" name="username" style="width: 350px" :rules="[{ required: true, message: 'Please input your username!' }]">
-            <Input class="input" v-model:value="userName" />
-          </FormItem>
-
-          <FormItem label="" style="width: 350px" name="username" :rules="[{ required: true, message: 'Please input your username!' }]">
-            <Row justify="space-around" align="middle">
-              <Col :span="18"> <Input class="input" type="password" v-model:value="userPassword" /> </Col>
-              <Col :span="6">
-                <div class="body_captcha">
-                  <p>Emilia</p>
-                  <div class="card">
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </FormItem>
-
-          <span class="link">Please enter your account and password !</span>
-          <button class="btn" @click="login">Sign Up</button>
-        </Form>
-      </div>
-
-      <!-- Sign In -->
-      <div class="container__form container--signin">
-        <Form action="#" class="form" id="form2">
-          <h2 class="form__title">Sign In</h2>
-          <FormItem label="" name="username" style="width: 350px" :rules="[{ required: true, message: 'Please input your username!' }]">
-            <Input class="input" v-model:value="userName" />
-          </FormItem>
-
-          <FormItem label="" style="width: 350px" name="username" :rules="[{ required: true, message: 'Please input your username!' }]">
-            <Row justify="space-around" align="middle">
-              <Col :span="18"> <Input class="input" type="password" v-model:value="userPassword" /> </Col>
-              <Col :span="6">
-                <div class="body_captcha">
-                  <p>Emilia</p>
-                  <div class="card">
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                    <div class="snow"></div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </FormItem>
-          <a href="#" class="link">Forgot your password?</a>
-          <button class="btn">Sign In</button>
-        </Form>
-      </div>
-
-      <!-- Overlay -->
-      <div class="container__overlay">
-        <div class="overlay">
-          <div class="overlay__panel overlay--left">
-            <button class="btn" id="signIn">Sign In</button>
-          </div>
-          <div class="overlay__panel overlay--right">
-            <button class="btn" id="signUp">Sign Up</button>
-          </div>
+    <div class="container">
+      <div class="form-box" ref="form_box">
+        <div class="register-box hidden" ref="register_box">
+          <h1>register</h1>
+          <input type="text" placeholder="用户名" />
+          <input type="email" placeholder="邮箱" />
+          <input type="password" placeholder="密码" />
+          <input type="password" placeholder="确认密码" />
+          <button>注册</button>
         </div>
+        <div class="login-box" ref="login_box">
+          <h1>login</h1>
+          <Input type="text" style="letter-spacing: 3px" v-model:value="userName" placeholder="用户名" />
+          <Row align="middle" style="width: 86%">
+            <Col :span="16">
+              <InputPassword class="input" type="password" style="letter-spacing: 5px" v-model:value="userPassword" placeholder="密码" />
+            </Col>
+            <Col :span="8" class="Login-captcha">
+              <img style="width: 100px; height: 40px" ref="Login_captcha" src="./images/code.png" alt="" />
+            </Col>
+          </Row>
+          <button @click="login">登录</button>
+        </div>
+      </div>
+      <div class="con-box left">
+        <h2>欢迎来到<span>Nos</span></h2>
+        <img src="./images/1.png" alt="" />
+        <p>已有账号</p>
+        <button id="login" @click="loginTo">去登录</button>
+      </div>
+      <div class="con-box right">
+        <h2>欢迎来到<span>Nos</span></h2>
+        <img src="./images/2.png" alt="" />
+        <p>没有账号？</p>
+        <button id="register" @click="register">去注册</button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent, onMounted, computed, toRefs } from 'vue';
+import { ref, reactive, defineComponent, onMounted, computed, toRefs, getCurrentInstance, ComponentInternalInstance } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../../store/index';
-import { Button, Form, FormItem, Row, Col } from 'ant-design-vue';
-
+import { Button, Form, FormItem, Row, Col, Input } from 'ant-design-vue';
+const InputPassword = Input.Password;
 export default defineComponent({
-  components: { Button, Form, FormItem, Row, Col },
+  components: { Button, Form, FormItem, Row, Col, Input, InputPassword },
   setup() {
+    const {
+      appContext: {
+        config: {
+          globalProperties: { $message },
+        },
+      },
+    } = getCurrentInstance() as ComponentInternalInstance;
     const route = useRouter();
     const store = useCounterStore();
+    let form_box = ref();
+    let register_box = ref();
+    let login_box = ref();
     const login = () => {
       sessionStorage.setItem('authorize', '1235465465435145634');
       route.push('/other');
       store.setShowSettingOutlined(true);
+      $message.success('Welcome back!');
     };
     let dataInfo = reactive({
       userName: 'admin',
       userPassword: '123456',
     });
-    onMounted(() => {
-      store.setShowSettingOutlined(false);
-      const signInBtn = document.getElementById('signIn') as HTMLElement;
-      const signUpBtn = document.getElementById('signUp');
-      const fistForm = document.getElementById('form1');
-      const secondForm = document.getElementById('form2');
-      const container = document.querySelector('.container');
+    const register = () => {
+      form_box.value.style.transform = 'translateX(80%)';
+      login_box.value.classList.add('hidden');
+      register_box.value.classList.remove('hidden');
+    };
+    const loginTo = () => {
+      form_box.value.style.transform = 'translateX(0%)';
+      register_box.value.classList.add('hidden');
+      login_box.value.classList.remove('hidden');
+    };
+    onMounted(() => {});
 
-      signInBtn.addEventListener('click', () => {
-        container?.classList.remove('right-panel-active');
-      });
-
-      signUpBtn?.addEventListener('click', () => {
-        container?.classList.add('right-panel-active');
-      });
-
-      fistForm?.addEventListener('submit', (e) => e.preventDefault());
-      secondForm?.addEventListener('submit', (e) => e.preventDefault());
-    });
-
-    return { login, ...toRefs(dataInfo) };
+    return { login, form_box, register_box, login_box, ...toRefs(dataInfo), register, loginTo };
   },
 });
 </script>
 <style lang="less" scoped>
-// @import url(https://fonts.googleapis.com/css?family=Lato);
 .login-wrap {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: grid;
-  place-items: center;
-  width: 1000px;
-  height: 500px;
-  position: relative;
-  top: 25%;
-  left: 25%;
-}
-
-.form__title {
-  font-weight: 300;
-  margin: 0;
-  margin-bottom: 1.25rem;
-}
-
-.link {
-  color: #333;
-  font-size: 0.9rem;
-  margin: 1.5rem 0;
-  text-decoration: none;
+  background: transparent;
 }
 
 .container {
-  background-color: transparent;
-  border-radius: 0.7rem;
-  height: 758px;
-  max-width: 420px;
-  overflow: hidden;
-  width: 100%;
-}
-
-.container__form {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  transition: all 0.6s ease-in-out;
-}
-
-.container--signin {
-  left: 0;
-  width: 50%;
-  z-index: 2;
-}
-
-.container.right-panel-active .container--signin {
-  transform: translateX(100%);
-}
-
-.container--signup {
-  left: 0;
-  opacity: 0;
-  width: 50%;
-  z-index: 1;
-}
-
-.container.right-panel-active .container--signup {
-  animation: show 0.6s;
-  opacity: 1;
-  transform: translateX(100%);
-  z-index: 5;
-}
-
-.container__overlay {
-  height: 100%;
-  left: 50%;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  transition: transform 0.6s ease-in-out;
-  width: 50%;
-  z-index: 100;
-}
-
-.container.right-panel-active .container__overlay {
-  transform: translateX(-100%);
-}
-
-.overlay {
-  background-color: #008997;
-  background: url('../../assets/image/3.png');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  left: -100%;
-  position: relative;
-  transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
-  width: 200%;
-}
-
-.container.right-panel-active .overlay {
-  transform: translateX(50%);
-}
-
-.overlay__panel {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  text-align: center;
-  top: 0;
-  transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
-  width: 50%;
-}
-
-.overlay--left {
-  transform: translateX(-20%);
-}
-
-.container.right-panel-active .overlay--left {
-  transform: translateX(0);
-}
-
-.overlay--right {
-  right: 0;
-  transform: translateX(0);
-}
-
-.container.right-panel-active .overlay--right {
-  transform: translateX(20%);
-}
-
-.btn {
-  background-color: #0367a6;
-  background-image: linear-gradient(90deg, #0367a6 0%, #008997 74%);
-  border-radius: 20px;
-  border: 1px solid #0367a6;
-  color: #e9e9e9;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: bold;
-  letter-spacing: 0.1rem;
-  padding: 0.9rem 4rem;
-  text-transform: uppercase;
-  transition: transform 80ms ease-in;
-}
-
-.form > .btn {
-  margin-top: 2rem;
-}
-
-.btn:active {
-  transform: scale(0.95);
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.form {
-  background-color: rgba(255, 255, 255, 0.3); /* 半透明背景 */
-  backdrop-filter: blur(10px); /* 背景模糊 */
-  -webkit-backdrop-filter: blur(10px); /* 兼容老版本 Safari */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 3rem;
-  height: 100%;
-  text-align: center;
-  box-shadow: 1px 1px 10px #ccc;
-  border-radius: 0.7rem;
-}
-
-.input {
   background-color: #fff;
-  border: none;
-  padding: 0.9rem 0.9rem;
-  margin: 0.5rem 0;
+  width: 750px;
+  height: 415px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.form-box {
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  background-color: #7f7581;
+  width: 420px;
+  height: 500px;
+  border-radius: 5px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: 0.5s ease-in-out;
+}
+
+.register-box,
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
-@keyframes show {
-  0%,
-  49.99% {
-    opacity: 0;
-    z-index: 1;
-  }
-
-  50%,
-  100% {
-    opacity: 1;
-    z-index: 5;
-  }
+.hidden {
+  display: none;
+  transition: 0.5s;
 }
-@baseFontSize: 50px;
-.body_captcha {
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 5px;
+}
+
+input {
+  background-color: transparent;
+  width: 70%;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 0;
+  text-indent: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+input::placeholder {
+  color: #fff;
+}
+
+input:focus {
+  color: #9f89a3;
+  outline: none;
+  border-bottom: 1px solid #a262ad80;
+  transition: 0.5s;
+}
+
+input:focus::placeholder {
+  opacity: 0;
+}
+/deep/.ant-input {
+  letter-spacing: 5px;
+  background-color: transparent;
+  width: 70%;
+  color: #fff;
+  text-indent: 10px;
+  margin: 8px 0;
+}
+.input {
+  background-color: transparent;
+  width: 70%;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 0;
+  text-indent: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.input::placeholder {
+  color: transparent;
+}
+
+.input:focus {
+  color: #9f89a3;
+  outline: none;
+  border-bottom: 1px solid #a262ad80;
+  transition: 0.5s;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+.form-box button {
+  width: 70%;
+  margin-top: 35px;
+  background-color: #f6f6f6;
+  outline: none;
+  border-radius: 8px;
+  padding: 13px;
+  color: #a262ad;
+  letter-spacing: 2px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-box button:hover {
+  background-color: #a262ad;
+  color: #f6f6f6;
+  transition: background-color 0.5s ease;
+}
+
+.con-box {
+  width: 50%;
   display: flex;
-  height: 50px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.con-box.left {
+  left: -2%;
+}
+
+.con-box.right {
+  right: -2%;
+}
+
+.con-box h2 {
+  color: #7f848f;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 3px;
   text-align: center;
-  background: #eee;
+  margin-bottom: 4px;
+}
 
-  .card {
-    width: @baseFontSize;
-    height: @baseFontSize;
-    display: flex;
-    background: #000;
-    filter: blur(10px) contrast(30);
+.con-box p {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #16181b;
+  text-align: center;
+}
 
-    .snow {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      border-radius: 100%;
-    }
-    .snow::after {
-      position: absolute;
-      content: '';
-      left: -100%;
-      top: 0;
-      width: inherit;
-      height: inherit;
-      background: #fff;
-      transition: 30s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    .snow:hover::after {
-      transform: scale(0);
-      transition-duration: 0.3s;
-    }
-  }
+.con-box span {
+  color: rgb(109, 91, 112);
+}
 
-  p {
-    position: absolute;
-    top: 60%;
-    left: 40%;
-    z-index: 9999;
-    color: white;
-    font-family: Lato, sans-serif;
-    line-height: 1em;
-    letter-spacing: 0.1em;
-    transform: translate(-20%, -80%);
-    pointer-events: none;
-  }
+.con-box img {
+  width: 150px;
+  height: 150px;
+  opacity: 0.9;
+  margin: 40px 0;
+}
+
+.con-box button {
+  margin-top: 3%;
+  background-color: #fff;
+  color: #39283b;
+  border: 1px solid #434044;
+  padding: 6px 10px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  outline: none;
+  cursor: pointer;
+}
+
+.con-box button:hover {
+  background-color: #d3b7d8;
+  color: #fff;
 }
 </style>
