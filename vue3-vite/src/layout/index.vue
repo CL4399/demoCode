@@ -227,6 +227,7 @@ export default defineComponent({
     };
     const loginOut = () => {
       sessionStorage.setItem('authorize', '');
+      store.setShowSettingOutlined(false);
       router.replace('/login');
     };
     const menusTitle = (item: any) => {

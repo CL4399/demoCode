@@ -107,7 +107,6 @@ export default {
       }
     );
     onMounted(() => {
-      store.setShowSettingOutlined(true);
       console.log('test-git', store.showSettingOutlined);
       store.setPrimaryColor(dataInfo.pureColor);
       window.addEventListener('load', (e) => {

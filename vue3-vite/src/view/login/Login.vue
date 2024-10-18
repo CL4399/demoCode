@@ -36,6 +36,24 @@
         <p>没有账号？</p>
         <button id="register" @click="register">去注册</button>
       </div>
+      <div class="square">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="circle">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -93,7 +111,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: transparent;
+  background: linear-gradient(200deg, #e3c5eb, #a9c1ed);
 }
 
 .container {
@@ -109,7 +127,7 @@ export default defineComponent({
   position: absolute;
   top: -10%;
   left: 5%;
-  background-color: #7f7581;
+  background: linear-gradient(200deg, #895b97, #869cc4);
   width: 420px;
   height: 500px;
   border-radius: 5px;
@@ -285,5 +303,99 @@ input:focus::placeholder {
 .con-box button:hover {
   background-color: #d3b7d8;
   color: #fff;
+}
+
+ul li {
+  position: absolute;
+  border: 1px solid #fff;
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  list-style: none;
+  opacity: 0;
+}
+
+.square li {
+  top: 40vh;
+  left: 0vw;
+  animation: square 10s linear infinite;
+}
+
+.square li:nth-child(2) {
+  top: 80vh;
+  left: -10vw;
+  animation-delay: 2s;
+}
+
+.square li:nth-child(3) {
+  top: 80vh;
+  left: 5vw;
+  animation-delay: 4s;
+}
+
+.square li:nth-child(4) {
+  top: 10vh;
+  left: -15vw;
+  animation-delay: 6s;
+}
+
+.square li:nth-child(5) {
+  top: 60vh;
+  left: 10vw;
+  animation-delay: 8s;
+}
+
+.circle li {
+  bottom: 0;
+  left: 55vw;
+  animation: circle 10s linear infinite;
+}
+
+.circle li:nth-child(2) {
+  left: 25vw;
+  animation-delay: 2s;
+}
+
+.circle li:nth-child(3) {
+  left: 15vw;
+  animation-delay: 6s;
+}
+
+.circle li:nth-child(4) {
+  left: 25vw;
+  animation-delay: 4s;
+}
+
+.circle li:nth-child(5) {
+  left: 40vw;
+  animation-delay: 8s;
+}
+
+@keyframes square {
+  0% {
+    transform: scale(0) rotateY(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(5) rotateY(1000deg);
+    opacity: 0;
+  }
+}
+
+@keyframes circle {
+  0% {
+    transform: scale(0) rotateY(0deg);
+    opacity: 1;
+    bottom: 0;
+    border-radius: 0;
+  }
+
+  100% {
+    transform: scale(5) rotateY(1000deg);
+    opacity: 0;
+    bottom: 90vh;
+    border-radius: 50%;
+  }
 }
 </style>
