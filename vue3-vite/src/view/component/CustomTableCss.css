@@ -1,0 +1,78 @@
+.resize-table-th {
+    position: relative;
+
+    .table-draggable-handle {
+        height: 100% !important;
+        bottom: 0;
+        left: auto !important;
+        right: -5px;
+        cursor: col-resize;
+        touch-action: none;
+        position: absolute;
+    }
+}
+
+.custom_table {
+    .ant-table-content {
+        .ant-table-tbody {
+            position: relative;
+        }
+    }
+}
+
+.ant-table-scroll>.ant-table-body {
+    overflow-x: auto !important;
+}
+
+.ant-table-row-cell-ellipsis {
+    position: relative;
+
+    &>div {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+.ant-table-thead>tr>th .anticon-filter,
+.ant-table-thead>tr>th .ant-table-filter-icon {
+    color: #00000088 !important;
+}
+
+.toolTip {
+    position: absolute;
+    max-width: 100%;
+    width: initial;
+    z-index: 999;
+
+
+
+
+}
+
+.tipHide {
+    display: none;
+}
+
+.toolTip :hover {
+    display: block;
+}
+
+.content {
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.arrow {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    position: absolute;
+    bottom: -6px;
+    left: 30px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.09);
+    transform: rotate(45deg);
+}

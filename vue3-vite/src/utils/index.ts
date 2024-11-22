@@ -59,6 +59,11 @@ function exportXLS(tableBody = [] as any[], tableHead = [] as any[], tableTitle 
     document.body.removeChild(oA);
     URL.revokeObjectURL(url)
 }
+
+
+
+
+
 export {
     exportXLS
 } 

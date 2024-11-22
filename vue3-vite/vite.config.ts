@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://api.example.com', // 你的/api接口的服务器地址
+        target: 'https://randomuser.me', // 你的/api接口的服务器地址
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
