@@ -1,7 +1,7 @@
 <script lang="ts">
 import { h, reactive } from 'vue';
 export default {
-  setup(props, { slots, attrs, emit }) {
+  setup() {
     const state = reactive({
       count: 0,
     });

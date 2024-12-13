@@ -9,6 +9,7 @@ import { message } from 'ant-design-vue';
 import * as Icons from '@ant-design/icons-vue';
 import vue3TreeOrg from 'vue3-tree-org';
 import 'vue3-tree-org/lib/vue3-tree-org.css';
+import * as iconsType from './common/icons' 
 const pinia = createPinia();
 const app = createApp(App);
 // 引入弹窗组件v3layer
@@ -52,3 +53,5 @@ app
 // app.config.globalProperties.$layer = layer(app);
 app.config.globalProperties.$message = message;
 app.config.globalProperties.$layer = layer;
+app.config.globalProperties.$icons = iconsType;
+

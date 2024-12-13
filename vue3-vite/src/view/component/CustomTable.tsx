@@ -6,6 +6,7 @@ import { usePagination } from 'vue-request';
 import { https } from '../../serve/https';
 import { ColumnType } from 'ant-design-vue/lib/table';
 import { watch } from 'fs';
+//@ts-ignore
 import { ResizeColumn } from './CustomTableType.ts';
 type APIParams = {
   results: number;
@@ -258,7 +259,7 @@ const CustomTableVue = defineComponent({
       https({
         baseUrl: props.url,
         method: 'GET',
-        data: { page: 1, results: 10, ...dataInfo.param },
+        data: { page: 1, results: 10, ...props.params },
       }).then(async (res) => {
         dataInfo.dataSource = JSON.parse(JSON.stringify(res.results));
         setTimeout(() => {
@@ -307,7 +308,7 @@ const CustomTableVue = defineComponent({
           // 可伸缩列 是否可拖动调整宽度，此时 width 必须是 number 类型
           onResizeColumn={handleResizeColumn}
           expandColumnWidth={15}
-          expandFixed='right'
+          expandFixed="right"
         >
           {{
             ...slots,

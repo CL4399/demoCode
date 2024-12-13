@@ -45,37 +45,35 @@
         <span style="color: aqua">Name</span>
       </template>
     </template>
-    <template #bodyCell="{ text, record, index, column }">
+    <template #bodyCell="{ record, column }">
       <template v-if="column.key === 'gender'">
         <span style="color: red"> {{ record[column.key] }}</span>
       </template>
     </template>
     <!-- input搜索 -->
-    <!-- <div v-for="item of inputSearch" :key="item" #slot="`${item}_filter`" style="padding: 8px">
-      <a-input-search
-        :allowClear="true"
-        v-model="params[item]"
-        :maxLength="200"
-        @search="(value, e) => search(value, item, e)"
-        :placeholder="$t('global.please_input')"
-        enter-button
-      />
-    </div> -->
-    <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }">
-      <div style="padding: 8px">
-        <a-input
+    <template #customFilterDropdown="{ selectedKeys, column }">
+      <div v-if="column.title === 'gender'" style="padding: 8px">
+        <div style="margin-bottom: 8px">
+          <Select
+            v-model:value="params[column.key]"
+            show-search
+            placeholder="请选择"
+            style="width: 200px"
+            :options="$icons.types"
+            @change="search"
+          ></Select>
+        </div>
+      </div>
+      <div style="padding: 8px" v-else>
+        <a-input-search
           ref="searchInput"
           :placeholder="`Search ${column.dataIndex}`"
           :value="selectedKeys[0]"
           style="width: 188px; margin-bottom: 8px; display: block"
           @change="(e) => change(e.target.value, column.dataIndex)"
-          @pressEnter="search(selectedKeys, confirm, column.dataIndex)"
+          @pressEnter="search"
+          @search="search"
         />
-        <a-button type="primary" size="small" style="width: 90px; margin-right: 8px" @click="search(selectedKeys, confirm, column.dataIndex)">
-          <template #icon><SearchOutlined /></template>
-          Search
-        </a-button>
-        <a-button size="small" style="width: 90px" @click="handleReset(clearFilters, column.dataIndex)"> Reset </a-button>
       </div>
     </template>
 
@@ -95,19 +93,21 @@
 </template>
 <script lang="ts">
 import { reactive, ref, toRefs, defineComponent, getCurrentInstance } from 'vue';
-import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
 import type { TableColumnsType } from 'ant-design-vue';
-import { Table as aTable, Tag as aTag, Divider as aDivider, Input as aInput, Button as aButton } from 'ant-design-vue';
+import { Table as aTable, Tag as aTag, Divider as aDivider, Input as aInput, Button as aButton, Select } from 'ant-design-vue';
+//@ts-ignore
 import CustomTableVue from '../component/CustomTable.tsx';
+//@ts-ignore
 import tableMixin from '../../common/table';
+const aInputSearch = aInput.Search;
 export default defineComponent({
-  components: { CustomTableVue, aTable, aTag, aDivider, aInput, aButton },
+  components: { CustomTableVue, aTable, aTag, aDivider, aInput, aButton, Select, aInputSearch },
   mixins: [tableMixin('Modules_table')],
   setup(props, { emit, slots }) {
     function handleResizeColumn(w: any, col: any) {
       col.width = w;
     }
-    const change = (value: string, dataIndex: string) => {
+    const change = (value: any, dataIndex: string) => {
       dataInfo.params[dataIndex] = value;
       console.log(dataInfo.params, value, 'handleSearch');
     };
@@ -152,12 +152,12 @@ export default defineComponent({
     const {
       appContext: {
         config: {
-          globalProperties: { $message },
+          globalProperties: { $message, $icons },
         },
       },
     } = getCurrentInstance() as any;
     $message.success('success');
-
+    console.log($icons, 'types');
     return { ...toRefs(dataInfo), handleReset, change, handleResizeColumn };
   },
 });

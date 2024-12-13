@@ -34,6 +34,7 @@ export default defineComponent({
     let dataInfo = reactive({
       timeArr: [],
     });
+
     const videoSrc = new URL('/public/video/121.mp4', import.meta.url).href;
     onMounted(() => {});
     return {
