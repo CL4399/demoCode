@@ -21,13 +21,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// 插入数据
-	insertStmt := "INSERT INTO user (name, create_time) VALUES (?, ?)"
-	_, err = db.Exec(insertStmt, "John Doe", "2025-01-09 15:33:33")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("Data inserted successfully")
+	// // 插入数据
+	// insertStmt := "INSERT INTO user (name, create_time) VALUES (?, ?)"
+	// _, err = db.Exec(insertStmt, "John Doe", "2025-01-09 15:33:33")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println("Data inserted successfully")
 
 	// 执行查询
 	rows, err := db.Query("SELECT * FROM user")

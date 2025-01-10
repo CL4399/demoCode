@@ -1,0 +1,10 @@
+app:
+  name: goProject
+  port: :3000
+
+database:
+  host: localhost
+  port: :3306
+  user: admin
+  password: Safesail1324..
+  name: testProject
