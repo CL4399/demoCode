@@ -253,6 +253,9 @@ export default defineComponent({
       arrS[0].push(1);
       //   console.log(arrS, 'arrS');
     });
+
+   
+
     return {
       ...toRefs(dataInfo),
       chooseItem,
