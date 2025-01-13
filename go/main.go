@@ -7,6 +7,7 @@ import (
 	"test/config" // go mod 文件里面的 module 名称
 
 	_ "github.com/go-sql-driver/mysql"
+
 )
 
 func main() {
