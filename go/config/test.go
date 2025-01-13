@@ -1,41 +1,15 @@
-package main
+package config
 
 import (
 	"database/sql"
 	"fmt"
 	"log"
-	"test/config" // go mod 文件里面的 module 名称
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func main() {
-	config.InitConfig()
-	// fmt.Println(config.AppConfig.App.Name) // 输出配置文件信息
-	// fmt.Println(config.AppConfig.Database) // 输出配置文件信息
-	sqlFile()
-}
-
-type DatabaseConfig struct {
-	User string
-}
-
-type AppConfig struct {
-	Database DatabaseConfig
-}
-
-type Config struct {
-	AppConfig AppConfig
-}
-
-func sqlFile() {
-	fmt.Println(config.AppConfig.Database) // 输出配置文件信息
-	var configSet = config.AppConfig.Database
-	fmt.Println(configSet.User)
-
-	dsn := fmt.Sprintf("%s:%s@tcp(%s%s)/%s", configSet.User, configSet.Password, configSet.Host, configSet.Port, configSet.Name) // admin:Safesail1324..@tcp(127.0.0.1:3306)/testProject
-
-	fmt.Println(dsn)
+func sqlfile() {
+	dsn := "admin:Safesail1324..@tcp(127.0.0.1:3306)/testProject"
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -101,4 +75,5 @@ func sqlFile() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }

@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/spf13/viper"
-
 )
 
 // 配置文件结构体
@@ -39,5 +38,7 @@ func InitConfig() {
 	if err := viper.Unmarshal(AppConfig); err != nil {
 		log.Fatalf("Unable to decode into struct: %v", err)
 	}
+
+	// sqlfile()
 
 }
