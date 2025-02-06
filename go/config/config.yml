@@ -8,3 +8,5 @@ database:
   user: admin
   password: 486200
   name: mysqlbase
+  # password: Safesail1324..
+  # name: testProject
