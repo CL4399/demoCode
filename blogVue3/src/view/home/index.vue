@@ -42,10 +42,9 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, reactive, defineComponent, onMounted, computed } from 'vue';
+import { h,ref, reactive, defineComponent, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCounterStore } from '../../store/index';
-import { h, ref } from 'vue';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import { MenuProps, Menu, Image, Carousel } from 'ant-design-vue';
 const MenuItem = Menu.Item;
